@@ -1,0 +1,230 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-4xl w-full">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+
+          <h3 class="m-0 text-xl font-semibold">Detail Item</h3>
+        </div>
+
+        <button
+          pButton
+          type="button"
+          icon="pi pi-file-edit"
+          severity="primary"
+          (click)="enableEdit()"
+        ></button>
+      </div>
+    </ng-template>
+
+    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+      <!-- SKU -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="sku">SKU</label>
+
+        <input
+          styleClass="w-full"
+          pInputText
+          id="sku"
+          name="sku"
+          type="text"
+          [ngModel]="item()?.sku"
+          disabled="true"
+          (ngModelChange)="updateSku($event)"
+        />
+      </div>
+
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="name">Name</label>
+
+        <input
+          styleClass="w-full"
+          pInputText
+          id="name"
+          name="name"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.name"
+          (ngModelChange)="updateName($event)"
+        />
+      </div>
+
+      <!-- Category -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="category">Category</label>
+
+        <p-select
+          id="category"
+          name="category_id"
+          [disabled]="!isEditing()"
+          [options]="categories()"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a category"
+          [ngModel]="item()?.category_id"
+          (ngModelChange)="updateCategory($event)"
+        ></p-select>
+      </div>
+
+      <!-- Unit -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="unit">Unit</label>
+
+        <p-select
+          styleClass="w-full"
+          id="unit"
+          name="unit_id"
+          [disabled]="!isEditing()"
+          [options]="units()"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a unit"
+          [ngModel]="item()?.unit_id"
+          (ngModelChange)="updateUnit($event)"
+        ></p-select>
+      </div>
+
+      <!-- Purchase Price -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="purchase_price">Purchase Price</label>
+
+        <p-inputNumber
+          styleClass="w-full"
+          inputId="purchase_price"
+          name="purchase_price"
+          mode="currency"
+          currency="PKR"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.purchase_price != null ? +item()!.purchase_price : null"
+          (ngModelChange)="updatePurchasePrice($event)"
+        ></p-inputNumber>
+      </div>
+
+      <!-- Sale Price -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="sale_price">Sale Price</label>
+
+        <p-inputNumber
+          styleClass="w-full"
+          inputId="sale_price"
+          name="sale_price"
+          mode="currency"
+          currency="PKR"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.sale_price != null ? +item()!.sale_price : null"
+          (ngModelChange)="updateSalePrice($event)"
+        ></p-inputNumber>
+      </div>
+
+      <!-- Reorder Level -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="reorder_level">Reorder Level</label>
+
+        <p-inputNumber
+          styleClass="w-full"
+          inputId="reorder_level"
+          name="reorder_level"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.reorder_level"
+          (ngModelChange)="updateReorderLevel($event)"
+        ></p-inputNumber>
+      </div>
+
+      <!-- Barcode -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="barcode">Barcode</label>
+
+        <input
+          styleClass="w-full"
+          pInputText
+          id="barcode"
+          name="barcode"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.barcode"
+          (ngModelChange)="updateBarcode($event)"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="status">Status</label>
+
+        <p-select
+          id="status"
+          name="status"
+          [disabled]="!isEditing()"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          [ngModel]="item()?.status"
+          (ngModelChange)="updateStatus($event)"
+        ></p-select>
+      </div>
+
+      <!-- Description -->
+      <div class="flex flex-col gap-2 sm:col-span-2 lg:col-span-3">
+        <label pLabel for="description">Description</label>
+
+        <textarea
+          class="sm:col-span-2 lg:col-span-3"
+          style="border: 1px solid gray"
+          pTextarea
+          id="description"
+          name="description"
+          rows="3"
+          class="p-2"
+          [disabled]="!isEditing()"
+          [ngModel]="item()?.description"
+          (ngModelChange)="updateDescription($event)"
+        ></textarea>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-between items-center">
+        <div>
+          <button
+            type="button"
+            pButton
+            variant="link"
+            severity="danger"
+            icon="pi pi-trash"
+            class="p-0 m-1"
+            (click)="delete($event, item()?.id)"
+          >
+            Delete
+          </button>
+        </div>
+
+        <p-confirmDialog></p-confirmDialog>
+
+        <div class="flex gap-2">
+          <button
+            type="button"
+            pButton
+            variant="link"
+            severity="secondary"
+            class="p-0 m-1"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            pButton
+            variant="link"
+            icon="pi pi-save"
+            class="p-0 m-1"
+            (click)="save()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

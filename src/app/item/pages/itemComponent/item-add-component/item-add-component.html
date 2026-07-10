@@ -1,0 +1,201 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-4xl w-full">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <h3 class="m-0 text-xl font-semibold">New Item</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+      <!-- SKU -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="sku">SKU</label>
+        <input pInputText id="sku"  [value]="item().sku" disabled class="w-full" />
+
+        <div class="text-red-500">
+          @if (itemForm.sku().touched()) {
+            @for (item of itemForm.sku().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="name">Name</label>
+        <input pInputText id="name" [formField]="itemForm.name" class="w-full" />
+
+        <div class="text-red-500">
+          @if (itemForm.name().touched()) {
+            @for (item of itemForm.name().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="category">Category</label>
+        <p-select
+          id="category"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a category"
+          styleClass="w-full"
+          [ngModel]="item().category_id"
+          [options]="categories()"
+          (ngModelChange)="itemForm.category_id().value.set($event)"
+          name="category_id"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (itemForm.category_id().touched()) {
+            @for (item of itemForm.category_id().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Unit -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="unit">Unit</label>
+        <p-select
+          id="unit"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a unit"
+          styleClass="w-full"
+          [ngModel]="item().unit_id"
+          [options]="units()"
+          (ngModelChange)="itemForm.unit_id().value.set($event)"
+          name="unit_id"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (itemForm.unit_id().touched()) {
+            @for (item of itemForm.unit_id().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Purchase Price -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="purchase_price">Purchase Price</label>
+        <input
+          pInputText
+          inputId="purchase_price"
+          [formField]="itemForm.purchase_price"
+          mode="currency"
+          currency="USD"
+          styleClass="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (itemForm.purchase_price().touched()) {
+            @for (item of itemForm.purchase_price().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Sale Price -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="sale_price">Sale Price</label>
+        <input
+          pInputText
+          inputId="sale_price"
+          [formField]="itemForm.sale_price"
+          mode="currency"
+          currency="USD"
+          styleClass="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (itemForm.sale_price().touched()) {
+            @for (item of itemForm.sale_price().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Reorder Level -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="reorder_level">Reorder Level</label>
+        <input
+          pInputText
+          inputId="reorder_level"
+          [formField]="itemForm.reorder_level"
+          styleClass="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (itemForm.reorder_level().touched()) {
+            @for (item of itemForm.reorder_level().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Barcode -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="barcode">Barcode</label>
+        <input pInputText id="barcode" [formField]="itemForm.barcode" class="w-full" />
+      </div>
+
+      <!-- Status -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="status">Status</label>
+        <p-select
+          id="status"
+          optionLabel="label"
+          optionValue="value"
+          styleClass="w-full"
+          [ngModel]="item().status"
+          [options]="statusOptions"
+          (ngModelChange)="itemForm.status().value.set($event)"
+          name="status"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (itemForm.status().touched()) {
+            @for (item of itemForm.status().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Description (full width) -->
+      <div class="flex flex-col gap-2 sm:col-span-2 lg:col-span-3">
+        <label for="description">Description</label>
+        <textarea
+          style="border: 1px solid gray"
+          pTextarea
+          id="description"
+          rows="4"
+          [formField]="itemForm.description"
+          class="w-full p-1"
+        ></textarea>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <div class="flex flex-col gap-4">
+        <div class="mt-2 text-right text-surface-500 text-sm">
+          <button pButton label="Save" icon="pi pi-save" type="button" (click)="submit()"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

@@ -1,0 +1,65 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-sm w-full">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <h3 class="m-0 text-xl font-semibold">New Category</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="space-y-6 mt-3">
+      <div class="flex flex-col gap-2">
+
+         <label pLabel for="name">Name</label>
+          <input pInputText id="name" [formField]="categoryForm.name" class="w-full" />
+
+        <div class="text-red-500">
+          @if (categoryForm.name().touched()) {
+            @for (item of categoryForm.name().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+            <label for="description"> Description </label>
+          <textarea style="border: 1px solid gray;"
+            pTextarea
+            id="description"
+            rows="4"
+            [formField]="categoryForm.description"
+            class="w-full p-1"
+          >
+          </textarea>
+
+        <div class="text-red-500">
+          @if (categoryForm.description().touched()) {
+            @for (item of categoryForm.description().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+    </form>
+    <ng-template #footer>
+      <div class="flex flex-col gap-4">
+        <div class="mt-2 text-right text-surface-500 text-sm">
+          <!-- <button
+            type="button"
+            pButton
+            variant="link"
+            class="p-0"
+            class="m-1"
+            severity="secondary"
+            (click)="cancel()"
+          >
+            Cancel
+          </button> -->
+           <button pButton label="Save" icon="pi pi-save" (click)="submit()"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

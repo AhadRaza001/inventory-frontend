@@ -1,0 +1,151 @@
+<p-toolbar styleClass="mb-3">
+  <ng-template #start>
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="sale_order_search"
+        [(ngModel)]="searchValue"
+        autocomplete="off"
+        (input)="table.filterGlobal($any($event.target).value, 'contains')"
+      />
+      <label for="sale_order_search">Search Sale Orders</label>
+    </p-floatlabel>
+  </ng-template>
+
+  <ng-template #end>
+    <button pButton label="New" icon="pi pi-plus" routerLink="/sale-order/create"></button>
+  </ng-template>
+</p-toolbar>
+
+<p-table
+  #table
+  [value]="saleOrders()"
+  [globalFilterFields]="[
+    'so_no',
+    'customer.name',
+    'store.name',
+    'user.name',
+    'status',
+    'amount_status',
+  ]"
+  [tableStyle]="{ width: '100%' }"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [lazy]="true"
+  [loading]="loading"
+  [totalRecords]="totalRecords"
+  (onLazyLoad)="loadSaleOrders($event)"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <!-- <th pSortableColumn="id">
+        ID
+        <p-sortIcon field="id"></p-sortIcon>
+        <p-columnFilter field="id" type="numeric" display="menu"></p-columnFilter>
+      </th> -->
+
+      <th pSortableColumn="so_no">
+        SO No
+        <p-sortIcon field="so_no"></p-sortIcon>
+        <p-columnFilter field="so_no" type="text" display="menu"></p-columnFilter>
+      </th>
+
+      <th pSortableColumn="customer.name">
+        Customer
+        <p-sortIcon field="customer.name"></p-sortIcon>
+        <p-columnFilter field="customer.name" type="text" display="menu"></p-columnFilter>
+      </th>
+
+      <th pSortableColumn="store.name">
+        Store
+        <p-sortIcon field="store.name"></p-sortIcon>
+        <p-columnFilter field="store.name" type="text" display="menu"></p-columnFilter>
+      </th>
+
+      <!-- <th pSortableColumn="user.name">
+        Created By
+        <p-sortIcon field="user.name"></p-sortIcon>
+        <p-columnFilter field="user.name" type="text" display="menu"></p-columnFilter>
+      </th> -->
+
+      <th pSortableColumn="status">
+        Status
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter field="status" type="text" display="menu">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-select
+              [ngModel]="value"
+              [options]="statusOptions"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Any"
+              (onChange)="filter($event.value)"
+              [showClear]="true"
+            >
+            </p-select>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+
+      <th pSortableColumn="amount_status">
+        Payment
+        <p-sortIcon field="amount_status"></p-sortIcon>
+        <p-columnFilter field="amount_status" type="text" display="menu">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-select
+              [ngModel]="value"
+              [options]="amount_status"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Any"
+              (onChange)="filter($event.value)"
+              [showClear]="true"
+            >
+            </p-select>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+
+      <!-- <th pSortableColumn="grand_total">
+        Grand Total
+        <p-sortIcon field="grand_total"></p-sortIcon>
+        <p-columnFilter field="grand_total" type="numeric" display="menu"></p-columnFilter>
+      </th> -->
+      <!-- 
+      <th pSortableColumn="paid_amount">
+        Paid
+        <p-sortIcon field="paid_amount"></p-sortIcon>
+        <p-columnFilter field="paid_amount" type="numeric" display="menu"></p-columnFilter>
+      </th> -->
+
+      <!-- <th pSortableColumn="due_amount">
+        Due
+        <p-sortIcon field="due_amount"></p-sortIcon>
+        <p-columnFilter field="due_amount" type="numeric" display="menu"></p-columnFilter>
+      </th> -->
+
+      <th pSortableColumn="created_at">
+        Date
+        <p-sortIcon field="created_at"></p-sortIcon>
+        <p-columnFilter field="created_at" type="date" display="menu"></p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item>
+    <tr class="table_row" style="cursor: pointer" (click)="detailSaleOrder(item.id)">
+      <!-- <td>{{ item.id }}</td> -->
+      <td>{{ item.so_no }}</td>
+      <td>{{ item.customer?.name }}</td>
+      <td>{{ item.store?.name }}</td>
+      <!-- <td>{{ item.user?.name }}</td> -->
+      <td>{{ item.status }}</td>
+      <td>{{ item.amount_status }}</td>
+      <!-- <td>{{ item.grand_total | currency: 'PKR' }}</td> -->
+      <!-- <td>{{ item.paid_amount | currency: 'PKR' }}</td> -->
+      <!-- <td>{{ item.due_amount | currency: 'PKR' }}</td> -->
+      <td>{{ item.created_at | date: 'dd-MM-yyyy' }}</td>
+    </tr>
+  </ng-template>
+</p-table>

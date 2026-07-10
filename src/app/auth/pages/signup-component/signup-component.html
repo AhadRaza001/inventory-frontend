@@ -1,0 +1,105 @@
+<!--
+  Angular + PrimeNG template for reference.
+  Requires: CardModule, InputTextModule, IconFieldModule, InputIconModule,
+            CheckboxModule, ButtonModule, FormsModule, RouterLink
+-->
+
+<div
+  class="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden"
+  style="background: linear-gradient(180deg, #6ee7b7 0%, #34d399 50%, #10b981 100%);"
+>
+  <!-- decorative wave layers -->
+  <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,150 C360,300 1080,0 1440,150 L1440,0 L0,0 Z" fill="#d1fae5" opacity="0.6"/>
+    <path d="M0,350 C400,500 1040,200 1440,380 L1440,900 L0,900 Z" fill="#059669" opacity="0.25"/>
+    <path d="M0,600 C400,750 1040,500 1440,650 L1440,900 L0,900 Z" fill="#047857" opacity="0.35"/>
+  </svg>
+
+  <p-card class="max-w-md w-full relative z-10 rounded-2xl shadow-xl" [style]="{ 'border-radius': '1rem' }">
+    <div class="p-2">
+      <h2 class="text-2xl font-bold text-surface-900 mb-1">Register</h2>
+      <p class="text-surface-500 mb-6">Let's get started</p>
+
+      <form class="space-y-4" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <!-- Username -->
+        <p-iconfield iconPosition="left" class="w-full">
+          <p-inputicon class="pi pi-user" />
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Username"
+            class="w-full"
+            [(ngModel)]="signup().name"
+            name="username"
+            required
+          />
+        </p-iconfield>
+
+        <!-- Email -->
+        <p-iconfield iconPosition="left" class="w-full">
+          <p-inputicon class="pi pi-envelope" />
+          <input
+            pInputText
+            id="email"
+            type="email"
+            placeholder="Email"
+            class="w-full"
+            [(ngModel)]="signup().email"
+            name="email"
+            required
+          />
+        </p-iconfield>
+
+        <!-- Password with show/hide toggle -->
+        <p-iconfield iconPosition="left" class="w-full">
+          <p-inputicon class="pi pi-lock" />
+          <input
+            pInputText
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            placeholder="Password"
+            class="w-full pr-10"
+            [(ngModel)]="signup().password"
+            name="password"
+            required
+          />
+          <i
+            class="pi absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-surface-400"
+            [class.pi-eye]="!showPassword()"
+            [class.pi-eye-slash]="showPassword()"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </p-iconfield>
+
+        <!-- Terms checkbox -->
+        <div class="flex items-start gap-2 pt-1">
+          <p-checkbox
+            [(ngModel)]="acceptedTerms"
+            name="acceptedTerms"
+            binary="true"
+            inputId="terms"
+            required
+          />
+          <label for="terms" class="text-sm cursor-pointer leading-5">
+            <span class="text-surface-900 font-semibold">I have read the</span>
+            <a class="text-surface-500 hover:text-primary-600 ml-1">Terms and Conditions</a>
+          </label>
+        </div>
+
+        <button
+          pButton
+          type="submit"
+          label="Sign Up"
+          class="w-full !bg-emerald-600 !border-emerald-600 hover:!bg-emerald-700 !mt-2"
+          [disabled]="!registerForm.valid || !acceptedTerms"
+        ></button>
+
+        <p class="text-center text-surface-500 text-sm pt-1">
+          Already have an account?
+          <a routerLink="/login" class="text-surface-900 font-semibold cursor-pointer">Login</a>
+        </p>
+      </form>
+    </div>
+  </p-card>
+</div>

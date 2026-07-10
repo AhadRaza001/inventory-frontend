@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import "primeicons/primeicons.css";
+
+@import "@fontsource/inter";
+
+body {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #334155;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+}

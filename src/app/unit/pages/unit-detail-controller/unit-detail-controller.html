@@ -1,0 +1,103 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-sm w-full">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i
+            (click)="back()"
+            class="pi pi-arrow-left cursor-pointer"
+          ></i>
+
+          <h3 class="m-0 text-xl font-semibold">
+            Detail Unit
+          </h3>
+        </div>
+
+        <button
+          pButton
+          type="button"
+          icon="pi pi-file-edit"
+          severity="primary"
+          (click)="enableEdit()"
+        ></button>
+      </div>
+    </ng-template>
+
+    <form class="space-y-6 mt-3">
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="name">Name</label>
+
+        <input
+          pInputText
+          id="name"
+          name="name"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="unit()?.name"
+          (ngModelChange)="updateName($event)"
+        />
+      </div>
+
+      <!-- Short Name (Remove if your interface doesn't have it) -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="short_name">Short Name</label>
+
+        <input
+          pInputText
+          id="short_name"
+          name="short_name"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="unit()?.symbol"
+          (ngModelChange)="updateShortName($event)"
+        />
+      </div>
+
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-between items-center">
+        <div>
+          <button
+            type="button"
+            pButton
+            variant="link"
+            severity="danger"
+            icon="pi pi-trash"
+            class="p-0 m-1"
+            (click)="delete($event, unit()?.id)"
+          >
+            Delete
+          </button>
+        </div>
+
+        <p-confirmDialog></p-confirmDialog>
+
+        <div class="flex gap-2">
+          <button
+            type="button"
+            pButton
+            variant="link"
+            severity="secondary"
+            class="p-0 m-1"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            pButton
+            variant="link"
+            icon="pi pi-save"
+            class="p-0 m-1"
+            (click)="save()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
