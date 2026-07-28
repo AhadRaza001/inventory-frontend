@@ -1,12 +1,36 @@
 @if (loadingService.loading()) {
 
-<div class="loading-overlay">
+<!-- <div class="loading-overlay">
 
     <p-progress-spinner
         strokeWidth="1"
         animationDuration=".5s">
     </p-progress-spinner>
+</div> -->
 
+<div class="loading-overlay">
+
+<!-- Main alignment layer - Handled dynamically by styling layers -->
+<div class="fixed top-5 left-1/2 -translate-x-1/2 loader-overlay-container pointer-events-none animate-fadein">
+  
+  <!-- Content Card - Bound strictly to native Aura Theme variables -->
+  <div 
+    style="
+      border: 1px solid var(--p-content-border-color); 
+      border-radius: var(--p-content-border-radius, 6px); 
+      color: var(--p-text-color); 
+      background-color: var(--p-content-background);
+    " 
+    class="p-4 shadow-xl flex items-center gap-3 pointer-events-auto rounded-md"
+  >
+    <!-- Aura primary matched loading spinner wheel -->
+    <i class="pi pi-spin pi-spinner text-xl" style="color: var(--p-primary-color);"></i>
+    
+    <!-- Status message matching global font weight profiles -->
+    <span class="font-medium text-sm tracking-wide">Please wait. Your request is loading...</span>
+  </div>
+
+</div>
 </div>
 
 }

@@ -1,8 +1,8 @@
-<div class="card">
-  <p-toolbar [style]="{ 'border-radius': '3rem', padding: '1rem 1rem 1rem 1.5rem' }">
+<div class="card mb-2" >
+  <p-toolbar>
     <ng-template #start>
   
-      <button [disabled]="sidebarService.pinned()" pButton icon="pi pi-bars" (click)="sidebarService.toggle()"></button>
+      <button class="p-button-sm" [disabled]="sidebarService.pinned()" pButton icon="pi pi-bars" (click)="sidebarService.toggle()"></button>
 
       <app-breadcrumb></app-breadcrumb>
     </ng-template>

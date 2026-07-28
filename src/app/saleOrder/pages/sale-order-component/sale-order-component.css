@@ -1,0 +1,13 @@
+.p-datatable-tbody {
+  display: block;
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Keep column widths aligned with header */
+.p-datatable-thead > tr,
+.p-datatable-tbody > tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}

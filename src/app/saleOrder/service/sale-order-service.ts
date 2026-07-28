@@ -2,10 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IsaleOrder } from '../../interface/isale-order';
+import { ISaleOrder } from '../../interface/iso-detail';
 
 @Service()
 export class SaleOrderService {
-    private baseUrl = 'http://localhost:8000/api/saleorders';
+  private baseUrl = 'http://localhost:8000/api/saleorders';
 
   private http = inject(HttpClient);
   // GET /SO
@@ -30,7 +31,7 @@ export class SaleOrderService {
   }
 
   // GET /SO/{id}
-  getById(id: any): Observable<IsaleOrder> {
+  getById(id: number): Observable<any> {
     return this.http.get<IsaleOrder>(`${this.baseUrl}/${id}`);
   }
 
@@ -40,8 +41,8 @@ export class SaleOrderService {
   }
 
   // POST /SO/{id}  (your backend uses POST for update, not PUT)
-  update(id: number, unit: Partial<IsaleOrder>): Observable<IsaleOrder> {
-    return this.http.post<IsaleOrder>(`${this.baseUrl}/${id}`, unit);
+  update(id: number, so: Partial<IsaleOrder>): Observable<IsaleOrder> {
+    return this.http.put<IsaleOrder>(`${this.baseUrl}/${id}`, so);
   }
 
   // DELETE /SO/{id}

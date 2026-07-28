@@ -1,13 +1,14 @@
 <div
   class="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden"
-  style="background: linear-gradient(180deg, #6ee7b7 0%, #34d399 50%, #10b981 100%);"
+  /* style="background: linear-gradient(180deg, #6ee7b7 0%, #34d399 50%, #10b981 100%);" */
+  style="background-color: #dae1e19d;"
 >
   <!-- decorative wave layers -->
-  <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,150 C360,300 1080,0 1440,150 L1440,0 L0,0 Z" fill="#d1fae5" opacity="0.6"/>
     <path d="M0,350 C400,500 1040,200 1440,380 L1440,900 L0,900 Z" fill="#059669" opacity="0.25"/>
     <path d="M0,600 C400,750 1040,500 1440,650 L1440,900 L0,900 Z" fill="#047857" opacity="0.35"/>
-  </svg>
+  </svg> -->
 
   <p-card class="max-w-md w-full relative z-10 rounded-2xl shadow-xl" [style]="{ 'border-radius': '1rem' }">
     <div class="p-2">
@@ -43,7 +44,7 @@
 
         <div class="flex items-center justify-between pt-1">
           <div class="flex items-center gap-2">
-            <!-- <p-checkbox [(ngModel)]="rememberMe" name="rememberMe" binary="true" inputId="remember" /> -->
+            <p-checkbox [(ngModel)]="rememberMe" name="rememberMe" binary="true" inputId="remember" />
             <label for="remember" class="text-surface-900 font-medium cursor-pointer">Remember Me</label>
           </div>
           <a class="text-surface-500 text-sm hover:text-primary-600 cursor-pointer">Reset password</a>

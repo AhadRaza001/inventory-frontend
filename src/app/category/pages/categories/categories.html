@@ -30,6 +30,8 @@
   [lazy]="true"
   (onLazyLoad)="loadCategories($event)"
   [totalRecords]="totalRecords"
+  [scrollable]="true"
+  scrollHeight="calc(100vh - 225px)"
 >
   <ng-template pTemplate="header">
     <tr>

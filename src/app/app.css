@@ -1,6 +1,7 @@
 .app-layout {
   display: flex;
   min-height: 100vh;
+  background-color: #F8F8F8;
 }
 
 /* the wrapper takes remaining width and shifts via margin/flex */
@@ -14,7 +15,7 @@
 }
 
 .sidebar-pinned .app-content-wrapper {
-  margin-left: 330px; /* match drawer width exactly */
+  margin-left: 300px; /* match drawer width exactly */
 }
 
 main {
@@ -26,11 +27,11 @@ tr {
 }
 
 .table_row :hover{
-  background-color: aliceblue;
+  background-color: rgb(243, 249, 245);
   text-decoration: underline;
   /* user-select: none; */
 }
 :host ::ng-deep .table_row:hover > td {
-  background-color: aliceblue !important;
+  background-color: rgb(243, 249, 245) !important;
   text-decoration: underline;
 }

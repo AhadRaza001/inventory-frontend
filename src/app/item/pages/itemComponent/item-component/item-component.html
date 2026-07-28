@@ -30,6 +30,9 @@
   [loading]="loading"
   [totalRecords]="totalRecords"
   (onLazyLoad)="loadUnits($event)"
+  [scrollable]="true"
+  scrollHeight="calc(100vh - 225px)"
+
 >
  <ng-template pTemplate="header">
   <tr>
@@ -67,7 +70,7 @@
       Category
       <p-sortIcon field="category.name"></p-sortIcon>
       <p-columnFilter
-        field="category_id"
+        field="category.name"
         type="text"
         display="menu">
       </p-columnFilter>
@@ -77,7 +80,7 @@
       Unit
       <p-sortIcon field="unit.name"></p-sortIcon>
       <p-columnFilter
-        field="unit_id"
+        field="unit.name"
         type="text"
         display="menu">
       </p-columnFilter>

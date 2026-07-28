@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     ConfirmationService,
-    provideAnimationsAsync(),
+    // provideAnimationsAsync(),
     MessageService,
     ConfirmationService,
 

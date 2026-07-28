@@ -1,0 +1,99 @@
+<!-- <p-toast></p-toast> -->
+<p-confirmDialog></p-confirmDialog>
+
+<p-card>
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="start">
+      <h3 class="text-lg font-semibold m-0">Sale Order Items</h3>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <p-button label="Add Item" icon="pi pi-plus" size="small" (onClick)="onAddItem()" />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="rows()" dataKey="id" [rowHover]="true" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>SKU</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Deliver Now</th>
+        <th>Amount</th>
+        <th>Sub Total</th>
+
+        <th style="width: 8rem">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        @if (row.isDraft && !row.item) {
+          <!-- Draft row: waiting for an item SKU to resolve -->
+          <td colspan="5">
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-gray-500">SKU:</span>
+              <input
+                pInputText
+                type="text"
+                class="w-32 p-1"
+                [(ngModel)]="row.sku"
+                (blur)="onItemIdResolve(row, row.sku)"
+                placeholder="Enter item SKU"
+              />
+              <span class="text-sm text-gray-400">Tab or click away to load item details</span>
+            </div>
+          </td>
+          <td>
+            <p-button
+              icon="pi pi-times"
+              size="small"
+              severity="danger"
+              [text]="true"
+              (onClick)="onRemoveDraftRow(row)"
+            />
+          </td>
+        } @else {
+          <!-- Item resolved (or an existing saved line): quantity is editable -->
+          <td>{{ row.item?.sku }}</td>
+          <td>{{ row.item?.name }}</td>
+          <td>
+            <p-inputNumber
+              [ngModel]="+row.quantity"
+              (ngModelChange)="row.quantity = $event.toString()"
+              (onBlur)="onQuantityBlur(row)"
+              [min]="1"
+              [showButtons]="false"
+              inputStyleClass="w-20 text-sm"
+            />
+          </td>
+          <td>
+            <p-inputNumber
+              [ngModel]="+(row.delivered_now ?? 0)"
+              (ngModelChange)="row.delivered_now = $event"
+              [min]="0"
+              [showButtons]="false"
+              inputStyleClass="w-20 text-sm"
+            />
+          </td>
+          <td>{{ row.item?.sale_price | currency: 'PKR ' }}</td>
+          <td>{{ row.item?.sale_price * row.quantity | currency: 'PKR ' }}</td>
+          <td>
+            <p-button
+              icon="pi pi-trash"
+              size="small"
+              severity="danger"
+              [text]="true"
+              (onClick)="onDeleteItem(row)"
+            />
+          </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center py-4 text-gray-500">
+          No items added to this sale order.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

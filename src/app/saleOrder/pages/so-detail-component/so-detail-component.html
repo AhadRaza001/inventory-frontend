@@ -1,1 +1,109 @@
-<p>so-detail-component works!</p>
+@if (so()) {
+  <!-- Part 1: Sale Order header info -->
+  <p-card styleClass="mb-4">
+    <div class="flex justify-between items-start flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+        <h2 class="text-xl font-semibold m-0">
+          {{ so()?.so_no | titlecase }} : {{ so()?.customer?.name | titlecase }}
+        </h2>
+        <!-- <p class="text-gray-600 m-0 mt-1">{{ so()?.customer?.name }}</p> -->
+      </div>
+      <div class="flex gap-2">
+      <p-button label="Post Packing" size="small" (onClick)="saveAndDispatch()" />
+      <p-button label="Packing Slip" size="small" (onClick)="getpackingslip()" />
+        <p-tag [value]="so()?.status" [severity]="getStatusSeverity(so()!.status)" />
+        <p-tag
+          [value]="so()?.amount_status"
+          [severity]="getAmountStatusSeverity(so()!.amount_status)"
+        />
+      </div>
+    </div>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+      <div>
+        <span class="text-sm text-gray-500 block">Customer No</span>
+        <span class="font-medium">{{ so()?.customer?.customer_no }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Customer Phone</span>
+        <span class="font-medium">{{ so()?.customer?.phone }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Customer Address</span>
+        <span class="font-medium">{{ so()?.customer?.address }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Customer Reference</span>
+        <input
+          pInputText
+          style="border: 1px solid rgb(129, 216, 129); border-radius: 7px; width: 60%"
+          type="text"
+          class="w-full p-1"
+          [value]="so()?.customer_reference ?? ''"
+          #refInput
+          (blur)="updateSaleOrderField('customer_reference', refInput.value)"
+        />
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Customer Requisition</span>
+        <input
+          style="border: 1px solid rgb(129, 216, 129); border-radius: 7px; width: 60%"
+          pInputText
+          type="text"
+          class="w-full p-1"
+          [value]="so()?.customer_requisitions ?? ''"
+          #reqInput
+          (blur)="updateSaleOrderField('customer_requisitions', reqInput.value)"
+        />
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Store</span>
+        <span class="font-medium">{{ so()?.store?.name }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Created By</span>
+        <span class="font-medium">{{ so()?.user?.name }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Updated At</span>
+        <span class="font-medium">{{ so()?.updated_at | date: 'medium' }}</span>
+      </div>
+    </div>
+
+    <p-divider />
+
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+      <div>
+        <span class="text-sm text-gray-500 block">Sub Total</span>
+        <span class="font-medium">{{ so()!.sub_total | currency: 'PKR ' }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Discount</span>
+        <span class="font-medium">{{ +so()!.discount_amount | currency: 'PKR ' }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Tax</span>
+        <span class="font-medium">{{ +so()!.tax_amount | currency: 'PKR ' }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Grand Total</span>
+        <span class="font-semibold text-lg">{{ +so()!.grand_total | currency: 'PKR ' }}</span>
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Paid</span>
+        <span class="font-medium text-green-600">{{ +so()!.paid_amount | currency: 'PKR ' }}</span>
+
+      </div>
+      <div>
+        <span class="text-sm text-gray-500 block">Due</span>
+        <span class="font-medium text-red-600">{{ +so()!.due_amount | currency: 'PKR ' }}</span>
+      </div>
+    </div>
+  </p-card>
+
+  @if (so()) {
+    <app-so-items-component [so]="so()" (refresh)="fetchSaleOrder($event)"></app-so-items-component>
+  }
+}

@@ -22,7 +22,6 @@ import { Select } from 'primeng/select';
     ToolbarModule,
     ButtonModule,
     RouterLink,
-    CurrencyPipe,
     DatePipe,
     Select,
   ],

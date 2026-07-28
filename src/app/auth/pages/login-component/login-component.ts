@@ -11,14 +11,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../../toast/toast-service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-login-component',
-  imports: [CardModule, ButtonModule, InputTextModule, FloatLabelModule,InputIconModule,IconFieldModule,FormsModule,RouterLink],
+  imports: [CardModule, ButtonModule, InputTextModule, FloatLabelModule,InputIconModule,IconFieldModule,FormsModule,RouterLink,Checkbox],
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
 })  
 export class LoginComponent {
+  rememberMe!:any;
   authservice = inject(AuthService);
     toast = inject(ToastService);
     router = inject(Router);

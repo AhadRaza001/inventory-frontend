@@ -32,6 +32,10 @@ export class ItemService {
     return this.http.get<Iitem>(`${this.baseUrl}/${id}`);
   }
 
+  getBySKU(sku: any) {
+    return this.http.get<Iitem>(`${this.baseUrl}/sku/${sku}`);
+  }
+
   // POST /item
   create(item: Partial<any>): Observable<any> {
     return this.http.post<Iitem>(this.baseUrl, item);
