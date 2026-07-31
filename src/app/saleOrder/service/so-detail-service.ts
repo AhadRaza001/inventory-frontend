@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class SoDetailService {
-  private baseUrl = 'http://localhost:8000/api/sodetails';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/sodetails`;
   private http = inject(HttpClient);
 
   create(id: any, payload: any) {

@@ -2,6 +2,7 @@ import { inject, Injectable, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 export interface Category {
   id: number;
   name: string;
@@ -12,7 +13,8 @@ export interface Category {
 
 @Service()
 export class CategoriesService {
-  private baseUrl = 'http://localhost:8000/api/categories'; // adjust to your actual API base URL
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/categories`;
 
   private http = inject(HttpClient);
   // GET /categories

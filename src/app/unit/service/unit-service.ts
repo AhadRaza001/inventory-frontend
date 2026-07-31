@@ -2,10 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Iunit } from '../../interface/iunit';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class UnitService {
-  private baseUrl = 'http://localhost:8000/api/units';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/units`;
 
   private http = inject(HttpClient);
   // GET /unit

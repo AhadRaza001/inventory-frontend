@@ -2,10 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Iitem } from '../../interface/iitem';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class ItemService {
-  private baseUrl = 'http://localhost:8000/api/items';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/items`;
   private http = inject(HttpClient);
 
   getItem(

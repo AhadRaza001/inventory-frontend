@@ -3,10 +3,12 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IsaleOrder } from '../../interface/isale-order';
 import { ISaleOrder } from '../../interface/iso-detail';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class SaleOrderService {
-  private baseUrl = 'http://localhost:8000/api/saleorders';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/saleorders`;
 
   private http = inject(HttpClient);
   // GET /SO

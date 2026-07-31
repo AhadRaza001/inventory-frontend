@@ -1,11 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IApiResponse, IPackingSlip, IPackingSlipCreatePayload } from '../../interface/packing-slip.model';
+import {
+  IApiResponse,
+  IPackingSlip,
+  IPackingSlipCreatePayload,
+} from '../../interface/packing-slip.model';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class PackingSlipSerive {
-  private baseUrl = 'http://localhost:8000/api/packingslips';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/packingslips`;
   private http = inject(HttpClient);
 
   getAll(params?: {
@@ -24,10 +30,9 @@ export class PackingSlipSerive {
         }
       });
     }
-    return this.http.get<IApiResponse<{ data: IPackingSlip[]; total: number }>>(
-      this.baseUrl,
-      { params: httpParams }
-    );
+    return this.http.get<IApiResponse<{ data: IPackingSlip[]; total: number }>>(this.baseUrl, {
+      params: httpParams,
+    });
   }
 
   /** GET /packing-slips/{id} */
@@ -37,10 +42,9 @@ export class PackingSlipSerive {
 
   /** GET /packing-slips?sale_order_id={id} — convenience wrapper */
   getBySaleOrder(saleOrderId: number): Observable<IApiResponse<IPackingSlip[]>> {
-    return this.http.get<IApiResponse<IPackingSlip[]>>(
-      `${this.baseUrl}/getBySaleOrder`,
-      { params: new HttpParams().set('sale_order_id', saleOrderId.toString()) }
-    );
+    return this.http.get<IApiResponse<IPackingSlip[]>>(`${this.baseUrl}/getBySaleOrder`, {
+      params: new HttpParams().set('sale_order_id', saleOrderId.toString()),
+    });
   }
 
   /** POST /packing-slips */
