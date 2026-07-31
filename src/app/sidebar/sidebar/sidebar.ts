@@ -34,7 +34,7 @@ export class Sidebar {
     {
       label: 'Dashboard',
       icon: 'pi pi-home',
-      route: '/dashboard',
+      route: '/categories',
     },
     {
       label: 'Category',
