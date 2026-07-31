@@ -14,14 +14,15 @@
   </ng-template>
 
   <ng-template #end>
-    <button pButton label="New" icon="pi pi-plus" routerLink="/category/createCategory"></button>
+    <button pButton  routerLink="/category/createCategory">
+      <i class="pi pi-plus"> Add</i>
+    </button>
   </ng-template>
 </p-toolbar>
 
 <p-table
   #table
   [value]="categories()"
-  /* [loading]="loading" */
   [globalFilterFields]="['name', 'description']"
   [tableStyle]="{ 'min-width': '50rem' }"
   [paginator]="true"
@@ -33,28 +34,28 @@
   [scrollable]="true"
   scrollHeight="calc(100vh - 225px)"
 >
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <tr>
       <th pSortableColumn="id">
         ID
-        <p-sortIcon field="id" />
-        <p-columnFilter field="id" type="numeric" display="menu"> </p-columnFilter>
+        <p-sort-icon field="id" />
+        <p-column-filter field="id" type="numeric" display="menu"> </p-column-filter>
       </th>
 
       <th pSortableColumn="name">
         Name
-        <p-sortIcon field="name" />
-        <p-columnFilter field="name" type="text" display="menu"> </p-columnFilter>
+        <p-sort-icon field="name" />
+        <p-column-filter field="name" type="text" display="menu"> </p-column-filter>
       </th>
 
       <th pSortableColumn="description">
         Description
-        <p-sortIcon field="description" />
-        <p-columnFilter field="description" type="text" display="menu"> </p-columnFilter>
+        <p-sort-icon field="description" />
+        <p-column-filter field="description" type="text" display="menu"> </p-column-filter>
       </th>
-    </tr>
+    </tr> 
   </ng-template>
-  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+  <ng-template #body let-item let-rowIndex="rowIndex">
     <tr (click)="detail_category(item.id)" style="cursor: pointer" class="table_row">
       <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>

@@ -1,6 +1,6 @@
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
           <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
@@ -52,14 +52,16 @@
       </div>
     </form>
 
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <div class="flex justify-end">
         <button
           pButton
           label="Save"
-          icon="pi pi-save"
+          text="true"
           (click)="submit()"
-        ></button>
+        >
+      <i class="pi pi-save">Save</i>  
+      </button>
       </div>
     </ng-template>
   </p-card>

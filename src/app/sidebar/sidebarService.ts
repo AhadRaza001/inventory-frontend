@@ -2,28 +2,34 @@ import { Service, signal } from '@angular/core';
 
 @Service()
 export class SidebarService {
-  visible = signal(false);
-  pinned = signal(false);
+  collapsed = signal(false);
 
   toggle() {
-    this.visible.set(!this.visible());
+    this.collapsed.update((v) => !v);
   }
 
-  open() {
-    this.visible.set(true);
-  }
-  close() {
-    // don't close if pinned
-    if (!this.pinned()) {
-      this.visible.set(false);
-    }
-  }
+  //   visible = signal(false);
+  //   pinned = signal(false);
 
- togglePin() {
-  this.pinned.set(!this.pinned());
+  //   toggle() {
+  //     this.visible.set(!this.visible());
+  //   }
 
-  if (this.pinned()) {
-    this.visible.set(true);
-  }
-}
+  //   open() {
+  //     this.visible.set(true);
+  //   }
+  //   close() {
+  //     // don't close if pinned
+  //     if (!this.pinned()) {
+  //       this.visible.set(false);
+  //     }
+  //   }
+
+  //  togglePin() {
+  //   this.pinned.set(!this.pinned());
+
+  //   if (this.pinned()) {
+  //     this.visible.set(true);
+  //   }
+  // }
 }

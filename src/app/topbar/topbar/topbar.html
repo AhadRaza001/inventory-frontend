@@ -1,19 +1,25 @@
-<div class="card mb-2" >
+<div class="card mb-2">
   <p-toolbar>
     <ng-template #start>
-  
-      <button class="p-button-sm" [disabled]="sidebarService.pinned()" pButton icon="pi pi-bars" (click)="sidebarService.toggle()"></button>
+      <button
+        class="p-button-sm"
+        /* [disabled]="sidebarService.pinned()" */
+        pButton
+        (click)="sidebarService.toggle()"
+      >
+        <i class="pi pi-bars"></i>
+      </button>
 
       <app-breadcrumb></app-breadcrumb>
     </ng-template>
     <ng-template #end>
       <div class="flex items-center gap-3">
-        <p-button label="share"  severity="contrast" size="small" />
+        <p-button label="share" severity="contrast" size="small" />
         <p-avatar
           image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
           [style]="{ width: '32px', height: '32px' }"
         />
-        <i class="pi pi-sign-out" title="logout" (click)="logout()" style="cursor: pointer;"></i>
+        <i class="pi pi-sign-out" title="logout" (click)="logout()" style="cursor: pointer"></i>
       </div>
     </ng-template>
   </p-toolbar>

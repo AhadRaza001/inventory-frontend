@@ -14,6 +14,7 @@ import { Loading } from './shared/loading/loading';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Breadcrumb } from './breadcrumb/breadcrumb/breadcrumb';
 @Component({
   selector: 'app-root',
   imports: [
@@ -21,12 +22,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
     ButtonModule,
     DrawerModule,
     RippleModule,
-    Topbar,
     Sidebar,
     RouterOutlet,
     ToastComponent,
-    Loading,
-  ],
+    Breadcrumb,
+    Loading
+],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -37,10 +38,7 @@ export class App {
   //sidebar work
   protected readonly title = signal('inventory_management');
 
-  sidebarVisible = false;
-  showSidebar() {
-    this.sidebarVisible = true;
-  }
+  sidebarVisible = this.sidebarService.collapsed;
 
 //Login Signup show than sidebr or top hide
   constructor() {

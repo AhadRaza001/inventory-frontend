@@ -1,6 +1,6 @@
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
           <i
@@ -16,10 +16,12 @@
         <button
           pButton
           type="button"
-          icon="pi pi-file-edit"
+          text="true"
           severity="primary"
           (click)="enableEdit()"
-        ></button>
+        >
+        <i class="pi pi-file-edit"></i>
+        </button>
       </div>
     </ng-template>
 
@@ -56,29 +58,29 @@
 
     </form>
 
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <div class="flex justify-between items-center">
         <div>
           <button
             type="button"
             pButton
-            variant="link"
-            severity="danger"
-            icon="pi pi-trash"
+            text="true"
             class="p-0 m-1"
+            severity="danger"
             (click)="delete($event, unit()?.id)"
           >
+          <i class="pi pi-trash"></i>
             Delete
           </button>
         </div>
 
-        <p-confirmDialog></p-confirmDialog>
+        <p-confirmdialog></p-confirmdialog>
 
         <div class="flex gap-2">
           <button
             type="button"
             pButton
-            variant="link"
+            text="ture"
             severity="secondary"
             class="p-0 m-1"
             (click)="cancel()"
@@ -89,11 +91,11 @@
           <button
             type="button"
             pButton
-            variant="link"
-            icon="pi pi-save"
+            text="true"
             class="p-0 m-1"
             (click)="save()"
           >
+          <i class="pi pi-save"></i>
             Save
           </button>
         </div>

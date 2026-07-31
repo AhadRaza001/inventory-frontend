@@ -1,90 +1,75 @@
-import { Component, EventEmitter, Input, Output, ViewChild ,HostListener, ElementRef, inject, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  HostListener,
+  ElementRef,
+  inject,
+  ChangeDetectorRef,
+  signal,
+  Signal,
+} from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { StyleClassModule } from 'primeng/styleclass';
 import { SidebarService } from '../sidebarService';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [AvatarModule, ButtonModule, DrawerModule, RippleModule, RouterLink],
+  imports: [AvatarModule, ButtonModule, RippleModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  collapsed = signal(false);
+  sidebarservice = inject(SidebarService);
 
-// @Input() visible: boolean = false;
-//  @Output() visibleChange = new EventEmitter<boolean>();
+  menus = [
+    {
+      label: 'Dashboard',
+      icon: 'pi pi-home',
+      route: '/dashboard',
+    },
+    {
+      label: 'Category',
+      icon: 'pi pi-folder',
+      route: '/categories',
+    },
+    {
+      label: 'Units',
+      icon: 'pi pi-calculator',
+      route: '/units',
+    },
+    {
+      label: 'Sale Orders',
+      icon: 'pi pi-shopping-cart',
+      route: '/saleOrders',
+    },
+    {
+      label: 'Purchase Orders',
+      icon: 'pi pi-shopping-bag',
+      route: '/purchase-orders',
+    },
+    {
+      label: 'Item',
+      icon: 'pi pi-box',
+      route: '/items'
+    },
+    {
+      label: 'Reports',
+      icon: 'pi pi-chart-bar',
+      route: '/reports',
+    },
+  ];
 
-//     closeSidebar() {
-//     this.visible = false;
-//     this.visibleChange.emit(this.visible);
-//   }
-
-// layout/sidebar/sidebar.component.ts
-
-
-sidebarService = inject(SidebarService);
-cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-
-@HostListener('document:click', ['$event'])
-clickOutside(event: MouseEvent) {
-
-  // if sidebar is pinned, do nothing
-  if (this.sidebarService.pinned()) {
-    return;
+  toggle() {
+    this.collapsed.update((v) => !v);
+    this.sidebarservice.toggle();
   }
-
-
-
-  const target = event.target as HTMLElement;
-
-
-  const drawer = document.querySelector('.p-drawer');
-
-
-  if (drawer && !drawer.contains(target)) {
-
-    this.sidebarService.close();
-
-  }
-
-}
-
-onVisibleChange(value:boolean){
-
-    if(this.sidebarService.pinned()){
-        return;
-    }
-
-    this.sidebarService.visible.set(value);
-
-}
-
-drawerVisible = true;
-
-
-togglePin() {
-
-  // remove drawer first
-  this.drawerVisible = false;
-
-
-  setTimeout(() => {
-
-    // change pin state after drawer removed
-    this.sidebarService.togglePin();
-
-
-    // recreate drawer
-    this.drawerVisible = true;
-    
-    // force Angular update
-    this.cdr.detectChanges();
-
-  }, 50);
-
-}
 }

@@ -1,30 +1,27 @@
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-between items-center p-4">
-
         <div class="flex items-center gap-3">
-          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer" style="color: #2392eb"></i>
           <h3 class="m-0 text-xl font-semibold">Detail Category</h3>
         </div>
 
-        <button
-          pButton
-          type="button"
-          icon="pi pi-file-edit"
-          label=""
-          severity="primary"
-          (click)="enableEdit()"
-        ></button>
+        <button pButton type="button" variant="text" severity="primary" (click)="enableEdit()">
+          <i class="pi pi-file-edit"></i>
+        </button>
       </div>
     </ng-template>
     <form class="space-y-6 mt-3">
+      <div class="mb-5">
+        <p-tag severity="info" [value]="'ID : ' + category()?.id"></p-tag>
+      </div>
       <div class="flex flex-col gap-2">
-        <label pLabel for="name">Name</label>
+        <label for="name" class="block mb-2 font-semibold text-900">Name</label>
         <input
           pInputText
           id="name"
-          [disabled]="!isEditing()"
+          [readonly]="!isEditing()"
           name="name"
           type="text"
           [ngModel]="category()?.name"
@@ -33,15 +30,19 @@
       </div>
       <div class="flex flex-col gap-2">
         <div class="flex items-center justify-between">
-          <label pLabel for="description" class="flex-1">Description</label>
+          <label class="block mb-2 font-semibold text-900 flex-1" for="description"
+            >Description</label
+          >
         </div>
         <textarea
           pInputText
           id="description"
           name="description"
+          rows="3"
+          class="w-full resize-none"
           type="text"
           [ngModel]="category()?.description"
-          [disabled]="!isEditing()"
+          [readonly]="!isEditing()"
           (ngModelChange)="updateDescription($event)"
         ></textarea>
       </div>
@@ -49,14 +50,24 @@
     <ng-template #footer>
       <div class="flex justify-between items-center">
         <div class="mt-2 text-right text-surface-500 text-sm">
-          <button type="button" icon="pi pi-trash" pButton  varient="link" class="p-0 m-1" severity="danger" (click)="delete($event,category()?.id)">Delete</button>
-        </div>
-        <p-confirmDialog></p-confirmDialog>
-        <div class="mt-2 text-right text-surface-500 text-sm">
           <button
             type="button"
             pButton
-            variant="link"
+            variant="text"
+            class="p-0 m-1"
+            severity="danger"
+            (click)="delete($event, category()?.id)"
+          >
+            <i class="pi pi-trash"></i>
+            Delete
+          </button>
+        </div>
+        <p-confirmdialog></p-confirmdialog>
+        <div class="mt-2 text-right text-surface-500 text-sm">
+          <button
+            pButton
+            type="button"
+            variant="text"
             class="p-0"
             class="m-1"
             severity="secondary"
@@ -64,14 +75,8 @@
           >
             Cancel
           </button>
-          <button
-            type="button"
-            pButton
-            variant="link"
-            class="p-0"
-            icon="pi pi-save"
-            (click)="save()"
-          >
+          <button type="button" pButton variant="text" class="p-0" (click)="save()">
+            <i class="pi pi-save"></i>
             Save
           </button>
         </div>

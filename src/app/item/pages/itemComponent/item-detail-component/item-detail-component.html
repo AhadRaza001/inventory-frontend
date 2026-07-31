@@ -1,6 +1,6 @@
 <div class="flex justify-center mt-5">
   <p-card class="max-w-4xl w-full">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
           <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
@@ -10,11 +10,13 @@
 
         <button
           pButton
+          text="true"
           type="button"
-          icon="pi pi-file-edit"
           severity="primary"
           (click)="enableEdit()"
-        ></button>
+        >
+      <i class="pi pi-file-edit"></i>  
+      </button>
       </div>
     </ng-template>
 
@@ -90,7 +92,7 @@
       <div class="flex flex-col gap-2">
         <label pLabel for="purchase_price">Purchase Price</label>
 
-        <p-inputNumber
+        <p-input-number
           styleClass="w-full"
           inputId="purchase_price"
           name="purchase_price"
@@ -99,14 +101,14 @@
           [disabled]="!isEditing()"
           [ngModel]="item()?.purchase_price != null ? +item()!.purchase_price : null"
           (ngModelChange)="updatePurchasePrice($event)"
-        ></p-inputNumber>
+        ></p-input-number>
       </div>
 
       <!-- Sale Price -->
       <div class="flex flex-col gap-2">
         <label pLabel for="sale_price">Sale Price</label>
 
-        <p-inputNumber
+        <p-input-number
           styleClass="w-full"
           inputId="sale_price"
           name="sale_price"
@@ -115,21 +117,21 @@
           [disabled]="!isEditing()"
           [ngModel]="item()?.sale_price != null ? +item()!.sale_price : null"
           (ngModelChange)="updateSalePrice($event)"
-        ></p-inputNumber>
+        ></p-input-number>
       </div>
 
       <!-- Reorder Level -->
       <div class="flex flex-col gap-2">
         <label pLabel for="reorder_level">Reorder Level</label>
 
-        <p-inputNumber
+        <p-input-number
           styleClass="w-full"
           inputId="reorder_level"
           name="reorder_level"
           [disabled]="!isEditing()"
           [ngModel]="item()?.reorder_level"
           (ngModelChange)="updateReorderLevel($event)"
-        ></p-inputNumber>
+        ></p-input-number>
       </div>
 
       <!-- Barcode -->
@@ -183,29 +185,29 @@
       </div>
     </form>
 
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <div class="flex justify-between items-center">
         <div>
           <button
             type="button"
             pButton
-            variant="link"
+            text="true"
             severity="danger"
-            icon="pi pi-trash"
+            
             class="p-0 m-1"
             (click)="delete($event, item()?.id)"
           >
-            Delete
+            <i class="pi pi-trash"></i> Delete
           </button>
         </div>
 
-        <p-confirmDialog></p-confirmDialog>
+        <p-confirmdialog></p-confirmdialog>
 
         <div class="flex gap-2">
           <button
             type="button"
             pButton
-            variant="link"
+            text="true"
             severity="secondary"
             class="p-0 m-1"
             (click)="cancel()"
@@ -216,11 +218,11 @@
           <button
             type="button"
             pButton
-            variant="link"
-            icon="pi pi-save"
+            text="true"
             class="p-0 m-1"
             (click)="save()"
           >
+          <i class="pi pi-save"></i>
             Save
           </button>
         </div>

@@ -1,18 +1,18 @@
 <!-- <p-toast></p-toast> -->
-<p-confirmDialog></p-confirmDialog>
+<p-confirmdialog></p-confirmdialog>
 
 <p-card>
   <p-toolbar styleClass="mb-4">
-    <ng-template pTemplate="start">
+    <ng-template #start>
       <h3 class="text-lg font-semibold m-0">Sale Order Items</h3>
     </ng-template>
-    <ng-template pTemplate="end">
+    <ng-template #end>
       <p-button label="Add Item" icon="pi pi-plus" size="small" (onClick)="onAddItem()" />
     </ng-template>
   </p-toolbar>
 
   <p-table [value]="rows()" dataKey="id" [rowHover]="true" responsiveLayout="scroll">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th>SKU</th>
         <th>Item</th>
@@ -24,7 +24,7 @@
         <th style="width: 8rem">Actions</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-row>
+    <ng-template #body let-row>
       <tr>
         @if (row.isDraft && !row.item) {
           <!-- Draft row: waiting for an item SKU to resolve -->
@@ -56,7 +56,7 @@
           <td>{{ row.item?.sku }}</td>
           <td>{{ row.item?.name }}</td>
           <td>
-            <p-inputNumber
+            <p-inputnumber
               [ngModel]="+row.quantity"
               (ngModelChange)="row.quantity = $event.toString()"
               (onBlur)="onQuantityBlur(row)"
@@ -66,7 +66,7 @@
             />
           </td>
           <td>
-            <p-inputNumber
+            <p-inputnumber
               [ngModel]="+(row.delivered_now ?? 0)"
               (ngModelChange)="row.delivered_now = $event"
               [min]="0"
@@ -88,7 +88,7 @@
         }
       </tr>
     </ng-template>
-    <ng-template pTemplate="emptymessage">
+    <ng-template #emptymessage>
       <tr>
         <td colspan="6" class="text-center py-4 text-gray-500">
           No items added to this sale order.

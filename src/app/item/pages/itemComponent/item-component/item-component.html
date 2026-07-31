@@ -14,7 +14,9 @@
   </ng-template>
 
   <ng-template #end>
-    <button pButton label="New" icon="pi pi-plus" [routerLink]="[('/item/createItem')]"></button>
+    <button pButton  icon="" [routerLink]="[('/item/createItem')]">
+      <i class="pi pi-plus"> Add</i>
+    </button>
   </ng-template>
 </p-toolbar>
 
@@ -34,92 +36,92 @@
   scrollHeight="calc(100vh - 225px)"
 
 >
- <ng-template pTemplate="header">
+ <ng-template #header>
   <tr>
     <!-- <th pSortableColumn="id" style="width: 6rem">
       ID
-      <p-sortIcon field="id"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="id"></p-sort-icon>
+      <p-column-filter
         field="id"
         type="numeric"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th> -->
 
     <th pSortableColumn="sku">
       SKU
-      <p-sortIcon field="sku"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="sku"></p-sort-icon>
+      <p-column-filter
         field="sku"
         type="text"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <th pSortableColumn="name">
       Name
-      <p-sortIcon field="name"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="name"></p-sort-icon>
+      <p-column-filter
         field="name"
         type="text"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <th pSortableColumn="category.name">
       Category
-      <p-sortIcon field="category.name"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="category.name"></p-sort-icon>
+      <p-column-filter
         field="category.name"
         type="text"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <th pSortableColumn="unit.name">
       Unit
-      <p-sortIcon field="unit.name"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="unit.name"></p-sort-icon>
+      <p-column-filter
         field="unit.name"
         type="text"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <th pSortableColumn="purchase_price">
       Purchase Price
-      <p-sortIcon field="purchase_price"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="purchase_price"></p-sort-icon>
+      <p-column-filter
         field="purchase_price"
         type="numeric"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <th pSortableColumn="sale_price">
       Sale Price
-      <p-sortIcon field="sale_price"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="sale_price"></p-sort-icon>
+      <p-column-filter
         field="sale_price"
         type="numeric"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th>
 
     <!-- <th pSortableColumn="reorder_level">
       Reorder Level
-      <p-sortIcon field="reorder_level"></p-sortIcon>
-      <p-columnFilter
+      <p-sort-icon field="reorder_level"></p-sort-icon>
+      <p-column-filter
         field="reorder_level"
         type="numeric"
         display="menu">
-      </p-columnFilter>
+      </p-column-filter>
     </th> -->
 
     <th pSortableColumn="status" style="width: 8rem">
       Status
-      <p-sortIcon field="status"></p-sortIcon>
-      <p-columnFilter field="status" matchMode="equals" display="menu">
+      <p-sort-icon field="status"></p-sort-icon>
+      <p-column-filter field="status" matchMode="equals" display="menu">
         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
           <p-select
             [ngModel]="value"
@@ -131,12 +133,12 @@
             [showClear]="true">
           </p-select>
         </ng-template>
-      </p-columnFilter>
+      </p-column-filter>
     </th>
   </tr>
 </ng-template>
 
-<ng-template pTemplate="body" let-item>
+<ng-template #body let-item>
   <tr
     class="table_row"
     style="cursor: pointer"

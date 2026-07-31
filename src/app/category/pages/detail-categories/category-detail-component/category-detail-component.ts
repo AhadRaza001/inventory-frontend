@@ -11,6 +11,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Tag, TagClasses, TagModule, TagStyle } from 'primeng/tag';
 
 @Component({
   selector: 'app-category-detail-component',
@@ -21,6 +22,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FloatLabelModule,
     FormsModule,
     ConfirmDialogModule,
+    TagModule
   ],
   templateUrl: './category-detail-component.html',
   styleUrl: './category-detail-component.css',

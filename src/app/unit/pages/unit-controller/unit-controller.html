@@ -17,9 +17,10 @@
     <button
       pButton
       label="New"
-      icon="pi pi-plus"
       routerLink="/unit/createUnit"
-    ></button>
+    >
+  <span class="pi pi-plus"> Add</span>  
+  </button>
   </ng-template>
 </p-toolbar>
 
@@ -38,41 +39,41 @@
   [scrollable]="true"
   scrollHeight="calc(100vh - 225px)"
 >
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <tr>
       <th pSortableColumn="id">
         ID
-        <p-sortIcon field="id"></p-sortIcon>
-        <p-columnFilter
+        <p-sort-icon field="id"></p-sort-icon>
+        <p-column-filter
           field="id"
           type="numeric"
           display="menu">
-        </p-columnFilter>
+        </p-column-filter>
       </th>
 
       <th pSortableColumn="name">
         Name
-        <p-sortIcon field="name"></p-sortIcon>
-        <p-columnFilter
+        <p-sort-icon field="name"></p-sort-icon>
+        <p-column-filter
           field="name"
           type="text"
           display="menu">
-        </p-columnFilter>
+        </p-column-filter>
       </th>
 
       <th pSortableColumn="symbol">
         Short Name
-        <p-sortIcon field="symbol"></p-sortIcon>
-        <p-columnFilter
+        <p-sort-icon field="symbol"></p-sort-icon>
+        <p-column-filter
           field="symbol"
           type="text"
           display="menu">
-        </p-columnFilter>
+        </p-column-filter>
       </th>
 
   </ng-template>
 
-  <ng-template pTemplate="body" let-item>
+  <ng-template #body let-item>
     <tr
       class="table_row"
       style="cursor: pointer"

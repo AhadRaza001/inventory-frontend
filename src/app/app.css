@@ -9,13 +9,15 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* prevents overflow issues */
+  min-width: 0;
+  /* prevents overflow issues */
   margin-left: 0;
   transition: margin-left 0.2s ease;
 }
 
 .sidebar-pinned .app-content-wrapper {
-  margin-left: 300px; /* match drawer width exactly */
+  margin-left: 300px;
+  /* match drawer width exactly */
 }
 
 main {
@@ -26,12 +28,31 @@ tr {
   cursor: pointer;
 }
 
-.table_row :hover{
+.table_row :hover {
   background-color: rgb(243, 249, 245);
   text-decoration: underline;
   /* user-select: none; */
 }
-:host ::ng-deep .table_row:hover > td {
+
+:host ::ng-deep .table_row:hover>td {
   background-color: rgb(243, 249, 245) !important;
   text-decoration: underline;
+}
+
+
+
+
+
+
+.content {
+
+  margin-left: 260px;
+
+  transition: .25s;
+}
+
+.sidebar_off{
+  margin-left: 80px;
+
+  transition: .25s;
 }
