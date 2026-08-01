@@ -6,13 +6,15 @@ import { catchError } from 'rxjs';
 import { throwError } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { ToastService } from '../../toast/toast-service';
+import { environment } from '../../../environments/environment';
 
 @Service()
 export class AuthService {
-  private baseUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}`;
   private http = inject(HttpClient);
   router = inject(Router);
-toast = inject(ToastService);
+  toast = inject(ToastService);
   login(authinfo: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, authinfo).pipe(
       tap((response: any) => {
@@ -42,14 +44,13 @@ toast = inject(ToastService);
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-  signup(signup:any):Observable<any>{
-    return this.http.post(`${this.baseUrl}/signup`,signup).pipe(tap(()=>console.log('signup is successfully')),
-    catchError((err)=>{
-      console.log('this is error from service.',err);
-      return throwError(()=>err);
-
-    })
-    )
-
+  signup(signup: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/signup`, signup).pipe(
+      tap(() => console.log('signup is successfully')),
+      catchError((err) => {
+        console.log('this is error from service.', err);
+        return throwError(() => err);
+      }),
+    );
   }
 }
