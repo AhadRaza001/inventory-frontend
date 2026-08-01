@@ -1,6 +1,6 @@
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
           <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
@@ -46,18 +46,7 @@
     <ng-template #footer>
       <div class="flex flex-col gap-4">
         <div class="mt-2 text-right text-surface-500 text-sm">
-          <!-- <button
-            type="button"
-            pButton
-            variant="link"
-            class="p-0"
-            class="m-1"
-            severity="secondary"
-            (click)="cancel()"
-          >
-            Cancel
-          </button> -->
-           <button pButton label="Save" icon="pi pi-save" (click)="submit()"></button>
+           <button pButton text="true" (click)="submit()"><i class="pi pi-save"></i>Save</button>
         </div>
       </div>
     </ng-template>
