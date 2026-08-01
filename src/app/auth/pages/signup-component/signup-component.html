@@ -6,8 +6,7 @@
 
 <div
   class="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden"
-  /* style="background: linear-gradient(180deg, #6ee7b7 0%, #34d399 50%, #10b981 100%);" */
-  style="background-color: #dae1e19d;"
+  style="background-color: #dae1e19d"
 >
   <!-- decorative wave layers -->
   <!-- <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +15,10 @@
     <path d="M0,600 C400,750 1040,500 1440,650 L1440,900 L0,900 Z" fill="#047857" opacity="0.35"/>
   </svg> -->
 
-  <p-card class="max-w-md w-full relative z-10 rounded-2xl shadow-xl" [style]="{ 'border-radius': '1rem' }">
+  <p-card
+    class="max-w-md w-full relative z-10 rounded-2xl shadow-xl"
+    [style]="{ 'border-radius': '1rem' }"
+  >
     <div class="p-2">
       <h2 class="text-2xl font-bold text-surface-900 mb-1">Register</h2>
       <p class="text-surface-500 mb-6">Let's get started</p>
@@ -91,10 +93,11 @@
         <button
           pButton
           type="submit"
-          label="Sign Up"
           class="w-full !bg-emerald-600 !border-emerald-600 hover:!bg-emerald-700 !mt-2"
           [disabled]="!registerForm.valid || !acceptedTerms"
-        ></button>
+        >
+          Sign Up
+        </button>
 
         <p class="text-center text-surface-500 text-sm pt-1">
           Already have an account?
