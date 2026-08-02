@@ -4,11 +4,12 @@
 
 .sidebar {
 
-    width: 260px;
+    width: 230px;
     height: 100vh;
 
-    background: #FCFCFC;
-    color: #10b981;
+    /* background: #FCFCFC; */
+    background-color: #F8FAFC;
+    color: #10B981;
 
     display: flex;
     flex-direction: column;
@@ -58,9 +59,9 @@
     height: 36px;
 
     border: none;
-    background: #2d2f36;
+    /* background: #10b981; */
 
-    color: white;
+    /* color: #10b981; */
 
     border-radius: 8px;
 

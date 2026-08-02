@@ -18,8 +18,11 @@
   <app-loading></app-loading>
   <router-outlet></router-outlet>
 } -->
-@if (showLayout()) {
-  <app-sidebar></app-sidebar>
+
+<div class="app-layout">
+
+  @if (showLayout()) {
+    <app-sidebar></app-sidebar>
 
   <div [class.content]="!sidebarVisible()" [class.sidebar_off]="sidebarVisible()">
     <app-breadcrumb></app-breadcrumb>
@@ -32,3 +35,5 @@
   <app-toast-component></app-toast-component>
   <router-outlet></router-outlet>
 }
+
+</div>

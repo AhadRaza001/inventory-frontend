@@ -1,7 +1,5 @@
 .app-layout {
-  display: flex;
-  min-height: 100vh;
-  background-color: #F8F8F8;
+  /* background-color: #F8F8F8; */
 }
 
 /* the wrapper takes remaining width and shifts via margin/flex */
@@ -28,14 +26,12 @@ tr {
   cursor: pointer;
 }
 
-.table_row :hover {
-  background-color: rgb(243, 249, 245);
-  text-decoration: underline;
-  /* user-select: none; */
-}
+
 
 :host ::ng-deep .table_row:hover>td {
   background-color: rgb(243, 249, 245) !important;
+  /* background-color: #d0e8d4 !important; */
+
   text-decoration: underline;
 }
 
@@ -46,7 +42,7 @@ tr {
 
 .content {
 
-  margin-left: 260px;
+  margin-left: 230px;
 
   transition: .25s;
 }

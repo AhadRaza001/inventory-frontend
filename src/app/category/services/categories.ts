@@ -60,4 +60,10 @@ export class CategoriesService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  bulkDelete(ids: number[]) {
+  return this.http.delete(`${this.baseUrl}/bulk-delete`, {
+    body: { ids }
+  });
+}
 }
