@@ -5,50 +5,58 @@
     <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
 
     <p-floatlabel variant="on">
-      <input
-        pInputText
-        id="over_label"
-        [(ngModel)]="searchValue"
-        autocomplete="off"
-        (input)="table.filterGlobal($any($event.target).value, 'contains')"
-      />
+      <p-iconfield>
+        <p-inputicon class="pi pi-search"></p-inputicon>
 
-      <label for="over_label"> Search categories </label>
+        <input
+          pInputText
+          id="over_label"
+          [(ngModel)]="searchValue"
+          autocomplete="off"
+          (input)="table.filterGlobal($any($event.target).value, 'contains')"
+        />
+      </p-iconfield>
+
+      <label for="over_label">Search categories</label>
     </p-floatlabel>
-    <!-- </ng-template> -->
-    <!-- <ng-template #end> -->
+
     <div class="ms-5 h-7 border-l border-surface-300"></div>
-    <button pButton text="true" routerLink="/category/createCategory" class="ms-2">
-      <i class="pi pi-plus"> New</i>
-    </button>
-    <button
-      pButton
-      text="true"
-      severity="danger"
-      [disabled]="selectedCategories.length === 0"
-      (click)="deleteSelected()"
-    >
-      <i class="pi pi-trash"> Delete</i>
-    </button>
-    <button
-      pButton
-      text="true"
-      severity="contrast"
-      [disabled]="selectedCategories.length === 0"
-      (click)="exportSelected()"
-    >
-      <i class="pi pi-file-excel"> Excel</i>
-    </button>
-    <button
-      pButton
-      text="true"
-      severity="contrast"
-      [disabled]="selectedCategories.length === 0"
-      (click)="exportPDF()"
-    >
-      <i class="pi pi-file-pdf"></i>
-      <span class="ml-1">PDF</span>
-    </button>
+    <div class="btns">
+      <button pButton text="true" routerLink="/category/createCategory" class="ms-2">
+        <i class="pi pi-plus"> New</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="danger"
+        [disabled]="selectedCategories.length === 0"
+        (click)="deleteSelected()"
+      >
+        <i class="pi pi-trash"> Delete</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="contrast"
+        [disabled]="selectedCategories.length === 0"
+        (click)="exportSelected()"
+      >
+        <i class="pi pi-file-excel"> Excel</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="contrast"
+        [disabled]="selectedCategories.length === 0"
+        (click)="exportPDF()"
+      >
+        <i class="pi pi-file-pdf"></i>
+        <span class="ml-1">PDF</span>
+      </button>
+    </div>
+  </ng-template>
+  <ng-template #end>
+    <button pButton text="true" (click)="refresh()"><i class="pi pi-refresh"></i></button>
   </ng-template>
 </p-toolbar>
 
@@ -76,9 +84,10 @@
       <th pSortableColumn="id">
         ID
         <p-sort-icon field="id" />
-        <p-column-filter field="id" type="numeric" display="menu"> </p-column-filter>
-      </th>
 
+        <p-column-filter field="id" type="numeric" display="menu"> </p-column-filter>
+
+      </th>
       <th pSortableColumn="name">
         Name
         <p-sort-icon field="name" />
@@ -97,7 +106,7 @@
       <td>
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>
-      <td (click)="detail_category(item.id)" style="color: green">{{ item.id }}</td>
+      <td (click)="detail_category(item.id)" class="rowId">{{ item.id }}</td>
       <td style="cursor: text">{{ item.name }}</td>
       <td style="cursor: text">{{ item.description }}</td>
     </tr>

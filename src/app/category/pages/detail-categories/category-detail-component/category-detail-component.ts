@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Tag, TagClasses, TagModule, TagStyle } from 'primeng/tag';
+import { Toolbar } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-category-detail-component',
@@ -22,7 +23,9 @@ import { Tag, TagClasses, TagModule, TagStyle } from 'primeng/tag';
     FloatLabelModule,
     FormsModule,
     ConfirmDialogModule,
-    TagModule
+    TagModule,
+    Toolbar,
+    
   ],
   templateUrl: './category-detail-component.html',
   styleUrl: './category-detail-component.css',
@@ -55,6 +58,7 @@ export class CategoryDetailComponent {
       },
     });
   }
+
   updateName(name: string) {
     this.category.update((c) => ({
       ...c!,
@@ -90,7 +94,7 @@ export class CategoryDetailComponent {
       },
     });
   }
-  delete(event: MouseEvent,id: any) {
+  delete(event: MouseEvent, id: any) {
     this.confirmationService.confirm({
       target: event.target as HTMLElement,
       message: 'Do you want to delete this record?',
@@ -122,5 +126,8 @@ export class CategoryDetailComponent {
   }
   back() {
     this.location.back();
+  }
+  refresh() {
+    this.ngOnInit();
   }
 }

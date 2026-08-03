@@ -4,6 +4,8 @@
 
 .sidebar {
 
+    border-right: 1px solid #e5e7eb;
+
     width: 230px;
     height: 100vh;
 

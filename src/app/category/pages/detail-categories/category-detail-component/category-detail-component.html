@@ -1,15 +1,52 @@
+<p-toolbar styleClass="mb-3">
+  <ng-template #start>
+    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
+    <div class="btns">
+      <button type="button" pButton variant="text" class="p-0" (click)="save()">
+        <i class="pi pi-save"></i>
+        Save
+      </button>
+      <button
+        type="button"
+        pButton
+        variant="text"
+        class="p-0 m-1"
+        severity="danger"
+        (click)="delete($event, category()?.id)"
+      >
+        <i class="pi pi-trash"></i>
+        Delete
+      </button>
+      <button pButton type="button" variant="text" severity="info" (click)="enableEdit()">
+        <i class="pi pi-file-edit"> Edit</i>
+      </button>
+      <button
+        pButton
+        type="button"
+        variant="text"
+        class="p-0"
+        class="m-1"
+        severity="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+  <ng-template #end>
+    <button pButton text="true" (click)="refresh()"><i class="pi pi-refresh"></i></button>
+  </ng-template>
+</p-toolbar>
+
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
     <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
-          <i (click)="back()" class="pi pi-arrow-left cursor-pointer" style="color: #2392eb"></i>
-          <h3 class="m-0 text-xl font-semibold">Detail Category</h3>
+          <h3 class="m-0 text-xl font-semibold">Category Details</h3>
         </div>
-
-        <button pButton type="button" variant="text" severity="primary" (click)="enableEdit()">
-          <i class="pi pi-file-edit"></i>
-        </button>
       </div>
     </ng-template>
     <form class="space-y-6 mt-3">
@@ -21,7 +58,7 @@
         <input
           pInputText
           id="name"
-          [readonly]="!isEditing()"
+          [disabled]="!isEditing()"
           name="name"
           type="text"
           [ngModel]="category()?.name"
@@ -42,45 +79,10 @@
           class="w-full resize-none"
           type="text"
           [ngModel]="category()?.description"
-          [readonly]="!isEditing()"
+          [disabled]="!isEditing()"
           (ngModelChange)="updateDescription($event)"
         ></textarea>
       </div>
     </form>
-    <ng-template #footer>
-      <div class="flex justify-between items-center">
-        <div class="mt-2 text-right text-surface-500 text-sm">
-          <button
-            type="button"
-            pButton
-            variant="text"
-            class="p-0 m-1"
-            severity="danger"
-            (click)="delete($event, category()?.id)"
-          >
-            <i class="pi pi-trash"></i>
-            Delete
-          </button>
-        </div>
-        <p-confirmdialog></p-confirmdialog>
-        <div class="mt-2 text-right text-surface-500 text-sm">
-          <button
-            pButton
-            type="button"
-            variant="text"
-            class="p-0"
-            class="m-1"
-            severity="secondary"
-            (click)="cancel()"
-          >
-            Cancel
-          </button>
-          <button type="button" pButton variant="text" class="p-0" (click)="save()">
-            <i class="pi pi-save"></i>
-            Save
-          </button>
-        </div>
-      </div>
-    </ng-template>
   </p-card>
 </div>

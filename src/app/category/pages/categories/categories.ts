@@ -16,6 +16,8 @@ import { Location } from '@angular/common';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
 @Component({
   selector: 'app-categories',
   imports: [
@@ -27,6 +29,8 @@ import autoTable from 'jspdf-autotable';
     ButtonModule,
     ConfirmDialogModule,
     RouterLink,
+    IconField,
+    InputIcon,
   ],
   templateUrl: './categories.html',
   styleUrl: './categories.css',
@@ -177,6 +181,7 @@ export class Categories {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Categories');
 
     XLSX.writeFile(workbook, 'categories.xlsx');
+    this.selectedCategories = [];
   }
   exportPDF() {
     if (this.selectedCategories.length === 0) {
@@ -194,8 +199,8 @@ export class Categories {
 
     doc.setFontSize(10);
     doc.text('Generated On: ' + new Date().toLocaleString(), 14, 35);
-    
-   doc.text('Developed By: Ahad Raza', 150, 15);
+
+    doc.text('Developed By: Ahad Raza', 150, 15);
     autoTable(doc, {
       startY: 45,
       head: [['ID', 'Name', 'Description']],
@@ -206,7 +211,11 @@ export class Categories {
 
     doc.text(`Total Records: ${this.selectedCategories.length}`, 14, finalY + 10);
 
-
     doc.save('Category_Report.pdf');
+    this.selectedCategories = [];
+  }
+  refresh() {
+    this.loadCategories(this.lastLazyEvent);
+    this.selectedCategories = [];
   }
 }

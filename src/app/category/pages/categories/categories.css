@@ -18,3 +18,13 @@
   margin-bottom: 0.4rem;
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+
+  .btns {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
