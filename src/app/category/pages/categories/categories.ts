@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CategoriesService } from '../../services/categories';
 import { Icategory } from '../../../interface/Icategory';
-import { TableCheckbox, TableHeaderCheckbox, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToastService } from '../../../toast/toast-service';
 import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialog, ConfirmDialogClasses, ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Location } from '@angular/common';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';

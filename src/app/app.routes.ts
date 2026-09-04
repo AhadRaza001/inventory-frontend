@@ -19,7 +19,7 @@ import { SoAddComponent } from './saleOrder/pages/so-add-component/so-add-compon
 export const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'signup', component: SignupComponent, canActivate: [authGuard] },
   //categories
   { path: 'categories', component: Categories, canActivate: [authGuard] },
   { path: 'category/createCategory', component: AddCategory, canActivate: [authGuard] },

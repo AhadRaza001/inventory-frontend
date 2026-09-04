@@ -1,26 +1,61 @@
 <p-toolbar styleClass="mb-3">
   <ng-template #start>
+    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
     <p-floatlabel variant="on">
-      <input
-        pInputText
-        id="unit_search"
-        [(ngModel)]="searchValue"
-        autocomplete="off"
-        (input)="table.filterGlobal($any($event.target).value, 'contains')"
-      />
+      <p-iconfield>
+        <p-inputicon class="pi pi-search"></p-inputicon>
 
-      <label for="unit_search">Search Units</label>
+        <input
+          pInputText
+          id="over_label"
+          [(ngModel)]="searchValue"
+          autocomplete="off"
+          (input)="table.filterGlobal($any($event.target).value, 'contains')"
+        />
+      </p-iconfield>
+
+      <label for="over_label">Search categories</label>
     </p-floatlabel>
-  </ng-template>
 
+    <div class="ms-5 h-7 border-l border-surface-300"></div>
+    <div class="btns">
+      <button pButton text="true" routerLink="/unit/createUnit" class="ms-2">
+        <i class="pi pi-plus"> New</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="danger"
+        [disabled]="selecteditems.length === 0"
+        (click)="deleteSelected()"
+      >
+        <i class="pi pi-trash"> Delete</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="contrast"
+        [disabled]="selecteditems.length === 0"
+        (click)="exportSelected()"
+      >
+        <i class="pi pi-file-excel"> Excel</i>
+      </button>
+      <button
+        pButton
+        text="true"
+        severity="contrast"
+        [disabled]="selecteditems.length === 0"
+        (click)="exportPDF()"
+      >
+        <i class="pi pi-file-pdf"></i>
+        <span class="ml-1">PDF</span>
+      </button>
+    </div>
+  </ng-template>
   <ng-template #end>
-    <button
-      pButton
-      label="New"
-      routerLink="/unit/createUnit"
-    >
-  <span class="pi pi-plus"> Add</span>  
-  </button>
+    <button pButton text="true" (click)="refresh()"><i class="pi pi-refresh"></i></button>
   </ng-template>
 </p-toolbar>
 
@@ -33,53 +68,42 @@
   [rows]="10"
   [rowsPerPageOptions]="[5, 10, 20]"
   [lazy]="true"
-  [loading]="loading"
   [totalRecords]="totalRecords"
   (onLazyLoad)="loadUnits($event)"
   [scrollable]="true"
+  [(selection)]="selecteditems"
   scrollHeight="calc(100vh - 225px)"
 >
   <ng-template #header>
     <tr>
+      <th style="width: 4rem">
+        <p-tableheadercheckbox></p-tableheadercheckbox>
+      </th>
       <th pSortableColumn="id">
         ID
         <p-sort-icon field="id"></p-sort-icon>
-        <p-column-filter
-          field="id"
-          type="numeric"
-          display="menu">
-        </p-column-filter>
+        <p-column-filter field="id" type="numeric" display="menu"> </p-column-filter>
       </th>
 
       <th pSortableColumn="name">
         Name
         <p-sort-icon field="name"></p-sort-icon>
-        <p-column-filter
-          field="name"
-          type="text"
-          display="menu">
-        </p-column-filter>
+        <p-column-filter field="name" type="text" display="menu"> </p-column-filter>
       </th>
 
       <th pSortableColumn="symbol">
         Short Name
         <p-sort-icon field="symbol"></p-sort-icon>
-        <p-column-filter
-          field="symbol"
-          type="text"
-          display="menu">
-        </p-column-filter>
-      </th>
+        <p-column-filter field="symbol" type="text" display="menu"> </p-column-filter>
+      </th></tr
+  ></ng-template>
 
-  </ng-template>
-
-  <ng-template #body let-item>
-    <tr
-      class="table_row"
-      style="cursor: pointer"
-      (click)="detailUnit(item.id)"
-    >
-      <td>{{ item.id }}</td>
+  <ng-template #body let-item let-rowIndex="rowIndex">
+    <tr class="table_row">
+      <td>
+        <p-tablecheckbox [value]="item"></p-tablecheckbox>
+      </td>
+      <td class="rowId" (click)="detailUnit(item.id)">{{ item.id }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.symbol }}</td>
     </tr>

@@ -54,4 +54,9 @@ export class UnitService {
   getAll(): Observable<any> {
     return this.http.get(this.baseUrl);
   }
+  bulkDelete(ids: number[]) {
+    return this.http.delete(`${this.baseUrl}/bulk-delete`, {
+      body: { ids },
+    });
+  }
 }

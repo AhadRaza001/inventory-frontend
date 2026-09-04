@@ -81,8 +81,10 @@ export class SignupComponent {
 
     this.authService.signup(formValue).subscribe({
       next: () => {
-        this.toast.success('Account created successfully.');
-        this.router.navigate(['/login']);
+        this.toast.success('Account created successfully.','Signup Successfully');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 300);
       },
       error: (err: any) => {
         if (err.status === 422) {
