@@ -47,6 +47,11 @@ export class Sidebar {
       route: '/units',
     },
     {
+      label: 'Item',
+      icon: 'pi pi-box',
+      route: '/items'
+    },
+    {
       label: 'Sale Orders',
       icon: 'pi pi-shopping-cart',
       route: '/saleOrders',
@@ -55,11 +60,6 @@ export class Sidebar {
       label: 'Purchase Orders',
       icon: 'pi pi-shopping-bag',
       route: '/purchase-orders',
-    },
-    {
-      label: 'Item',
-      icon: 'pi pi-box',
-      route: '/items'
     },
     {
       label: 'Reports',

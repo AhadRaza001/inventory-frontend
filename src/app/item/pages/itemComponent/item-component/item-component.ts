@@ -12,7 +12,11 @@ import { ButtonModule } from 'primeng/button';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { Select, SelectModule } from 'primeng/select';
 import { GenerateNumberService } from '../../../../core/service/generate-number-service';
-
+import { TableToolbar } from '../../../../shared/table-toolbar/table-toolbar';
+import { Location } from '@angular/common';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-item-component',
   imports: [
@@ -26,6 +30,7 @@ import { GenerateNumberService } from '../../../../core/service/generate-number-
     CurrencyPipe,
     NgClass,
     Select,
+    TableToolbar,
   ],
   templateUrl: './item-component.html',
   styleUrl: './item-component.css',
@@ -34,6 +39,8 @@ export class ItemComponent {
   itemService = inject(ItemService);
   router = inject(Router);
   toast = inject(ToastService);
+  location = inject(Location);
+  selecteditems: Iitem[] = [];
 
   units = signal<Iitem[]>([]);
 
@@ -55,10 +62,11 @@ export class ItemComponent {
       console.log('Loading State:', this.loading);
     }, 3000);
   }
-
-  loadUnits(event: TableLazyLoadEvent) {
+  lastLazyEvent!: any;
+  loadItems(event: TableLazyLoadEvent) {
     const page = (event.first ?? 0) / (event.rows ?? 10) + 1;
     const size = event.rows ?? 10;
+    this.lastLazyEvent = event;
 
     // Sorting
     const sortField = (event.sortField as string) ?? 'id';
@@ -133,5 +141,93 @@ export class ItemComponent {
       },
     });
   }
-  
+
+  back() {
+    this.location.back();
+  }
+
+  exportSelected() {
+    const exportData = this.selecteditems.map((item) => ({
+      ID: item.id,
+      SKU: item.sku,
+      Name: item.name,
+      Category: item.category?.name,
+      Unit: item.unit?.name,
+      PurchasePrice: item.purchase_price,
+      SalePrice: item.sale_price,
+      Status: item.status,
+      Barcode: item.barcode,
+      ReorderLevel: item.reorder_level,
+      Description: item.description,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Units');
+
+    XLSX.writeFile(workbook, 'units.xlsx');
+    this.selecteditems = [];
+  }
+  exportPDF() {
+    if (this.selecteditems.length === 0) {
+      this.toast.warn('Please select at least one unit.');
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text('Inventory Management System', 14, 15);
+
+    doc.setFontSize(15);
+    doc.text('Items Report', 14, 25);
+
+    doc.setFontSize(10);
+    doc.text('Generated On: ' + new Date().toLocaleString(), 130, 120);
+
+    doc.text('Developed By: Ahad Raza', 150, 15);
+    autoTable(doc, {
+      startY: 45,
+      head: [['ID', 'SKU', 'Name', 'Category', 'Unit','Purchase Price', 'Sale Price', 'Status']],
+      body: this.selecteditems.map((item) => [
+        item.id,
+        item.sku ?? '',
+        item.name ?? '',
+        item.category?.name ?? '',
+        item.unit?.name ?? '',
+        item.purchase_price ?? '',
+        item.sale_price ?? '',
+        item.status ?? '',
+      ]),
+    });
+
+    const finalY = (doc as any).lastAutoTable.finalY;
+
+    doc.text(`Total Records: ${this.selecteditems.length}`, 14, finalY + 10);
+
+    doc.save('Unit_Report.pdf');
+    this.selecteditems = [];
+  }
+  refresh() {
+    this.loadItems(this.lastLazyEvent);
+    this.selecteditems = [];
+  }
+  onNew() {
+    this.router.navigate(['/item/createItem']);
+  }
+  onSearch(value: string) {
+    this.searchValue = value;
+
+    if (this.lastLazyEvent) {
+      this.loadItems({
+        ...this.lastLazyEvent,
+        first: 0,
+      });
+    }
+  }
+
+  deleteSelected(){
+    //bulk delete work neend on backend
+  }
 }

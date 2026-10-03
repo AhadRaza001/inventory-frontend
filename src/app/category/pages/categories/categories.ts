@@ -18,6 +18,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { TableToolbar } from '../../../shared/table-toolbar/table-toolbar';
 @Component({
   selector: 'app-categories',
   imports: [
@@ -31,6 +32,7 @@ import { InputIcon } from 'primeng/inputicon';
     RouterLink,
     IconField,
     InputIcon,
+    TableToolbar,
   ],
   templateUrl: './categories.html',
   styleUrl: './categories.css',
@@ -217,5 +219,18 @@ export class Categories {
   refresh() {
     this.loadCategories(this.lastLazyEvent);
     this.selectedCategories = [];
+  }
+  onNew() {
+    this.router.navigate(['/category/createCategory']);
+  }
+  onSearch(value: string) {
+    this.searchValue = value;
+
+    if (this.lastLazyEvent) {
+      this.loadCategories({
+        ...this.lastLazyEvent,
+        first: 0,
+      });
+    }
   }
 }

@@ -1,5 +1,7 @@
 import { Categories } from '../category/pages/categories/categories';
 import { UnitController } from '../unit/pages/unit-controller/unit-controller';
+import { Icategory } from './Icategory';
+import { Iunit } from './iunit';
 
 export interface Iitem {
   id: number;
@@ -16,6 +18,6 @@ export interface Iitem {
   created_at: string;
   updated_at: string;
 
-  category?: Categories;
-  unit?: UnitController;
+  category?: Icategory;
+  unit?: Iunit;
 }

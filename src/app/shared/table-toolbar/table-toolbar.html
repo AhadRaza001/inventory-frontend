@@ -1,0 +1,95 @@
+<p-toolbar styleClass="mb-3">
+  <!-- LEFT SIDE -->
+  <ng-template #start>
+    <!-- Back -->
+    @if (showBack) {
+      <i class="pi pi-arrow-left cursor-pointer" (click)="onBack()"></i>
+
+      <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+    }
+
+    <!-- Search -->
+    <p-floatlabel variant="on">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search"></p-inputicon>
+
+        <input
+          pInputText
+          id="table-toolbar-search"
+          [ngModel]="searchValue"
+          (ngModelChange)="onSearch($event)"
+          autocomplete="off"
+        />
+      </p-iconfield>
+
+      <label for="table-toolbar-search">
+        {{ searchPlaceholder }}
+      </label>
+    </p-floatlabel>
+
+    <!-- Separator -->
+    <div class="ms-5 h-7 border-l border-surface-300"></div>
+
+    <!-- Buttons -->
+    <div class="btns">
+      <!-- New -->
+      @if (showNew) {
+        <button pButton [text]="true" class="ms-2" (click)="onNew()">
+          <i class="pi pi-plus"></i>
+          <span class="ml-1">New</span>
+        </button>
+      }
+
+      <!-- Delete -->
+      @if (showDelete) {
+        <button
+          pButton
+          [text]="true"
+          severity="danger"
+          [disabled]="deleteDisabled"
+          (click)="onDelete()"
+        >
+          <i class="pi pi-trash"></i>
+          <span class="ml-1">Delete</span>
+        </button>
+      }
+
+      <!-- Excel -->
+      @if (showExcel) {
+        <button
+          pButton
+          [text]="true"
+          severity="contrast"
+          [disabled]="excelDisabled"
+          (click)="onExcel()"
+        >
+          <i class="pi pi-file-excel"></i>
+          <span class="ml-1">Excel</span>
+        </button>
+      }
+
+      <!-- PDF -->
+      @if (showPdf) {
+        <button
+          pButton
+          [text]="true"
+          severity="contrast"
+          [disabled]="pdfDisabled"
+          (click)="onPdf()"
+        >
+          <i class="pi pi-file-pdf"></i>
+          <span class="ml-1">PDF</span>
+        </button>
+      }
+    </div>
+  </ng-template>
+
+  <!-- RIGHT SIDE -->
+  <ng-template #end>
+    @if (showRefresh) {
+      <button pButton [text]="true" (click)="onRefresh()">
+        <i class="pi pi-refresh"></i>
+      </button>
+    }
+  </ng-template>
+</p-toolbar>

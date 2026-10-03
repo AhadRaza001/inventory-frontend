@@ -1,5 +1,5 @@
-<p-confirmdialog></p-confirmdialog>
-<p-toolbar styleClass="mb-3">
+<!-- <p-confirmdialog></p-confirmdialog> -->
+<!-- <p-toolbar styleClass="mb-3">
   <ng-template #start>
     <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
     <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
@@ -58,8 +58,32 @@
   <ng-template #end>
     <button pButton text="true" (click)="refresh()"><i class="pi pi-refresh"></i></button>
   </ng-template>
-</p-toolbar>
+</p-toolbar> -->
 
+
+
+<app-table-toolbar
+  searchPlaceholder="Search categories"
+  [showBack]="true"
+  [showNew]="true"
+  [showDelete]="true"
+  [showExcel]="true"
+  [showPdf]="true"
+  [showRefresh]="true"
+
+  [deleteDisabled]="selectedCategories.length === 0"
+  [excelDisabled]="selectedCategories.length === 0"
+  [pdfDisabled]="selectedCategories.length === 0"
+
+
+  (searchChange)="onSearch($event)"
+  (backClick)="back()"
+  (newClick)="onNew()"
+  (deleteClick)="deleteSelected()"
+  (excelClick)="exportSelected()"
+  (pdfClick)="exportPDF()"
+  (refreshClick)="refresh()"
+/>
 <p-table
   #table
   [value]="categories()"

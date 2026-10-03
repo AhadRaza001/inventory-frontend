@@ -16,6 +16,7 @@ import { ConfirmationService } from 'primeng/api';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { TableToolbar } from '../../../shared/table-toolbar/table-toolbar';
 
 @Component({
   selector: 'app-unit-controller',
@@ -29,6 +30,7 @@ import autoTable from 'jspdf-autotable';
     RouterLink,
     IconField,
     InputIcon,
+    TableToolbar,
   ],
   templateUrl: './unit-controller.html',
   styleUrl: './unit-controller.css',
@@ -206,5 +208,18 @@ export class UnitController {
   refresh() {
     this.loadUnits(this.lastLazyEvent);
     this.selecteditems = [];
+  }
+  onNew() {
+    this.router.navigate(['/unit/createUnit']);
+  }
+  onSearch(value: string) {
+    this.searchValue = value;
+
+    if (this.lastLazyEvent) {
+      this.loadUnits({
+        ...this.lastLazyEvent,
+        first: 0,
+      });
+    }
   }
 }
