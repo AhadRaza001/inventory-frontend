@@ -1,24 +1,36 @@
 @if (so()) {
-  <p-toolbar styleClass="mb-3">
-    <!-- LEFT SIDE -->
+  <p-toolbar
+    styleClass="!rounded-none !border-0 !border-b !border-surface-200 !bg-white !px-2 !py-1 mb-4"
+  >
     <ng-template #start>
-      <i class="pi pi-arrow-left cursor-pointer" (click)="back()"></i>
-      <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
-      <button pButton text="true" size="small" (click)="saveAndDispatch()">
-        <!-- <i class="pi pi-check mr-2"></i> -->
-        <span class="text-sm text-gray-700 block">Post Packing</span>
-      </button>
+      <div class="flex items-center gap-1">
+        <button
+          pButton
+          type="button"
+          text="true"
+          size="small"
+          severity="secondary"
+          (click)="back()"
+          aria-label="Back"
+        >
+          <i class="pi pi-arrow-left cursor-pointer"></i>
+        </button>
 
-      <button pButton text="true" size="small" (click)="getpackingslip()">
-        <!-- <i class="pi pi-file mr-2"></i> -->
-        <span class="text-sm text-gray-700 block">Packing Slip</span>
-      </button>
+        <div class="mx-2 h-5 border-l border-surface-300"></div>
+        <button pButton type="button" text="true" size="small" label="" (click)="saveAndDispatch()">
+          <i class="pi pi-box"></i>
+          Post Packing
+        </button>
+        <button pButton type="button" text="true" size="small" label="" (click)="getpackingslip()">
+          <i class="pi pi-file"></i>
+          Packing Slip
+        </button>
+      </div>
     </ng-template>
 
     <ng-template #end>
-      <div class="flex gap-3">
+      <div class="flex items-center gap-2">
         <p-tag [value]="so()?.status" [severity]="getStatusSeverity(so()!.status)" />
-
         <p-tag
           [value]="so()?.amount_status"
           [severity]="getAmountStatusSeverity(so()!.amount_status)"
@@ -26,95 +38,127 @@
       </div>
     </ng-template>
   </p-toolbar>
-  <!-- Part 1: Sale Order header info -->
+
   <p-card styleClass="mb-4">
-    <div class="flex justify-between items-start flex-wrap gap-4">
-      <div class="flex items-center gap-3">
-        <h2 class="text-xl font-semibold m-0">
-          {{ so()?.so_no | titlecase }} : {{ so()?.customer?.name | titlecase }}
-        </h2>
+    <!-- ========== PAGE TITLE ========== -->
+    <div class="mb-4 px-1">
+      <div class="text-xs uppercase tracking-wide text-surface-500">Sale Order</div>
+      <h1 class="m-0 text-2xl font-semibold text-surface-900">
+        {{ so()?.so_no | uppercase }}
+        <span class="font-normal text-surface-500">: {{ so()?.customer?.name | titlecase }}</span>
+      </h1>
+    </div>
+
+    <!-- ========== SUMMARY STRIP (financial KPIs) ========== -->
+    <div class="grid grid-cols-2 md:grid-cols-6 mb-4 rounded border border-surface-200 bg-white">
+      <div class="p-4 border-r border-b md:border-b-0 border-surface-200">
+        <div class="text-xs text-surface-500">Sub Total</div>
+        <div class="mt-1 text-base font-medium text-surface-900">
+          {{ so()!.sub_total | currency: 'PKR ' }}
+        </div>
+      </div>
+      <div class="p-4 border-b md:border-b-0 md:border-r border-surface-200">
+        <div class="text-xs text-surface-500">Discount</div>
+        <div class="mt-1 text-base font-medium text-surface-900">
+          {{ +so()!.discount_amount | currency: 'PKR ' }}
+        </div>
+      </div>
+      <div class="p-4 border-r border-b md:border-b-0 border-surface-200">
+        <div class="text-xs text-surface-500">Tax</div>
+        <div class="mt-1 text-base font-medium text-surface-900">
+          {{ +so()!.tax_amount | currency: 'PKR ' }}
+        </div>
+      </div>
+      <div class="p-4 border-b md:border-b-0 md:border-r border-surface-200 bg-surface-50">
+        <div class="text-xs text-surface-500">Grand Total</div>
+        <div class="mt-1 text-lg font-semibold text-surface-900">
+          {{ +so()!.grand_total | currency: 'PKR ' }}
+        </div>
+      </div>
+      <div class="p-4 border-r border-surface-200">
+        <div class="text-xs text-surface-500">Paid</div>
+        <div class="mt-1 text-base font-medium text-green-700">
+          {{ +so()!.paid_amount | currency: 'PKR ' }}
+        </div>
+      </div>
+      <div class="p-4">
+        <div class="text-xs text-surface-500">Due</div>
+        <div class="mt-1 text-base font-medium text-red-700">
+          {{ +so()!.due_amount | currency: 'PKR ' }}
+        </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-      <div>
-        <span class="text-sm text-gray-500 block">Customer No</span>
-        <span class="font-medium">{{ so()?.customer?.customer_no }}</span>
+    <!-- ========== GENERAL SECTION ========== -->
+    <!-- ========== GENERAL SECTION ========== -->
+    <section class="mb-4 rounded border border-surface-200 bg-white">
+      <header class="border-b border-surface-200 px-4 py-3">
+        <h2 class="m-0 text-sm font-semibold text-surface-900">General</h2>
+      </header>
+
+      <div class="grid grid-cols-1 gap-x-6 gap-y-5 p-4 md:grid-cols-3">
+        <!-- Customer -->
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Customer No</label>
+          <div class="text-sm text-surface-900">{{ so()?.customer?.customer_no || '—' }}</div>
+        </div>
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Customer Phone</label>
+          <div class="text-sm text-surface-900">{{ so()?.customer?.phone || '—' }}</div>
+        </div>
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Customer Address</label>
+          <div class="text-sm text-surface-900">{{ so()?.customer?.address || '—' }}</div>
+        </div>
+
+        <!-- Editable fields -->
+        <div class="w-fit">
+          <label class="mb-1 block text-xs text-surface-500" for="custRef">
+            Customer Reference
+          </label>
+          <input
+            id="custRef"
+            pInputText
+            type="text"
+            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            [value]="so()?.customer_reference ?? ''"
+            #refInput
+            (blur)="updateSaleOrderField('customer_reference', refInput.value)"
+          />
+        </div>
+
+        <div class="w-fit">
+          <label class="mb-1 block text-xs text-surface-500" for="custReq">
+            Customer Requisition
+          </label>
+          <input
+            id="custReq"
+            pInputText
+            type="text"
+            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            [value]="so()?.customer_requisitions ?? ''"
+            #reqInput
+            (blur)="updateSaleOrderField('customer_requisitions', reqInput.value)"
+          />
+        </div>
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Store</label>
+          <div class="text-sm text-surface-900">{{ so()?.store?.name || '—' }}</div>
+        </div>
+
+        <!-- Audit -->
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Created By</label>
+          <div class="text-sm text-surface-900">{{ so()?.user?.name || '—' }}</div>
+        </div>
+        <div>
+          <label class="mb-1 block text-xs text-surface-500">Updated At</label>
+          <div class="text-sm text-surface-900">{{ so()?.updated_at | date: 'medium' }}</div>
+        </div>
       </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Customer Phone</span>
-        <span class="font-medium">{{ so()?.customer?.phone }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Customer Address</span>
-        <span class="font-medium">{{ so()?.customer?.address }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Customer Reference</span>
-        <input
-          pInputText
-          style="border: 1px solid rgb(129, 216, 129); border-radius: 7px; width: 60%"
-          type="text"
-          class="w-full p-1"
-          [value]="so()?.customer_reference ?? ''"
-          #refInput
-          (blur)="updateSaleOrderField('customer_reference', refInput.value)"
-        />
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Customer Requisition</span>
-        <input
-          style="border: 1px solid rgb(129, 216, 129); border-radius: 7px; width: 60%"
-          pInputText
-          type="text"
-          class="w-full p-1"
-          [value]="so()?.customer_requisitions ?? ''"
-          #reqInput
-          (blur)="updateSaleOrderField('customer_requisitions', reqInput.value)"
-        />
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Store</span>
-        <span class="font-medium">{{ so()?.store?.name }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Created By</span>
-        <span class="font-medium">{{ so()?.user?.name }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Updated At</span>
-        <span class="font-medium">{{ so()?.updated_at | date: 'medium' }}</span>
-      </div>
-    </div>
+    </section>
 
     <p-divider />
-
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
-      <div>
-        <span class="text-sm text-gray-500 block">Sub Total</span>
-        <span class="font-medium">{{ so()!.sub_total | currency: 'PKR ' }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Discount</span>
-        <span class="font-medium">{{ +so()!.discount_amount | currency: 'PKR ' }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Tax</span>
-        <span class="font-medium">{{ +so()!.tax_amount | currency: 'PKR ' }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Grand Total</span>
-        <span class="font-semibold text-lg">{{ +so()!.grand_total | currency: 'PKR ' }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Paid</span>
-        <span class="font-medium text-green-600">{{ +so()!.paid_amount | currency: 'PKR ' }}</span>
-      </div>
-      <div>
-        <span class="text-sm text-gray-500 block">Due</span>
-        <span class="font-medium text-red-600">{{ +so()!.due_amount | currency: 'PKR ' }}</span>
-      </div>
-    </div>
   </p-card>
 
   @if (so()) {

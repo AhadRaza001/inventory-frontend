@@ -26,7 +26,6 @@ import { ConfirmationService } from 'primeng/api';
     InputTextModule,
     ToolbarModule,
     ButtonModule,
-    RouterLink,
     DatePipe,
     Select,
     TableToolbar,

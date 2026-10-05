@@ -21,7 +21,8 @@ type IEditableSaleOrderField = 'customer_reference' | 'customer_requisitions' | 
 @Component({
   selector: 'app-so-detail-component',
   imports: [
-    Card,
+    // Card,
+    UpperCasePipe,
     CurrencyPipe,
     CardModule,
     DividerModule,
