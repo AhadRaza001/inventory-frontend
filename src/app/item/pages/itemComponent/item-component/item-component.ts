@@ -17,6 +17,7 @@ import { Location } from '@angular/common';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-item-component',
   imports: [
@@ -26,7 +27,7 @@ import autoTable from 'jspdf-autotable';
     InputTextModule,
     ToolbarModule,
     ButtonModule,
-    RouterLink,
+    // RouterLink,
     CurrencyPipe,
     NgClass,
     Select,
@@ -41,6 +42,8 @@ export class ItemComponent {
   toast = inject(ToastService);
   location = inject(Location);
   selecteditems: Iitem[] = [];
+  confirmService = inject(ConfirmationService);
+
 
   units = signal<Iitem[]>([]);
 
@@ -164,14 +167,14 @@ export class ItemComponent {
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Units');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Items');
 
-    XLSX.writeFile(workbook, 'units.xlsx');
+    XLSX.writeFile(workbook, 'items.xlsx');
     this.selecteditems = [];
   }
   exportPDF() {
     if (this.selecteditems.length === 0) {
-      this.toast.warn('Please select at least one unit.');
+      this.toast.warn('Please select at least one item.');
       return;
     }
 
@@ -206,7 +209,7 @@ export class ItemComponent {
 
     doc.text(`Total Records: ${this.selecteditems.length}`, 14, finalY + 10);
 
-    doc.save('Unit_Report.pdf');
+    doc.save('item_Report.pdf');
     this.selecteditems = [];
   }
   refresh() {
@@ -227,7 +230,42 @@ export class ItemComponent {
     }
   }
 
-  deleteSelected(){
-    //bulk delete work neend on backend
+  deleteSelected() {
+    if (this.selecteditems.length === 0) {
+      this.toast.warn('Please select at least one item.');
+      return;
+    }
+
+    this.confirmService.confirm({
+      message: `Do you want to delete ${this.selecteditems.length} selected Items?`,
+      header: 'Danger Zone',
+      icon: 'pi pi-info-circle',
+
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true,
+      },
+
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger',
+      },
+
+      accept: () => {
+        const ids = this.selecteditems.map((c) => c.id);
+
+        this.itemService.bulkDelete(ids).subscribe({
+          next: (response: any) => {
+            this.toast.success(response.message);
+            this.selecteditems = [];
+            this.loadItems(this.lastLazyEvent);
+          },
+          error: (err: any) => {
+            this.toast.error(err.error?.message || 'Something went wrong.');
+          },
+        });
+      },
+    });
   }
 }

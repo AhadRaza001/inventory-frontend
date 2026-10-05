@@ -1,1 +1,288 @@
-<p>so-add-component works!</p>
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-5xl w-full">
+    <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i
+            (click)="back()"
+            class="pi pi-arrow-left cursor-pointer"
+          ></i>
+
+          <h3 class="m-0 text-xl font-semibold">New Sale Order</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+
+      <!-- SO No -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="so_no">SO No</label>
+
+        <input
+          pInputText
+          id="so_no"
+          [value]="saleOrder().so_no"
+          disabled
+          class="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (saleOrderForm.so_no().touched()) {
+            @for (item of saleOrderForm.so_no().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Customer -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="customer">Customer</label>
+
+        <p-select
+          id="customer"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a customer"
+          styleClass="w-full"
+          [ngModel]="saleOrder().customer_id"
+          [options]="customers()"
+          (ngModelChange)="saleOrderForm.customer_id().value.set($event)"
+          name="customer_id"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (saleOrderForm.customer_id().touched()) {
+            @for (
+              item of saleOrderForm.customer_id().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Store -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="store">Store</label>
+
+        <p-select
+          id="store"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select a store"
+          styleClass="w-full"
+          [ngModel]="saleOrder().store_id"
+          [options]="stores()"
+          (ngModelChange)="saleOrderForm.store_id().value.set($event)"
+          name="store_id"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (saleOrderForm.store_id().touched()) {
+            @for (
+              item of saleOrderForm.store_id().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="status">Status</label>
+
+        <p-select
+          id="status"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select status"
+          styleClass="w-full"
+          [ngModel]="saleOrder().status"
+          [options]="statusOptions"
+          (ngModelChange)="saleOrderForm.status().value.set($event)"
+          name="status"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (saleOrderForm.status().touched()) {
+            @for (
+              item of saleOrderForm.status().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Amount Status -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="amount_status">Amount Status</label>
+
+        <p-select
+          id="amount_status"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select amount status"
+          styleClass="w-full"
+          [ngModel]="saleOrder().amount_status"
+          [options]="amountStatusOptions"
+          (ngModelChange)="saleOrderForm.amount_status().value.set($event)"
+          name="amount_status"
+        ></p-select>
+
+        <div class="text-red-500">
+          @if (saleOrderForm.amount_status().touched()) {
+            @for (
+              item of saleOrderForm.amount_status().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+
+
+
+      <!-- Discount Percentage -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="discount_percentage">Discount %</label>
+
+        <input
+          pInputText
+          id="discount_percentage"
+          type="number"
+          [formField]="saleOrderForm.discount_percentage"
+          class="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (saleOrderForm.discount_percentage().touched()) {
+            @for (
+              item of saleOrderForm.discount_percentage().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Tax Percentage -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="taxPercent">Tax %</label>
+
+        <input
+          pInputText
+          id="taxPercent"
+          type="number"
+          [formField]="saleOrderForm.taxPercent"
+          class="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (saleOrderForm.taxPercent().touched()) {
+            @for (
+              item of saleOrderForm.taxPercent().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+
+
+      <!-- Paid Amount -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="paid_amount">Paid Amount</label>
+
+        <input
+          pInputText
+          id="paid_amount"
+          type="number"
+          [formField]="saleOrderForm.paid_amount"
+          class="w-full"
+        />
+
+        <div class="text-red-500">
+          @if (saleOrderForm.paid_amount().touched()) {
+            @for (
+              item of saleOrderForm.paid_amount().errors();
+              track $index
+            ) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+
+      <!-- Customer Requisition -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="customer_requisitions">
+          Customer Requisition
+        </label>
+
+        <input
+          pInputText
+          id="customer_requisitions"
+          [formField]="saleOrderForm.customer_requisitions"
+          class="w-full"
+        />
+      </div>
+
+      <!-- Customer Reference -->
+      <div class="flex flex-col gap-2">
+        <label pLabel for="customer_reference">
+          Customer Reference
+        </label>
+
+        <input
+          pInputText
+          id="customer_reference"
+          [formField]="saleOrderForm.customer_reference"
+          class="w-full"
+        />
+      </div>
+
+      <!-- Footer Description / Notes -->
+      <div class="flex flex-col gap-2 sm:col-span-2 lg:col-span-3">
+        <label for="description">Description</label>
+
+        <textarea
+          pTextarea
+          id="description"
+          rows="4"
+          class="w-full p-1"
+          style="border: 1px solid rgb(210, 208, 208)"
+        ></textarea>
+      </div>
+
+    </form>
+
+    <ng-template #footer>
+      <div class="flex flex-col gap-4">
+        <div class="mt-2 text-right text-surface-500 text-sm">
+          <button
+            pButton
+            text="true"
+            type="button"
+            (click)="submit()"
+          >
+            <i class="pi pi-save"> Save</i>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+  </p-card>
+</div>

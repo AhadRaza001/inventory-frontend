@@ -1,29 +1,40 @@
 @if (so()) {
-  <!-- Part 1: Sale Order header info -->
-  <p-card styleClass="mb-4">
-    <div class="flex justify-between items-start flex-wrap gap-4">
-      <div class="flex items-center gap-3">
-        <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
-        <h2 class="text-xl font-semibold m-0">
-          {{ so()?.so_no | titlecase }} : {{ so()?.customer?.name | titlecase }}
-        </h2>
-        <!-- <p class="text-gray-600 m-0 mt-1">{{ so()?.customer?.name }}</p> -->
-      </div>
-      <div class="flex gap-2">
-      <button pButton text="true" size="small" (onClick)="saveAndDispatch()">
-        <span>Post Packing</span>
+  <p-toolbar styleClass="mb-3">
+    <!-- LEFT SIDE -->
+    <ng-template #start>
+      <i class="pi pi-arrow-left cursor-pointer" (click)="back()"></i>
+      <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+      <button pButton text="true" size="small" (click)="saveAndDispatch()">
+        <!-- <i class="pi pi-check mr-2"></i> -->
+        <span class="text-sm text-gray-700 block">Post Packing</span>
       </button>
-      <button pButton text="true" size="small" (onClick)="getpackingslip()">
-        <span>Packing Slip</span>
+
+      <button pButton text="true" size="small" (click)="getpackingslip()">
+        <!-- <i class="pi pi-file mr-2"></i> -->
+        <span class="text-sm text-gray-700 block">Packing Slip</span>
       </button>
+    </ng-template>
+
+    <ng-template #end>
+      <div class="flex gap-3">
         <p-tag [value]="so()?.status" [severity]="getStatusSeverity(so()!.status)" />
+
         <p-tag
           [value]="so()?.amount_status"
           [severity]="getAmountStatusSeverity(so()!.amount_status)"
         />
       </div>
+    </ng-template>
+  </p-toolbar>
+  <!-- Part 1: Sale Order header info -->
+  <p-card styleClass="mb-4">
+    <div class="flex justify-between items-start flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <h2 class="text-xl font-semibold m-0">
+          {{ so()?.so_no | titlecase }} : {{ so()?.customer?.name | titlecase }}
+        </h2>
+      </div>
     </div>
-
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
       <div>
@@ -98,7 +109,6 @@
       <div>
         <span class="text-sm text-gray-500 block">Paid</span>
         <span class="font-medium text-green-600">{{ +so()!.paid_amount | currency: 'PKR ' }}</span>
-
       </div>
       <div>
         <span class="text-sm text-gray-500 block">Due</span>

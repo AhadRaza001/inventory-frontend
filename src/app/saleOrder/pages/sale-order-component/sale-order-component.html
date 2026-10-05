@@ -1,23 +1,22 @@
-<p-toolbar styleClass="mb-3" [style]="{ 'border-radius': '1rem' }">
-  <ng-template #start>
-    <p-floatlabel variant="on">
-      <input
-        pInputText
-        id="sale_order_search"
-        [(ngModel)]="searchValue"
-        autocomplete="off"
-        (input)="table.filterGlobal($any($event.target).value, 'contains')"
-      />
-      <label for="sale_order_search">Search Sale Orders</label>
-    </p-floatlabel>
-  </ng-template>
-
-  <ng-template #end>
-    <button pButton  routerLink="/sale-order/createOrder">
-      <i class="pi pi-plus"> Add</i>
-    </button>
-  </ng-template>
-</p-toolbar>
+<app-table-toolbar
+  searchPlaceholder="Search items"
+  [showBack]="true"
+  [showNew]="true"
+  [showDelete]="true"
+  [showExcel]="true"
+  [showPdf]="true"
+  [showRefresh]="true"
+  [deleteDisabled]="selecteditems.length === 0"
+  [excelDisabled]="selecteditems.length === 0"
+  [pdfDisabled]="selecteditems.length === 0"
+  (searchChange)="onSearch($event)"
+  (backClick)="back()"
+  (newClick)="onNew()"
+  (deleteClick)="deleteSelected()"
+  (excelClick)="exportSelected()"
+  (pdfClick)="exportPDF()"
+  (refreshClick)="refresh()"
+/>
 
 <p-table
   #table
@@ -37,16 +36,15 @@
   [lazy]="true"
   [totalRecords]="totalRecords"
   (onLazyLoad)="loadSaleOrders($event)"
+  [(selection)]="selecteditems"
   [scrollable]="true"
   scrollHeight="calc(100vh - 225px)"
 >
   <ng-template #header>
     <tr>
-      <!-- <th pSortableColumn="id">
-        ID
-        <p-sort-icon field="id"></p-sort-icon>
-        <p-column-filter field="id" type="numeric" display="menu"></p-column-filter>
-      </th> -->
+     <th style="width: 4rem">
+        <p-tableheadercheckbox></p-tableheadercheckbox>
+      </th>
 
       <th pSortableColumn="so_no">
         SO No
@@ -138,7 +136,9 @@
 
   <ng-template #body let-item>
     <tr class="table_row" style="cursor: pointer" (click)="detailSaleOrder(item.id)">
-      <!-- <td>{{ item.id }}</td> -->
+      <td>
+        <p-tablecheckbox [value]="item"></p-tablecheckbox>
+      </td>
       <td>{{ item.so_no }}</td>
       <td>{{ item.customer?.name }}</td>
       <td>{{ item.store?.name }}</td>

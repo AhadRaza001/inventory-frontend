@@ -15,6 +15,7 @@ import { DividerModule } from 'primeng/divider';
 import { DatePicker } from 'primeng/datepicker';
 import { SoItemsComponent } from '../so-items-component/so-items-component';
 import { PackingSlipSerive } from '../../service/packing-slip-serive';
+import { TableToolbar } from '../../../shared/table-toolbar/table-toolbar';
 type IEditableSaleOrderField = 'customer_reference' | 'customer_requisitions' | 'paid_amount';
 
 @Component({
@@ -31,7 +32,8 @@ type IEditableSaleOrderField = 'customer_reference' | 'customer_requisitions' | 
     DatePipe,
     TitleCasePipe,
     SoItemsComponent,
-  ],
+    ToolbarModule
+],
   templateUrl: './so-detail-component.html',
   styleUrl: './so-detail-component.css',
 })
@@ -225,4 +227,5 @@ export class SoDetailComponent {
     },
   });
 }
+
 }

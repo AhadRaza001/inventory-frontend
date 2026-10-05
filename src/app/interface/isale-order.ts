@@ -1,3 +1,5 @@
+import { ICustomer, IStore } from "./iso-detail";
+
 export interface IsaleOrder {
   id: number;
 
@@ -7,12 +9,19 @@ export interface IsaleOrder {
 
   so_no: string;
 
-  status: 'open' | 'partially_delivered' | 'delivered' | 'cancelled' | 'invoiced';
+  status:
+    | 'open'
+    | 'partially_delivered'
+    | 'delivered'
+    | 'cancelled'
+    | 'invoiced';
 
   amount_status: 'paid' | 'unpaid' | 'partial';
 
   sub_total: number;
   discount_amount: number;
+  discount_percentage: number;
+  taxPercent: number;
   tax_amount: number;
   grand_total: number;
   paid_amount: number;
@@ -23,4 +32,6 @@ export interface IsaleOrder {
 
   created_at: string;
   updated_at: string;
+  customer?:ICustomer;
+  store:IStore;
 }

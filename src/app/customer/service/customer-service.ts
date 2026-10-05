@@ -1,26 +1,24 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IsaleOrder } from '../../interface/isale-order';
-import { ISaleOrder } from '../../interface/iso-detail';
+import { ICustomer } from '../../interface/iso-detail';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Service()
-export class SaleOrderService {
+export class CustomerService {
   private apiUrl = environment.apiUrl;
-  private baseUrl = `${this.apiUrl}/saleorders`;
-
+  private baseUrl = `${this.apiUrl}/customers`;
   private http = inject(HttpClient);
-  // GET /SO
 
-  getSaleOrder(
+  // GET /customers
+  getCustomer(
     page: number,
     perPage: number,
     search: string,
     sortField: string,
     sortOrder: string,
     filters: any[],
-  ) {
+  ): Observable<ICustomer> {
     let params = new HttpParams()
       .set('page', page)
       .set('per_page', perPage)
@@ -29,32 +27,35 @@ export class SaleOrderService {
       .set('sortOrder', sortOrder)
       .set('filters', JSON.stringify(filters));
 
-    return this.http.get<any>(this.baseUrl, { params });
+    return this.http.get<ICustomer>(this.baseUrl, { params });
   }
 
-  // GET /SO/{id}
+  // GET /customers
+  getAll(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
+  }
+
+  // GET /customers/single/{id}
   getById(id: number): Observable<any> {
-    return this.http.get<IsaleOrder>(`${this.baseUrl}/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  // POST /SO
-  create(saleorder: Partial<IsaleOrder>): Observable<IsaleOrder> {
-    return this.http.post<IsaleOrder>(this.baseUrl, saleorder);
+  // POST /customers
+  create(customer: Partial<any>): Observable<any> {
+    return this.http.post<any>(this.baseUrl, customer);
   }
 
-  // POST /SO/{id}  (your backend uses POST for update, not PUT)
-  update(id: number, so: Partial<IsaleOrder>): Observable<IsaleOrder> {
-    return this.http.put<IsaleOrder>(`${this.baseUrl}/${id}`, so);
+  // POST /customers/{id}
+  update(id: number, customer: Partial<any>): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${id}`, customer);
   }
 
-  // DELETE /SO/{id}
+  // DELETE /customers/{id}
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  getAll(): Observable<any> {
-    return this.http.get(this.baseUrl);
-  }
+  // DELETE /customers/bulk-delete
   bulkDelete(ids: number[]) {
     return this.http.delete(`${this.baseUrl}/bulk-delete`, {
       body: { ids },
