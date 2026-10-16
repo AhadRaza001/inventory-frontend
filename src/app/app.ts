@@ -15,6 +15,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Breadcrumb } from './breadcrumb/breadcrumb/breadcrumb';
+import { AuthService } from './auth/service/auth-service';
 @Component({
   selector: 'app-root',
   imports: [
@@ -26,23 +27,24 @@ import { Breadcrumb } from './breadcrumb/breadcrumb/breadcrumb';
     RouterOutlet,
     ToastComponent,
     Breadcrumb,
-    Loading
-],
+    Loading,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
   router = inject(Router);
   sidebarService = inject(SidebarService);
-
+  private authService = inject(AuthService);
   //sidebar work
   protected readonly title = signal('inventory_management');
 
   sidebarVisible = this.sidebarService.collapsed;
 
-//Login Signup show than sidebr or top hide
   constructor() {
-    // recompute showLayout whenever navigation ends
+    // Restore existing authentication session
+    this.authService.restoreSession();
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
@@ -51,10 +53,7 @@ export class App {
         );
         this.showLayout.set(!isAuthRoute);
       });
-
   }
-  
-
 
   // routes where the layout chrome (topbar/sidebar) should be hidden
   private authRoutes = ['/login', '/signup'];

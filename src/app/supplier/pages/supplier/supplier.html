@@ -1,0 +1,104 @@
+<app-table-toolbar
+  searchPlaceholder="Search suppliers"
+  [showBack]="true"
+  [showNew]="true"
+  [showDelete]="true"
+  [showExcel]="true"
+  [showPdf]="true"
+  [showRefresh]="true"
+  [deleteDisabled]="selecteditems.length === 0"
+  [excelDisabled]="selecteditems.length === 0"
+  [pdfDisabled]="selecteditems.length === 0"
+  (searchChange)="onSearch($event)"
+  (backClick)="back()"
+  (newClick)="onNew()"
+  (deleteClick)="deleteSelected()"
+  (excelClick)="exportSelected()"
+  (pdfClick)="exportPDF()"
+  (refreshClick)="refresh()"
+/>
+
+<p-table
+  #table
+  [value]="suppliers()"
+  [globalFilterFields]="['sku', 'name', 'phone', 'city', 'email']"
+  [tableStyle]="{ width: '100%' }"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [lazy]="true"
+  [totalRecords]="totalRecords"
+  (onLazyLoad)="loadSuppliers($event)"
+  [(selection)]="selecteditems"
+  [scrollable]="true"
+  scrollHeight="calc(100vh - 225px)"
+>
+  <ng-template #header>
+    <tr>
+      <th style="width: 4rem">
+        <p-tableheadercheckbox></p-tableheadercheckbox>
+      </th>
+
+      <th pSortableColumn="sku">
+        SKU
+        <p-sort-icon field="sku"></p-sort-icon>
+        <p-column-filter field="sku" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="name">
+        Name
+        <p-sort-icon field="name"></p-sort-icon>
+        <p-column-filter field="name" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="phone">
+        Phone
+        <p-sort-icon field="phone"></p-sort-icon>
+        <p-column-filter field="phone" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="city">
+        City
+        <p-sort-icon field="city"></p-sort-icon>
+        <p-column-filter field="city" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="email">
+        Email
+        <p-sort-icon field="email"></p-sort-icon>
+        <p-column-filter field="email" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="credit_limit">
+        Credit Limit
+        <p-sort-icon field="credit_limit"></p-sort-icon>
+        <p-column-filter field="credit_limit" type="numeric" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="created_at">
+        Date
+        <p-sort-icon field="created_at"></p-sort-icon>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-item>
+    <tr
+      class="table_row"
+      style="cursor: pointer"
+      (click)="detailSupplier(item.id)"
+    >
+      <td>
+        <p-tablecheckbox [value]="item"></p-tablecheckbox>
+      </td>
+
+      <td>{{ item.sku }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.phone }}</td>
+      <td>{{ item.city }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.credit_limit | currency: 'PKR' }}</td>
+      <td>{{ item.created_at | date: 'dd-MM-yyyy' }}</td>
+    </tr>
+  </ng-template>
+</p-table>

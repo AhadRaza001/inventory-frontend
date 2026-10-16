@@ -59,13 +59,20 @@ export class Sidebar {
     {
       label: 'Purchase Orders',
       icon: 'pi pi-shopping-bag',
-      route: '/purchase-orders',
+      route: '/purchaseorder',
     },
+    {
+     label: 'Supplier',
+     icon: 'pi pi-building',
+     route: '/supplier',
+   },
     {
       label: 'Reports',
       icon: 'pi pi-chart-bar',
       route: '/reports',
     },
+
+    
   ];
 
   toggle() {

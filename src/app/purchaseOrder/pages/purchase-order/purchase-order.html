@@ -1,0 +1,114 @@
+<app-table-toolbar
+  searchPlaceholder="Search purchase orders"
+  [showBack]="true"
+  [showNew]="true"
+  [showDelete]="true"
+  [showExcel]="true"
+  [showPdf]="true"
+  [showRefresh]="true"
+  [deleteDisabled]="selecteditems.length === 0"
+  [excelDisabled]="selecteditems.length === 0"
+  [pdfDisabled]="selecteditems.length === 0"
+  (searchChange)="onSearch($event)"
+  (backClick)="back()"
+  (newClick)="onNew()"
+  (deleteClick)="deleteSelected()"
+  (excelClick)="exportSelected()"
+  (pdfClick)="exportPDF()"
+  (refreshClick)="refresh()"
+/>
+
+<p-table
+  #table
+  [value]="purchaseOrders()"
+  [globalFilterFields]="['po_no', 'supplier.name', 'store.name', 'user.name', 'status']"
+  [tableStyle]="{ width: '100%' }"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [lazy]="true"
+  [totalRecords]="totalRecords"
+  (onLazyLoad)="loadPurchaseOrders($event)"
+  [(selection)]="selecteditems"
+  [scrollable]="true"
+  scrollHeight="calc(100vh - 225px)"
+>
+  <ng-template #header>
+    <tr>
+      <th style="width: 4rem">
+        <p-tableheadercheckbox></p-tableheadercheckbox>
+      </th>
+
+      <th pSortableColumn="po_no">
+        PO No
+        <p-sort-icon field="po_no"></p-sort-icon>
+        <p-column-filter field="po_no" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="supplier.name">
+        Supplier
+        <p-sort-icon field="supplier.name"></p-sort-icon>
+        <p-column-filter field="supplier.name" type="text" display="menu"></p-column-filter>
+      </th>
+
+      <th pSortableColumn="store.name">
+        Store
+        <p-sort-icon field="store.name"></p-sort-icon>
+        <p-column-filter field="store.name" type="text" display="menu"></p-column-filter>
+      </th>
+
+
+      <th pSortableColumn="status">
+        Status
+        <p-sort-icon field="status"></p-sort-icon>
+
+        <p-column-filter field="status" type="text" display="menu">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-select
+              [ngModel]="value"
+              [options]="statusOptions"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Any"
+              (onChange)="filter($event.value)"
+              [showClear]="true"
+            >
+            </p-select>
+          </ng-template>
+        </p-column-filter>
+      </th>
+
+      <th pSortableColumn="grand_total">
+        Grand Total
+        <p-sort-icon field="grand_total"></p-sort-icon>
+
+        <p-column-filter field="grand_total" type="numeric" display="menu"></p-column-filter>
+      </th></tr
+  ></ng-template>
+
+  <ng-template #body let-item>
+    <tr class="table_row" style="cursor: pointer" (click)="detailPurchaseOrder(item.id)">
+      <td>
+        <p-tablecheckbox [value]="item"></p-tablecheckbox>
+      </td>
+
+      <td>{{ item.po_no }}</td>
+
+      <td>
+        {{ item.supplier_id?.name }}
+      </td>
+
+      <td>
+        {{ item.store?.name }}
+      </td>
+
+      <td>
+        {{ item.status }}
+      </td>
+
+      <td>
+        {{ item.created_at | date: 'dd-MM-yyyy'}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
