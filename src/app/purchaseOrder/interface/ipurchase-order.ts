@@ -7,7 +7,7 @@ export interface IPurchaseOrder {
   id: number;
   company_id: number | null;
   store_id: IStore;
-  supplier_id: ISupplier;
+  supplier: ISupplier;
   user_id: number;
   po_no: string;
   status: PurchaseOrderStatus;

@@ -92,10 +92,10 @@
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>
 
-      <td>{{ item.po_no }}</td>
+      <td class="rowId">{{ item.po_no }}</td>
 
       <td>
-        {{ item.supplier_id?.name }}
+        {{ item.supplier.name }}
       </td>
 
       <td>

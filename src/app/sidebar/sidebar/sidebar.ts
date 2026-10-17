@@ -71,7 +71,6 @@ export class Sidebar {
       icon: 'pi pi-chart-bar',
       route: '/reports',
     },
-
     
   ];
 

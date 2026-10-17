@@ -189,7 +189,7 @@ export class PurchaseOrder {
 
       'PO No': order.po_no,
 
-      Supplier: order.supplier_id?.name ?? '',
+      Supplier: order.supplier?.name ?? '',
 
       Store: order.store_id.name ?? '',
 
@@ -280,7 +280,7 @@ export class PurchaseOrder {
 
         order.po_no ?? '',
 
-        order.supplier_id?.name ?? '',
+        order.supplier?.name ?? '',
 
         order.store_id?.name ?? '',
 

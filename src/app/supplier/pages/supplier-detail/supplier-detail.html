@@ -1,0 +1,304 @@
+<div class="sticky top-0 z-50 bg-surface-0">
+<p-toolbar styleClass="mb-3">
+  <ng-template #start>
+    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+
+    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
+    <div class="btns">
+      <!-- Save -->
+      <button
+        type="button"
+        pButton
+        variant="text"
+        class="p-0"
+        (click)="save()"
+      >
+        <i class="pi pi-save"></i>
+        Save
+      </button>
+
+      <!-- Delete -->
+      <button
+        type="button"
+        pButton
+        variant="text"
+        class="p-0 m-1"
+        severity="danger"
+        (click)="delete($event, supplier()?.id)"
+      >
+        <i class="pi pi-trash"></i>
+        Delete
+      </button>
+
+      <!-- Edit -->
+      <button
+        pButton
+        type="button"
+        variant="text"
+        severity="info"
+        (click)="enableEdit()"
+      >
+        <i class="pi pi-file-edit"></i>
+        Edit
+      </button>
+
+      <!-- Cancel -->
+      <button
+        pButton
+        type="button"
+        variant="text"
+        class="m-1"
+        severity="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #end>
+    <button
+      pButton
+      type="button"
+      text="true"
+      (click)="refresh()"
+    >
+      <i class="pi pi-refresh"></i>
+    </button>
+  </ng-template>
+</p-toolbar>
+</div>
+
+<div class="flex justify-center mt-5">
+
+  <p-card class="max-w-3xl w-full">
+
+    <!-- Header -->
+  
+  <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+
+        <div class="flex items-center gap-3">
+
+          <h3 class="m-0 text-xl font-semibold">
+            Supplier Details
+          </h3>
+
+        </div>
+
+      </div>
+    </ng-template>
+
+    <form class="space-y-6 mt-3">
+
+      <!-- ID -->
+      <div class="mb-5">
+        <p-tag
+          severity="info"
+          [value]="'ID : ' + supplier()?.id"
+        ></p-tag>
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Row 1: SKU + Name -->
+      <!-- ========================= -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- SKU -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="sku"
+            class="block mb-2 font-semibold text-900"
+          >
+            SKU
+          </label>
+
+          <input
+            pInputText
+            id="sku"
+            name="sku"
+            type="text"
+            class="w-full"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.sku"
+            (ngModelChange)="updateSku($event)"
+          />
+
+        </div>
+
+
+        <!-- Name -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="name"
+            class="block mb-2 font-semibold text-900"
+          >
+            Name
+          </label>
+
+          <input
+            pInputText
+            id="name"
+            name="name"
+            type="text"
+            class="w-full"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.name"
+            (ngModelChange)="updateName($event)"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Row 2: Phone + Email -->
+      <!-- ========================= -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Phone -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="phone"
+            class="block mb-2 font-semibold text-900"
+          >
+            Phone
+          </label>
+
+          <input
+            pInputText
+            id="phone"
+            name="phone"
+            type="text"
+            class="w-full"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.phone"
+            (ngModelChange)="updatePhone($event)"
+          />
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="email"
+            class="block mb-2 font-semibold text-900"
+          >
+            Email
+          </label>
+
+          <input
+            pInputText
+            id="email"
+            name="email"
+            type="email"
+            class="w-full"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.email"
+            (ngModelChange)="updateEmail($event)"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Row 3: City + Credit Limit -->
+      <!-- ========================= -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- City -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="city"
+            class="block mb-2 font-semibold text-900"
+          >
+            City
+          </label>
+
+          <input
+            pInputText
+            id="city"
+            name="city"
+            type="text"
+            class="w-full"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.city"
+            (ngModelChange)="updateCity($event)"
+          />
+
+        </div>
+
+
+        <!-- Credit Limit -->
+        <div class="flex flex-col gap-2">
+
+          <label
+            for="credit_limit"
+            class="block mb-2 font-semibold text-900"
+          >
+            Credit Limit
+          </label>
+
+          <p-inputnumber
+            inputId="credit_limit"
+            name="credit_limit"
+            mode="decimal"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            [disabled]="!isEditing()"
+            [ngModel]="supplier()?.credit_limit"
+            (ngModelChange)="updateCreditLimit($event)"
+            class="w-full"
+            styleClass="w-full"
+          ></p-inputnumber>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Row 4: Address -->
+      <!-- ========================= -->
+
+      <div class="flex flex-col gap-2">
+
+        <label
+          for="address"
+          class="block mb-2 font-semibold text-900"
+        >
+          Address
+        </label>
+
+        <textarea
+          pInputText
+          id="address"
+          name="address"
+          rows="3"
+          class="w-full resize-none"
+          [disabled]="!isEditing()"
+          [ngModel]="supplier()?.address"
+          (ngModelChange)="updateAddress($event)"
+        ></textarea>
+
+      </div>
+
+    </form>
+
+  </p-card>
+
+</div>

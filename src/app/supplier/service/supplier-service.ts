@@ -37,7 +37,7 @@ export class SupplierService {
   }
  
   // GET /suppliers/{id}
-  getById(id: number): Observable<any> {
+  getById(id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
  

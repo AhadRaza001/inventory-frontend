@@ -89,7 +89,7 @@ export class Supplier {
   }
  
   detailSupplier(id: number) {
-    this.router.navigate(['/suppliers/detail', id]);
+    this.router.navigate(['/supplier/detail/', id]);
   }
  
   back() {
@@ -123,7 +123,6 @@ export class Supplier {
     }
  
     const exportData = this.selecteditems.map((supplier) => ({
-      ID: supplier.id,
       SKU: supplier.sku,
       Name: supplier.name,
       Phone: supplier.phone,

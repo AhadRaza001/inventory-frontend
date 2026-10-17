@@ -33,4 +33,12 @@ export class GenerateNumberService {
       }),
     );
   }
+
+   public supplier() {
+    return this.http.get(`${this.baseUrl}/supplier`).pipe(
+      tap((res: any) => {
+        console.log(res);
+      }),
+    );
+  }
 }

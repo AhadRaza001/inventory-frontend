@@ -83,16 +83,12 @@
   </ng-template>
 
   <ng-template #body let-item>
-    <tr
-      class="table_row"
-      style="cursor: pointer"
-      (click)="detailSupplier(item.id)"
-    >
+    <tr class="table_row">
       <td>
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>
 
-      <td>{{ item.sku }}</td>
+      <td class="rowId" (click)="detailSupplier(item.id)">{{ item.sku }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.phone }}</td>
       <td>{{ item.city }}</td>

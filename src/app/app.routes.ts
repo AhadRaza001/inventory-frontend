@@ -17,6 +17,7 @@ import { SoDetailComponent } from './saleOrder/pages/so-detail-component/so-deta
 import { SoAddComponent } from './saleOrder/pages/so-add-component/so-add-component';
 import { PurchaseOrder } from './purchaseOrder/pages/purchase-order/purchase-order';
 import { Supplier } from './supplier/pages/supplier/supplier';
+import { SupplierDetail } from './supplier/pages/supplier-detail/supplier-detail';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -45,6 +46,8 @@ export const routes: Routes = [
   { path: 'purchaseOrder/createOrder', component: SoAddComponent, canActivate: [authGuard] },
  //Supplier
   { path: 'supplier', component: Supplier, canActivate: [authGuard] },
+  { path: 'supplier/detail/:id', component: SupplierDetail, canActivate: [authGuard] },
+
 
 
   { path: '**', redirectTo: 'login' },
