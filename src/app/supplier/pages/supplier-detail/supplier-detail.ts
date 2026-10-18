@@ -21,7 +21,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     Toolbar,
     InputNumber,
     Card,
-    Tag,
     FormsModule,
     CardModule,
     ButtonModule,
@@ -36,10 +35,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   styleUrl: './supplier-detail.css',
 })
 export class SupplierDetail {
-  // =========================
-  // Services
-  // =========================
-
   route = inject(ActivatedRoute);
 
   confirmationService = inject(ConfirmationService);
@@ -87,18 +82,6 @@ export class SupplierDetail {
         },
       });
     }
-  }
-
-  // =========================
-  // Update SKU
-  // =========================
-
-  updateSku(sku: string) {
-    this.supplier.update((s) => ({
-      ...s!,
-
-      sku: sku,
-    }));
   }
 
   // =========================

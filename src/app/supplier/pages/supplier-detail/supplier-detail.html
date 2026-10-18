@@ -92,15 +92,6 @@
 
     <form class="space-y-6 mt-3">
 
-      <!-- ID -->
-      <div class="mb-5">
-        <p-tag
-          severity="info"
-          [value]="'ID : ' + supplier()?.id"
-        ></p-tag>
-      </div>
-
-
       <!-- ========================= -->
       <!-- Row 1: SKU + Name -->
       <!-- ========================= -->
@@ -123,9 +114,8 @@
             name="sku"
             type="text"
             class="w-full"
-            [disabled]="!isEditing()"
+            [disabled]="true"
             [ngModel]="supplier()?.sku"
-            (ngModelChange)="updateSku($event)"
           />
 
         </div>

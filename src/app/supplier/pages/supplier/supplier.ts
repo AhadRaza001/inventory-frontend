@@ -97,7 +97,7 @@ export class Supplier {
   }
  
   onNew() {
-    this.router.navigate(['/suppliers/create']);
+    this.router.navigate(['/supplier/create']);
   }
  
   onSearch(value: string) {

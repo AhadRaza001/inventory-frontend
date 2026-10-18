@@ -193,7 +193,7 @@ export class PurchaseOrder {
 
       Store: order.store_id.name ?? '',
 
-      User: order.user_id ?? '',
+      // User: order.user_id ?? '',
 
       Status: order.status,
 
