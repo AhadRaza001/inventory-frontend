@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../../toast/toast-service';
 import { ConfirmationService } from 'primeng/api';
 import { ISupplier } from '../../../interface/isupplier';
-import { TableLazyLoadEvent, TableCheckbox, SortIcon, ColumnFilter, TableHeaderCheckbox, Table } from 'primeng/table';
+import { TableLazyLoadEvent, TableCheckbox, SortIcon, ColumnFilter, TableHeaderCheckbox, Table, SortableColumn } from 'primeng/table';
 import { Location } from '@angular/common';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -15,7 +15,7 @@ import { TableToolbar } from '../../../shared/table-toolbar/table-toolbar';
 
 @Component({
   selector: 'app-supplier',
-  imports: [TableCheckbox, SortIcon, ColumnFilter, TableHeaderCheckbox, Table, TableToolbar, DatePipe,CurrencyPipe],
+  imports: [TableCheckbox, SortIcon, ColumnFilter, TableHeaderCheckbox, Table, TableToolbar, DatePipe,CurrencyPipe,SortableColumn],
   templateUrl: './supplier.html',
   styleUrl: './supplier.css',
 })

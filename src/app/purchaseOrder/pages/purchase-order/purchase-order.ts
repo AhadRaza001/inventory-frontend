@@ -24,6 +24,7 @@ import {
   SortIcon,
   ColumnFilter,
   TableCheckbox,
+  SortableColumn
 } from 'primeng/table';
 import { PurchaseOrderService } from '../../service/purchase-order-service';
 import { IPurchaseOrder } from '../../interface/ipurchase-order';
@@ -41,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     TableCheckbox,
     FormsModule,
     DatePipe,
+    SortableColumn
   ],
   templateUrl: './purchase-order.html',
   styleUrl: './purchase-order.css',
@@ -157,7 +159,7 @@ export class PurchaseOrder {
   }
 
   onNew() {
-    this.router.navigate(['/purchaseOrders/createOrder']);
+    this.router.navigate(['/purchaseOrder/createOrder']);
   }
 
   onSearch(value: string) {

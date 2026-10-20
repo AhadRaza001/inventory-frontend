@@ -37,8 +37,8 @@ export class PurchaseOrderService {
   }
  
   // POST /purchaseorders
-  create(purchaseOrder: Partial<IPurchaseOrder>): Observable<IPurchaseOrder> {
-    return this.http.post<IPurchaseOrder>(this.baseUrl, purchaseOrder);
+  create(purchaseOrder: Partial<ICreatePurchaseOrder>): Observable<ICreatePurchaseOrder> {
+    return this.http.post<ICreatePurchaseOrder>(this.baseUrl, purchaseOrder);
   }
  
   // POST /purchaseorders/{id}  (backend uses POST for update, not PUT)
@@ -61,4 +61,13 @@ export class PurchaseOrderService {
       body: { ids },
     });
   }
+}
+
+
+export interface ICreatePurchaseOrder {
+  po_no: string;
+  supplier_id: number | null;
+  store_id: number | null;
+  customer_reference: string;
+  customer_requisitions: string;
 }

@@ -1,0 +1,89 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-2xl w-full">
+    <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <h3 class="m-0 text-xl font-semibold">New Purchase Order</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-2">
+        <label for="po_no">PO No</label>
+        <input pInputText id="po_no" [formField]="poForm.po_no" class="w-full" />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="supplier_id">Supplier</label>
+        <p-select
+          inputId="supplier_id"
+          [options]="suppliers()"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select supplier"
+          [filter]="true"
+          filterBy="name,sku"
+          [formField]="poForm.supplier_id"
+          styleClass="w-full"
+        />
+        <div class="text-red-500">
+          @if (poForm.supplier_id().touched()) {
+            @for (item of poForm.supplier_id().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="store_id">Store</label>
+        <p-select
+          inputId="store_id"
+          [options]="stores()"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select store"
+          [formField]="poForm.store_id"
+          styleClass="w-full"
+        />
+        <div class="text-red-500">
+          @if (poForm.store_id().touched()) {
+            @for (item of poForm.store_id().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="customer_reference">Reference</label>
+        <input
+          pInputText
+          id="customer_reference"
+          [formField]="poForm.customer_reference"
+          class="w-full"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2 md:col-span-2">
+        <label for="customer_requisitions">Requisition</label>
+        <input
+          pInputText
+          id="customer_requisitions"
+          [formField]="poForm.customer_requisitions"
+          class="w-full"
+        />
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <div class="flex flex-col gap-4">
+        <div class="mt-2 text-right text-surface-500 text-sm">
+          <button pButton (click)="submit()"><i class="pi pi-save"></i>Save</button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
