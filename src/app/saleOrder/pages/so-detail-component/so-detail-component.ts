@@ -16,6 +16,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { SoItemsComponent } from '../so-items-component/so-items-component';
 import { PackingSlipSerive } from '../../service/packing-slip-serive';
 import { TableToolbar } from '../../../shared/table-toolbar/table-toolbar';
+import { PackingSlipType } from '../../../interface/packing-slip.model';
 type IEditableSaleOrderField = 'customer_reference' | 'customer_requisitions' | 'paid_amount';
 
 @Component({
@@ -33,8 +34,8 @@ type IEditableSaleOrderField = 'customer_reference' | 'customer_requisitions' | 
     DatePipe,
     TitleCasePipe,
     SoItemsComponent,
-    ToolbarModule
-],
+    ToolbarModule,
+  ],
   templateUrl: './so-detail-component.html',
   styleUrl: './so-detail-component.css',
 })
@@ -148,7 +149,10 @@ export class SoDetailComponent {
     const so = this.so();
     if (!so) return null;
 
+    const type: PackingSlipType = 'sale';
+
     return {
+      type,
       sale_order_id: so.id,
       store_id: so.store_id,
       vehicle_no: this.customer_requisitions,
@@ -211,22 +215,20 @@ export class SoDetailComponent {
   }
 
   getpackingslip() {
-  const so = this.so();
-  if (!so) return;
+    const so = this.so();
+    if (!so) return;
 
-  this.psService.getBySaleOrder(so.id).subscribe({
-    next: (res) => {
-      console.log('this is packing slip of sale order: ', res);
-      
-    },
-    error: (err) => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Failed to load packing slips',
-        detail: err.error?.message,
-      });
-    },
-  });
-}
-
+    this.psService.getBySaleOrder(so.id).subscribe({
+      next: (res) => {
+        console.log('this is packing slip of sale order: ', res);
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failed to load packing slips',
+          detail: err.error?.message,
+        });
+      },
+    });
+  }
 }

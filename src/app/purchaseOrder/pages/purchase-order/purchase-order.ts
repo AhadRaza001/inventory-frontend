@@ -124,7 +124,6 @@ export class PurchaseOrder {
       .subscribe({
         next: (response: any) => {
           this.purchaseOrders.set(response.data);
-          console.log('Purchace order data is: ', response.data);
           this.totalRecords = response.pagination.total;
 
           this.loading = false;

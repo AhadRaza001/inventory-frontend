@@ -43,7 +43,7 @@ export interface ISaleOrder {
   so_no: string;
   customer_id: number;
   customer: ICustomer;
-  store_id: number;
+  store_id: IStore;
   store: IStore;
   user_id: number;
   user: ISaleOrderUser;

@@ -11,6 +11,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PurchaseOrderService } from '../../service/purchase-order-service';
 import { IPurchaseOrder } from '../../interface/ipurchase-order';
 import { PoItems } from '../po-items/po-items';
+import { PackingSlipType } from '../../../interface/packing-slip.model';
+import { PackingSlipSerive } from '../../../saleOrder/service/packing-slip-serive';
 
 type IEditablePoField = 'customer_reference' | 'customer_requisitions';
 @Component({
@@ -26,8 +28,8 @@ type IEditablePoField = 'customer_reference' | 'customer_requisitions';
     ButtonModule,
     TagModule,
     InputTextModule,
-    PoItems
-],
+    PoItems,
+  ],
   templateUrl: './po-detail.html',
   styleUrl: './po-detail.css',
 })
@@ -38,6 +40,9 @@ export class PoDetail {
   private location = inject(Location);
 
   po = signal<IPurchaseOrder | null>(null);
+  // inside the class
+  psService = inject(PackingSlipSerive);
+  saving = signal(false);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -104,6 +109,95 @@ export class PoDetail {
           severity: 'error',
           summary: 'Error',
           detail: 'Failed to update purchase order.',
+        });
+      },
+    });
+  }
+
+  private buildPayload() {
+    const po = this.po();
+    if (!po) return null;
+
+    const type: PackingSlipType = 'purchase';
+
+    return {
+      type,
+      purchase_order_id: po.id,
+      store_id: po.store_id,
+      vehicle_no: po.customer_requisitions,
+      driver_name: po.customer_reference,
+      details: po.po_detail
+        .filter((d) => d.id > 0) // drop empty/unsaved placeholder rows
+        .map((d) => ({
+          po_detail_id: d.id,
+          item_id: d.item_id,
+          packed_qty: Number(d.quantity),
+          ordered_qty: Number(d.quantity),
+        })),
+    };
+  }
+
+  saveAndReceive() {
+    const payload = this.buildPayload();
+    if (!payload) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cannot receive',
+        detail: 'Purchase order data is not loaded yet.',
+      });
+      return;
+    }
+
+    this.saving.set(true);
+
+    this.psService.create(payload).subscribe({
+      next: (res) => {
+        this.psService.dispatch(res.data.id).subscribe({
+          next: (dispatchRes) => {
+            this.saving.set(false);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Received',
+              detail: `${dispatchRes.data.ps_no} received, stock updated`,
+            });
+            this.fetchPurchaseOrder(payload.purchase_order_id); // refresh status
+          },
+          error: (err) => {
+            this.saving.set(false);
+            // Slip WAS created as draft, only the dispatch failed
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Saved as draft, receiving failed',
+              detail: err.error?.message ?? 'You can retry from the packing slip list.',
+              life: 8000,
+            });
+          },
+        });
+      },
+      error: (err) => {
+        this.saving.set(false);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failed to create',
+          detail: err.error?.message ?? err.error?.debug,
+        });
+      },
+    });
+  }
+
+  getPackingSlips() {
+    const po = this.po();
+    if (!po) return;
+
+    this.psService.getByPurchaseOrder(po.id).subscribe({
+      next: (res) => {
+        console.log('packing slips of purchase order: ', res);
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failed to load packing slips',
+          detail: err.error?.message,
         });
       },
     });
