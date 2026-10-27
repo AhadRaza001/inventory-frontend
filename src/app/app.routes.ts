@@ -21,6 +21,7 @@ import { SupplierDetail } from './supplier/pages/supplier-detail/supplier-detail
 import { AddSupplier } from './supplier/pages/add-supplier/add-supplier';
 import { PoDetail } from './purchaseOrder/pages/po-detail/po-detail';
 import { AddPurchaseOrder } from './purchaseOrder/pages/add-purchase-order/add-purchase-order';
+import { PackingSlipComponent } from './pdf/packing-slip-component/packing-slip-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -51,7 +52,11 @@ export const routes: Routes = [
   { path: 'supplier', component: Supplier, canActivate: [authGuard] },
   { path: 'supplier/detail/:id', component: SupplierDetail, canActivate: [authGuard] },
   { path: 'supplier/create', component: AddSupplier, canActivate: [authGuard] },
-
+// PDF packingslip
+  {
+    path: 'packing-slip/:id',
+    component: PackingSlipComponent
+  },
 
 
   { path: '**', redirectTo: 'login' },

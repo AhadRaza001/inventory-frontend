@@ -28,7 +28,7 @@
         <th class="w-40">SKU</th>
         <th>Item</th>
         <th class="w-32 text-right">Quantity</th>
-        <th class="w-32 text-right">Deliver Now</th>
+        <!-- <th class="w-32 text-right">Deliver Now</th> -->
         <th class="w-36 text-right">Unit Price</th>
         <th class="w-40 text-right">Sub Total</th>
         <th class="w-20 text-center">Actions</th>
@@ -84,7 +84,7 @@
               inputStyleClass="w-24 !py-1 text-sm text-center !border !border-surface-300 !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-600 focus:!ring-1 focus:!ring-green-600"
             />
           </td>
-          <td class="text-right">
+          <!-- <td class="text-right">
             <p-inputnumber
               [ngModel]="+(row.delivered_now ?? 0)"
               (ngModelChange)="row.delivered_now = $event ?? 0"
@@ -92,7 +92,7 @@
               [showButtons]="false"
               inputStyleClass="w-24 !py-1 text-sm text-center !border !border-surface-300 !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-600 focus:!ring-1 focus:!ring-green-600"
             />
-          </td>
+          </td> -->
           <td class="text-right text-sm text-surface-700">
             {{ row.item?.sale_price | currency: 'PKR ' }}
           </td>

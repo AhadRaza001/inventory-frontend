@@ -205,10 +205,14 @@ export class SoDetailComponent {
         });
       },
       error: (err) => {
+        const detail =
+          err.error?.errors?.details?.[0] ?? err.error?.message ?? 'Failed to create packing slip.';
+
         this.messageService.add({
           severity: 'error',
           summary: 'Failed to create',
-          detail: err.error?.debug,
+          detail: detail,
+          life: 8000,
         });
       },
     });
@@ -218,17 +222,6 @@ export class SoDetailComponent {
     const so = this.so();
     if (!so) return;
 
-    this.psService.getBySaleOrder(so.id).subscribe({
-      next: (res) => {
-        console.log('this is packing slip of sale order: ', res);
-      },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failed to load packing slips',
-          detail: err.error?.message,
-        });
-      },
-    });
+    this.router.navigate(['/packing-slip', so.id]);
   }
 }

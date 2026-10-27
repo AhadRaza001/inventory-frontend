@@ -17,7 +17,7 @@
         </button>
 
         <div class="mx-2 h-5 border-l border-surface-300"></div>
-        <button pButton type="button" text="true" size="small" label="" (click)="saveAndReceive()">
+        <button pButton type="button" [disabled]="order?.status === 'delivered'" [class.cursor-not-allowed]="order?.status === 'delivered'" text="true" size="small" label="" (click)="saveAndReceive()">
           <i class="pi pi-box"></i>
           Post Packing
         </button>

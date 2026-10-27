@@ -1,0 +1,5 @@
+@if (pdfUrl(); as url) {
+  <iframe [src]="url" width="100%" height="800px" style="border: none"></iframe>
+} @else {
+  <p>Generating PDF...</p>
+}
