@@ -1,0 +1,61 @@
+# Copyright 2019-2093 by Stephan Rauh
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Additional translations
+unverified-signature-warning = Dokument vsebuje digitalni podpis. PDF viewer ne more preveriti veljavnost podpisa. Prosimo prenesite dokument in veljavnost podpisa preverite v programu Acrobat Reader.
+pdfjs-infinite-scroll-button-label = Neskončno drsenje
+pdfjs-find-multiple-checkbox-label = Najdi vsako besedo
+pdfjs-find-regexp-checkbox-label = Regularni izraz
+pdfjs-editor-movePageUp-button =
+    .title = Premakni stran navzgor
+pdfjs-editor-movePageUp-button-label = Premakni stran navzgor
+pdfjs-editor-movePageDown-button =
+    .title = Premakni stran navzdol
+pdfjs-editor-movePageDown-button-label = Premakni stran navzdol
+pdfjs-cursor-page-flip-tool-button =
+    .title = Listanje strani
+pdfjs-cursor-page-flip-tool-button-label = Listanje strani
+pdfjs-loading-error-more-info = Več informacij
+pdfjs-loading-error-less-info = Manj informacij
+pdfjs-loading-error-close = Zapri
+
+# #3255 Sidebar buttons. pdf.js removed these keys in commit 2367196a0
+# ("Change the sidebar for a views manager"); ngx-extended-pdf-viewer keeps its
+# own sidebar, so the translations live here now.
+pdfjs-toggle-sidebar-button =
+    .title = Preklopi stransko vrstico
+pdfjs-toggle-sidebar-button-label = Preklopi stransko vrstico
+pdfjs-document-outline-button =
+    .title = Prikaži oris dokumenta (dvokliknite za razširitev/strnitev vseh predmetov)
+pdfjs-document-outline-button-label = Oris dokumenta
+pdfjs-attachments-button =
+    .title = Prikaži priponke
+pdfjs-attachments-button-label = Priponke
+pdfjs-layers-button =
+    .title = Prikaži plasti (dvokliknite za ponastavitev vseh plasti na privzeto stanje)
+pdfjs-layers-button-label = Plasti
+pdfjs-thumbs-button =
+    .title = Prikaži sličice
+pdfjs-thumbs-button-label = Sličice
+pdfjs-editor-eraser-button =
+    .title = Radiraj
+pdfjs-editor-eraser-button-label = Radiraj
+pdfjs-editor-eraser-editor =
+    .aria-label = Radirka
+pdfjs-editor-undo-button =
+    .title = Razveljavi
+pdfjs-editor-undo-button-label = Razveljavi
+pdfjs-editor-redo-button =
+    .title = Uveljavi znova
+pdfjs-editor-redo-button-label = Uveljavi znova

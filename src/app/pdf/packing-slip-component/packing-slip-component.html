@@ -1,5 +1,36 @@
-@if (pdfUrl(); as url) {
-  <iframe [src]="url" width="100%" height="800px" style="border: none"></iframe>
+<div class="toolbar">
+  <div class="search">
+    <i class="pi pi-search"></i>
+    <input #q type="text" placeholder="Search in document..."
+           (input)="onSearch(q.value)" (keydown.enter)="next(q.value)" />
+    <button type="button" (click)="prev(q.value)" title="Previous"><i class="pi pi-chevron-up"></i></button>
+    <button type="button" (click)="next(q.value)" title="Next"><i class="pi pi-chevron-down"></i></button>
+  </div>
+
+ <div class="zoom">
+    <button type="button" (click)="zoomOut()" title="Zoom out"><i class="pi pi-search-minus"></i></button>
+    <span class="zoom-value">{{ zoomPercent }}%</span>
+    <button type="button" (click)="zoomIn()" title="Zoom in"><i class="pi pi-search-plus"></i></button>
+    <button type="button" (click)="resetZoom()" title="Reset zoom"><i class="pi pi-refresh"></i></button>
+  </div>
+
+  <div class="actions">
+     <button type="button" class="print" (click)="print()"><i class="pi pi-print"></i> Print</button>
+    <button type="button" class="pdf"   (click)="exportPdf()"><i class="pi pi-file-pdf"></i> PDF</button>
+    <button type="button" class="excel" (click)="exportExcel()"><i class="pi pi-file-excel"></i> Excel</button>
+    <button type="button" class="word"  (click)="exportWord()"><i class="pi pi-file-word"></i> Word</button>
+  </div>
+</div>
+
+@if (pdfBlob(); as blob) {
+  <ngx-extended-pdf-viewer
+    [src]="blob"
+    [showToolbar]="false"
+    [textLayer]="true"
+    [(zoom)]="zoom"
+    (zoomChange)="onZoomChange($event)"
+    [height]="'calc(100vh - 130px)'"
+  />
 } @else {
-  <p>Generating PDF...</p>
+  <p class="loading">Generating PDF...</p>
 }
