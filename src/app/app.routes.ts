@@ -22,6 +22,8 @@ import { AddSupplier } from './supplier/pages/add-supplier/add-supplier';
 import { PoDetail } from './purchaseOrder/pages/po-detail/po-detail';
 import { AddPurchaseOrder } from './purchaseOrder/pages/add-purchase-order/add-purchase-order';
 import { PackingSlipComponent } from './pdf/packing-slip-component/packing-slip-component';
+import { PoPackingSlipComponent } from './pdf/po-packing-slip-component/po-packing-slip-component';
+import { ItemledgerComponent } from './itemledger/itemledger-component/itemledger-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -56,6 +58,15 @@ export const routes: Routes = [
   {
     path: 'packing-slip/:id',
     component: PackingSlipComponent
+  },
+   {
+    path: 'po-packing-slip/:id',
+    component: PoPackingSlipComponent
+  },
+  //ledger
+  {
+    path: 'itemledger',
+    component: ItemledgerComponent
   },
 
 

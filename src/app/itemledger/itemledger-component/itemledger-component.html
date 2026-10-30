@@ -1,0 +1,174 @@
+<p-toast />
+
+<div class="p-4">
+  @if (pdfBlob(); as blob) {
+    <!-- PDF TOOLBAR -->
+    <div class="toolbar">
+  <div style="display: flex;">
+    <button
+          pButton
+          type="button"
+          text="true"
+          size="small"
+          severity="secondary"
+          (click)="back()"
+          aria-label="Back"
+        >
+          <i class="pi pi-arrow-left cursor-pointer pr-2"></i>
+        </button>
+        <div class="mx-2 h-5  border-l border-surface-300"></div>
+  </div>
+  <div class="search">
+    <i class="pi pi-search"></i>
+    <input #q type="text" placeholder="Search in document..."
+           (input)="onSearch(q.value)" (keydown.enter)="next(q.value)" />
+    <button type="button" (click)="prev(q.value)" title="Previous"><i class="pi pi-chevron-up"></i></button>
+    <button type="button" (click)="next(q.value)" title="Next"><i class="pi pi-chevron-down"></i></button>
+  </div>
+
+ <div class="zoom">
+    <button type="button" (click)="zoomOut()" title="Zoom out"><i class="pi pi-search-minus"></i></button>
+    <span class="zoom-value">{{ zoomPercent }}%</span>
+    <button type="button" (click)="zoomIn()" title="Zoom in"><i class="pi pi-search-plus"></i></button>
+    <button type="button" (click)="resetZoom()" title="Reset zoom"><i class="pi pi-refresh"></i></button>
+  </div>
+
+  <div class="actions">
+     <button type="button" class="print" (click)="print()"><i class="pi pi-print"></i> Print</button>
+    <button type="button" class="pdf"   (click)="exportPdf()"><i class="pi pi-file-pdf"></i> PDF</button>
+    <button type="button" class="excel" (click)="exportExcel()"><i class="pi pi-file-excel"></i> Excel</button>
+    <button type="button" class="word"  (click)="exportWord()"><i class="pi pi-file-word"></i> Word</button>
+  </div>
+</div>
+
+    <!-- PDF VIEWER -->
+    <ngx-extended-pdf-viewer
+      [src]="blob"
+      [showToolbar]="false"
+      [textLayer]="true"
+      [(zoom)]="zoom"
+      (zoomChange)="onZoomChange($event)"
+      [height]="'calc(100vh - 130px)'"
+    />
+  } @else {
+    <!-- INITIAL HEADER -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-xl font-semibold">Item Ledger</h2>
+
+        <p class="text-sm text-surface-500">
+          Select an item and warehouse to generate the ledger report.
+        </p>
+      </div>
+
+      <button type="button" class="filter-btn" style="cursor:pointer" (click)="openDrawer()">
+        <i class="pi pi-filter"></i>
+        Filters
+      </button>
+    </div>
+
+    @if (loading()) {
+      <p class="loading">
+        <i class="pi pi-spin pi-spinner mr-2"></i>
+        Generating PDF...
+      </p>
+    } @else if (noRecords()) {
+      <div class="text-center text-surface-500 py-12">
+        No ledger entries found for this item and warehouse in the selected range.
+      </div>
+    } @else {
+      <div class="text-center text-surface-500 py-12">
+        Open the filters and choose an item and warehouse to view the ledger.
+      </div>
+    }
+  }
+</div>
+
+<!-- FILTER DRAWER -->
+<p-drawer
+  header="Ledger Filters"
+  position="right"
+  [visible]="drawerVisible()"
+  (visibleChange)="drawerVisible.set($event)"
+  [style]="{ width: '24rem' }"
+>
+  <div class="flex flex-col gap-4">
+    <!-- ITEM -->
+    <div class="flex flex-col gap-2">
+      <label for="item">Item *</label>
+
+      <p-select
+        inputId="item"
+        [options]="items()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select item"
+        [filter]="true"
+        filterBy="name"
+        appendTo="body"
+        styleClass="w-full"
+        [ngModel]="itemId"
+        (ngModelChange)="itemId = $event"
+      />
+    </div>
+
+    <!-- WAREHOUSE -->
+    <div class="flex flex-col gap-2">
+      <label for="store">Warehouse *</label>
+
+      <p-select
+        inputId="store"
+        [options]="stores()"
+        optionLabel="name"
+        [filter]="true"
+        optionValue="id"
+        placeholder="Select warehouse"
+        appendTo="body"
+        styleClass="w-full"
+        [ngModel]="storeId"
+        (ngModelChange)="storeId = $event"
+      />
+    </div>
+
+    <!-- START DATE -->
+    <div class="flex flex-col gap-2">
+      <label for="from">Start date</label>
+
+      <p-datepicker
+        inputId="from"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        appendTo="body"
+        styleClass="w-full"
+        [maxDate]="dateTo"
+        [ngModel]="dateFrom"
+        (ngModelChange)="dateFrom = $event"
+      />
+    </div>
+
+    <!-- END DATE -->
+    <div class="flex flex-col gap-2">
+      <label for="to">End date</label>
+
+      <p-datepicker
+        inputId="to"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        appendTo="body"
+        styleClass="w-full"
+        [minDate]="dateFrom"
+        [ngModel]="dateTo"
+        (ngModelChange)="dateTo = $event"
+      />
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="flex gap-2 justify-end mt-2">
+      <p-button label="Reset" severity="secondary" [outlined]="true" (onClick)="resetFilters()" />
+
+      <p-button label="Apply" icon="pi pi-check" [loading]="loading()" (onClick)="applyFilters()" />
+    </div>
+  </div>
+</p-drawer>

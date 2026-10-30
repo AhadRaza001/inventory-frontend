@@ -1,4 +1,18 @@
 <div class="toolbar">
+  <div style="display: flex;">
+    <button
+          pButton
+          type="button"
+          text="true"
+          size="small"
+          severity="secondary"
+          (click)="back()"
+          aria-label="Back"
+        >
+          <i class="pi pi-arrow-left cursor-pointer pr-2"></i>
+        </button>
+        <div class="mx-2 h-5  border-l border-surface-300"></div>
+  </div>
   <div class="search">
     <i class="pi pi-search"></i>
     <input #q type="text" placeholder="Search in document..."

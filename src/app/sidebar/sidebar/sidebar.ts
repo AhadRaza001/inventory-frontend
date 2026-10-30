@@ -49,7 +49,7 @@ export class Sidebar {
     {
       label: 'Item',
       icon: 'pi pi-box',
-      route: '/items'
+      route: '/items',
     },
     {
       label: 'Sale Orders',
@@ -62,16 +62,26 @@ export class Sidebar {
       route: '/purchaseorder',
     },
     {
-     label: 'Supplier',
-     icon: 'pi pi-building',
-     route: '/supplier',
-   },
+      label: 'Supplier',
+      icon: 'pi pi-building',
+      route: '/supplier',
+    },
+
+    {
+      label: 'Item Ledger',
+      icon: 'pi pi-book',
+      route: '/itemledger',
+    },
+    {
+      label: 'In-Out Summary',
+      icon: 'pi pi-arrow-right-arrow-left',
+      route: '/inoutsummary',
+    },
     {
       label: 'Reports',
       icon: 'pi pi-chart-bar',
       route: '/reports',
     },
-    
   ];
 
   toggle() {

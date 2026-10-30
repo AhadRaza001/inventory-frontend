@@ -7,6 +7,7 @@ import autoTable from 'jspdf-autotable';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerModule, NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-packing-slip-component',
   imports: [NgxExtendedPdfViewerModule],
@@ -18,6 +19,7 @@ export class PackingSlipComponent implements OnInit {
   private packingSlipDetailService = inject(PsDetailService);
   private route = inject(ActivatedRoute);
   private pdfService = inject(NgxExtendedPdfViewerService);
+  private location = inject(Location);
 
   pdfBlob = signal<Blob | null>(null);
   private slip: any = null;
@@ -326,5 +328,8 @@ export class PackingSlipComponent implements OnInit {
   onZoomChange(value: number | string | undefined) {
     const n = Number(value);
     if (!isNaN(n) && n > 0) this.zoomPercent = Math.round(n);
+  }
+  back(){
+    this.location.back();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyPipe, DatePipe, Location, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
@@ -38,6 +38,7 @@ export class PoDetail {
   private poService = inject(PurchaseOrderService);
   private messageService = inject(MessageService);
   private location = inject(Location);
+  private router = inject(Router);
 
   po = signal<IPurchaseOrder | null>(null);
   // inside the class
@@ -133,6 +134,7 @@ export class PoDetail {
           item_id: d.item_id,
           packed_qty: Number(d.quantity),
           ordered_qty: Number(d.quantity),
+          reference_type:"purchase",
         })),
     };
   }
@@ -189,17 +191,6 @@ export class PoDetail {
     const po = this.po();
     if (!po) return;
 
-    this.psService.getByPurchaseOrder(po.id).subscribe({
-      next: (res) => {
-        console.log('packing slips of purchase order: ', res);
-      },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failed to load packing slips',
-          detail: err.error?.message,
-        });
-      },
-    });
+    this.router.navigate(['/po-packing-slip', po.id]);
   }
 }

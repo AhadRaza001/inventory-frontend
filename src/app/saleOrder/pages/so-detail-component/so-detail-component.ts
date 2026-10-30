@@ -59,8 +59,9 @@ export class SoDetailComponent {
       this.fetchSaleOrder(+id);
     }
   }
-
+  fetchid: any;
   fetchSaleOrder(id: any): void {
+    this.fetchid = id;
     this.saleOrderService.getById(id).subscribe({
       next: (res) => {
         this.so.set(res.data);
@@ -165,6 +166,7 @@ export class SoDetailComponent {
           sku: d.item?.sku,
           packed_qty: Number(d.quantity),
           ordered_qty: Number(d.quantity),
+          reference_type: 'sale',
           // rate: d.rate,
           // only what the backend's Validator actually asks for
         })),
@@ -191,7 +193,7 @@ export class SoDetailComponent {
               summary: 'Dispatched',
               detail: `${dispatchRes.data.ps_no} dispatched successfully`,
             });
-            // emit refresh to parent SO page
+            this.fetchSaleOrder(this.fetchid);
           },
           error: (err) => {
             // Slip WAS created as draft — dispatch just failed. Tell the user clearly.

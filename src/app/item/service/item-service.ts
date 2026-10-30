@@ -58,4 +58,7 @@ export class ItemService {
       body: { ids },
     });
   }
+  all(){
+    return this.http.get<Iitem>(this.baseUrl);
+  }
 }

@@ -17,11 +17,28 @@
         </button>
 
         <div class="mx-2 h-5 border-l border-surface-300"></div>
-        <button pButton type="button" [disabled]="order?.status === 'delivered'" [class.cursor-not-allowed]="order?.status === 'delivered'" text="true" size="small" label="" (click)="saveAndReceive()">
+        <button
+          pButton
+          type="button"
+          [disabled]="order?.status === 'delivered'"
+          [class.cursor-not-allowed]="order?.status === 'delivered'"
+          text="true"
+          size="small"
+          label=""
+          (click)="saveAndReceive()"
+        >
           <i class="pi pi-box"></i>
           Post Packing
         </button>
-        <button pButton type="button" text="true" size="small" label="" (click)="getPackingSlips()">
+        <button
+          pButton
+          type="button"
+          text="true"
+          size="small"
+          label=""
+          [disabled]="order?.status === 'open'"
+          (click)="getPackingSlips()"
+        >
           <i class="pi pi-file"></i>
           Packing Slip
         </button>
@@ -117,12 +134,14 @@
             [value]="order.customer_reference ?? ''"
             #refInput
             (blur)="updatePoField('customer_reference', refInput.value)"
+            [disabled]="order?.status === 'delivered'"
           />
         </div>
 
         <div class="w-fit">
           <label class="mb-1 block text-xs text-surface-500" for="poReq">Requisition</label>
           <input
+            [disabled]="order?.status === 'delivered'"
             id="poReq"
             pInputText
             type="text"
