@@ -40,7 +40,6 @@ interface ILedgerRow {
     Toast,
     ButtonModule,
     FormsModule,
-    DatePipe,
     ButtonModule,
     DrawerModule,
     SelectModule,
@@ -312,18 +311,26 @@ export class ItemledgerComponent {
         fontSize: 9,
         cellPadding: 3,
         overflow: 'linebreak',
+        lineWidth: 0.1,
+        lineColor: [180, 180, 180],
+        fillColor: [255, 255, 255],
+        textColor: [0, 0, 0],
       },
 
       headStyles: {
         fontStyle: 'bold',
         fillColor: [16, 185, 129],
-        textColor: 255,
+        textColor: [255, 255, 255],
+        lineWidth: 0.1,
+        lineColor: [180, 180, 180],
       },
 
       footStyles: {
         fontStyle: 'bold',
         fillColor: [235, 245, 240],
         textColor: [0, 0, 0],
+        lineWidth: 0.1,
+        lineColor: [180, 180, 180],
       },
 
       margin: {

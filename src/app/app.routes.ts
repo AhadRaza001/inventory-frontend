@@ -24,6 +24,7 @@ import { AddPurchaseOrder } from './purchaseOrder/pages/add-purchase-order/add-p
 import { PackingSlipComponent } from './pdf/packing-slip-component/packing-slip-component';
 import { PoPackingSlipComponent } from './pdf/po-packing-slip-component/po-packing-slip-component';
 import { ItemledgerComponent } from './itemledger/itemledger-component/itemledger-component';
+import { InoutsummaryComponent } from './inoutsummary/inoutsummary-component/inoutsummary-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -50,25 +51,29 @@ export const routes: Routes = [
   { path: 'purchaseorder', component: PurchaseOrder, canActivate: [authGuard] },
   { path: 'purchaseOrder/detail/:id', component: PoDetail, canActivate: [authGuard] },
   { path: 'purchaseOrder/createOrder', component: AddPurchaseOrder, canActivate: [authGuard] },
- //Supplier
+  //Supplier
   { path: 'supplier', component: Supplier, canActivate: [authGuard] },
   { path: 'supplier/detail/:id', component: SupplierDetail, canActivate: [authGuard] },
   { path: 'supplier/create', component: AddSupplier, canActivate: [authGuard] },
-// PDF packingslip
+  // PDF packingslip
   {
     path: 'packing-slip/:id',
-    component: PackingSlipComponent
+    component: PackingSlipComponent,
   },
-   {
+  {
     path: 'po-packing-slip/:id',
-    component: PoPackingSlipComponent
+    component: PoPackingSlipComponent,
   },
   //ledger
   {
     path: 'itemledger',
-    component: ItemledgerComponent
+    component: ItemledgerComponent,
   },
 
+  {
+    path: 'inoutsummary',
+    component: InoutsummaryComponent,
+  },
 
   { path: '**', redirectTo: 'login' },
 ];

@@ -1,0 +1,195 @@
+<p-toast />
+
+<div class="p-4">
+  @if (pdfBlob(); as blob) {
+    <!-- PDF TOOLBAR -->
+    <div class="toolbar">
+      <div style="display: flex;">
+        <button
+          pButton
+          type="button"
+          text="true"
+          size="small"
+          severity="secondary"
+          (click)="back()"
+          aria-label="Back"
+        >
+          <i class="pi pi-arrow-left cursor-pointer pr-2"></i>
+        </button>
+        <div class="mx-2 h-5 border-l border-surface-300"></div>
+      </div>
+
+      <div class="search">
+        <i class="pi pi-search"></i>
+        <input #q type="text" placeholder="Search in document..."
+               (input)="onSearch(q.value)" (keydown.enter)="next(q.value)" />
+        <button type="button" (click)="prev(q.value)" title="Previous"><i class="pi pi-chevron-up"></i></button>
+        <button type="button" (click)="next(q.value)" title="Next"><i class="pi pi-chevron-down"></i></button>
+      </div>
+
+      <div class="zoom">
+        <button type="button" (click)="zoomOut()" title="Zoom out"><i class="pi pi-search-minus"></i></button>
+        <span class="zoom-value">{{ zoomPercent }}%</span>
+        <button type="button" (click)="zoomIn()" title="Zoom in"><i class="pi pi-search-plus"></i></button>
+        <button type="button" (click)="resetZoom()" title="Reset zoom"><i class="pi pi-refresh"></i></button>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="print" (click)="print()"><i class="pi pi-print"></i> Print</button>
+        <button type="button" class="pdf" (click)="exportPdf()"><i class="pi pi-file-pdf"></i> PDF</button>
+        <button type="button" class="excel" (click)="exportExcel()"><i class="pi pi-file-excel"></i> Excel</button>
+        <button type="button" class="word" (click)="exportWord()"><i class="pi pi-file-word"></i> Word</button>
+      </div>
+    </div>
+
+    <!-- PDF VIEWER -->
+    <ngx-extended-pdf-viewer
+      [src]="blob"
+      [showToolbar]="false"
+      [textLayer]="true"
+      [(zoom)]="zoom"
+      (zoomChange)="onZoomChange($event)"
+      [height]="'calc(100vh - 130px)'"
+    />
+  } @else {
+    <!-- INITIAL HEADER -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-xl font-semibold">Item In / Out Summary</h2>
+
+        <p class="text-sm text-surface-500">
+          Select a warehouse, item range and date range to generate the summary report.
+        </p>
+      </div>
+
+      <button type="button" class="filter-btn" style="cursor:pointer" (click)="openDrawer()">
+        <i class="pi pi-filter"></i>
+        Filters
+      </button>
+    </div>
+
+    @if (loading()) {
+      <p class="loading">
+        <i class="pi pi-spin pi-spinner mr-2"></i>
+        Generating PDF...
+      </p>
+    } @else if (noRecords()) {
+      <div class="text-center text-surface-500 py-12">
+        No items found for this warehouse and item range.
+      </div>
+    } @else {
+      <div class="text-center text-surface-500 py-12">
+        Open the filters and choose a warehouse, item range and dates to view the summary.
+      </div>
+    }
+  }
+</div>
+
+<!-- FILTER DRAWER -->
+<p-drawer
+  header="In / Out Summary Filters"
+  position="right"
+  [visible]="drawerVisible()"
+  (visibleChange)="drawerVisible.set($event)"
+  [style]="{ width: '24rem' }"
+>
+  <div class="flex flex-col gap-4">
+    <!-- WAREHOUSE -->
+    <div class="flex flex-col gap-2">
+      <label for="store">Warehouse *</label>
+
+      <p-select
+        inputId="store"
+        [options]="stores()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select warehouse"
+        [filter]="true"
+        filterBy="name"
+        appendTo="body"
+        styleClass="w-full"
+        [ngModel]="storeId"
+        (ngModelChange)="storeId = $event"
+      />
+    </div>
+
+    <!-- ITEM FROM -->
+    <div class="flex flex-col gap-2">
+      <label for="itemFrom">Item from *</label>
+
+      <p-select
+        inputId="itemFrom"
+        [options]="items()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select first item"
+        [filter]="true"
+        filterBy="name"
+        appendTo="body"
+        styleClass="w-full"
+        [ngModel]="itemFrom"
+        (ngModelChange)="itemFrom = $event"
+      />
+    </div>
+
+    <!-- ITEM TO -->
+    <div class="flex flex-col gap-2">
+      <label for="itemTo">Item to *</label>
+
+      <p-select
+        inputId="itemTo"
+        [options]="items()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select last item"
+        [filter]="true"
+        filterBy="name"
+        appendTo="body"
+        styleClass="w-full"
+        [ngModel]="itemTo"
+        (ngModelChange)="itemTo = $event"
+      />
+    </div>
+
+    <!-- START DATE -->
+    <div class="flex flex-col gap-2">
+      <label for="from">Start date *</label>
+
+      <p-datepicker
+        inputId="from"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        appendTo="body"
+        styleClass="w-full"
+        [maxDate]="dateTo"
+        [ngModel]="dateFrom"
+        (ngModelChange)="dateFrom = $event"
+      />
+    </div>
+
+    <!-- END DATE -->
+    <div class="flex flex-col gap-2">
+      <label for="to">End date *</label>
+
+      <p-datepicker
+        inputId="to"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        appendTo="body"
+        styleClass="w-full"
+        [minDate]="dateFrom"
+        [ngModel]="dateTo"
+        (ngModelChange)="dateTo = $event"
+      />
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="flex gap-2 justify-end mt-2">
+      <p-button label="Reset" severity="secondary" [outlined]="true" (onClick)="resetFilters()" />
+
+      <p-button label="Apply" icon="pi pi-check" [loading]="loading()" (onClick)="applyFilters()" />
+    </div>
+  </div>
+</p-drawer>
