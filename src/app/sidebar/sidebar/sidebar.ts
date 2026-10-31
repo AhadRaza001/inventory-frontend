@@ -82,6 +82,16 @@ export class Sidebar {
       icon: 'pi pi-chart-bar',
       route: '/reports',
     },
+     {
+      label: 'In-Out Summary',
+      icon: 'pi pi-arrow-right-arrow-left',
+      route: '/inoutsummary',
+    },
+    {
+      label: 'Reports',
+      icon: 'pi pi-chart-bar',
+      route: '/reports',
+    },
   ];
 
   toggle() {

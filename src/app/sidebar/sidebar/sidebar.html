@@ -13,7 +13,7 @@
 
   </div>
 
-  <nav>
+  <nav style="cursor: pointer;">
     @for (menu of menus; track menu.route) {
       <a [routerLink]="menu.route" routerLinkActive="active">
         <i [class]="menu.icon"></i>

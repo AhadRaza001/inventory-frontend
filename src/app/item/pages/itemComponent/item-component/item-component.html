@@ -128,11 +128,11 @@
   </ng-template>
 
   <ng-template #body let-item>
-    <tr class="table_row" style="cursor: pointer" (click)="detailItem(item.id)">
+    <tr class="table_row" style="cursor: pointer">
       <td>
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>
-      <td class="rowId">{{ item.sku }}</td>
+      <td class="rowId" (click)="detailItem(item.id)">{{ item.sku }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.category?.name ?? '-' }}</td>
       <td>{{ item.unit?.name ?? '-' }}</td>
