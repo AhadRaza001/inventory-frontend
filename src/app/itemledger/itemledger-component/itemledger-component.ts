@@ -319,18 +319,18 @@ export class ItemledgerComponent {
 
       headStyles: {
         fontStyle: 'bold',
-        fillColor: [16, 185, 129],
-        textColor: [255, 255, 255],
+        // fillColor: [16, 185, 129],
+        // textColor: [255, 255, 255],
         lineWidth: 0.1,
-        lineColor: [180, 180, 180],
+        // lineColor: [180, 180, 180],
       },
 
       footStyles: {
         fontStyle: 'bold',
-        fillColor: [235, 245, 240],
-        textColor: [0, 0, 0],
+        // fillColor: [235, 245, 240],
+        // textColor: [0, 0, 0],
         lineWidth: 0.1,
-        lineColor: [180, 180, 180],
+        // lineColor: [180, 180, 180],
       },
 
       margin: {

@@ -6,6 +6,20 @@
     overflow: hidden;
 }
 
+/* Remove the grey viewer background */
+::ng-deep #viewerContainer,
+::ng-deep ngx-extended-pdf-viewer .zoom {
+  background-color: #ffffff;
+}
+
+/* Remove the dark shadow around each page */
+::ng-deep .pdfViewer .page {
+  box-shadow: none;
+  border: none;
+  border-image: none;
+  margin: 0 auto 8px;
+}
+
 .toolbar {
     display: flex;
     justify-content: space-between;
