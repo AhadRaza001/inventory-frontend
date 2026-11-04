@@ -57,7 +57,6 @@
         <p-column-filter field="store.name" type="text" display="menu"></p-column-filter>
       </th>
 
-
       <th pSortableColumn="status">
         Status
         <p-sort-icon field="status"></p-sort-icon>
@@ -78,16 +77,16 @@
         </p-column-filter>
       </th>
 
-      <th pSortableColumn="grand_total">
-        Grand Total
-        <p-sort-icon field="grand_total"></p-sort-icon>
+      <th pSortableColumn="created_at">
+        Created at
+        <p-sort-icon field="created_at"></p-sort-icon>
 
-        <p-column-filter field="grand_total" type="numeric" display="menu"></p-column-filter>
+        <p-column-filter field="created_at" type="date" display="menu"></p-column-filter>
       </th></tr
   ></ng-template>
 
   <ng-template #body let-item>
-    <tr class="table_row" >
+    <tr class="table_row">
       <td>
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>
@@ -107,7 +106,7 @@
       </td>
 
       <td>
-        {{ item.created_at | date: 'dd-MM-yyyy'}}
+        {{ item.created_at | date: 'dd-MM-yyyy' }}
       </td>
     </tr>
   </ng-template>

@@ -127,7 +127,7 @@
       </th> -->
 
       <th pSortableColumn="created_at">
-        Date
+        Created at
         <p-sort-icon field="created_at"></p-sort-icon>
         <p-column-filter field="created_at" type="date" display="menu"></p-column-filter>
       </th>
@@ -135,7 +135,7 @@
   </ng-template>
 
   <ng-template #body let-item>
-    <tr class="table_row" style="cursor: pointer">
+    <tr class="table_row">
       <td>
         <p-tablecheckbox [value]="item"></p-tablecheckbox>
       </td>

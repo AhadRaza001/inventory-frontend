@@ -281,6 +281,13 @@ export class SaleOrderComponent {
       this.toast.warn('Please select at least one sale order.');
       return;
     }
+    // Check delivered sale orders
+    const deliveredOrders = this.selecteditems.filter((order) => order.status === 'delivered');
+
+    if (deliveredOrders.length > 0) {
+      this.toast.warn('Delivered sale orders cannot be deleted.');
+      return;
+    }
 
     this.confirmService.confirm({
       message: `Do you want to delete ${this.selecteditems.length} selected sale orders?`,

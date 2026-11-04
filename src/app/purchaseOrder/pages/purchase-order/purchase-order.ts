@@ -24,7 +24,7 @@ import {
   SortIcon,
   ColumnFilter,
   TableCheckbox,
-  SortableColumn
+  SortableColumn,
 } from 'primeng/table';
 import { PurchaseOrderService } from '../../service/purchase-order-service';
 import { IPurchaseOrder } from '../../interface/ipurchase-order';
@@ -42,7 +42,7 @@ import { FormsModule } from '@angular/forms';
     TableCheckbox,
     FormsModule,
     DatePipe,
-    SortableColumn
+    SortableColumn,
   ],
   templateUrl: './purchase-order.html',
   styleUrl: './purchase-order.css',
@@ -343,6 +343,13 @@ export class PurchaseOrder {
     if (this.selecteditems.length === 0) {
       this.toast.warn('Please select at least one purchase order.');
 
+      return;
+    }
+    // Check delivered sale orders
+    const deliveredOrders = this.selecteditems.filter((order) => order.status === 'delivered');
+
+    if (deliveredOrders.length > 0) {
+      this.toast.warn('Delivered purchase orders cannot be deleted.');
       return;
     }
 
