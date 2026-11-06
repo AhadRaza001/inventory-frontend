@@ -1,0 +1,69 @@
+:host {
+  display: block;
+}
+
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.25rem 1rem;
+  background: var(--p-content-background, #fff);
+  border-bottom: 1px solid var(--p-content-border-color, #e5e7eb);
+}
+
+/* Remove PrimeNG's own box so the bar controls the look */
+:host ::ng-deep .p-breadcrumb {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Keep long trails on one line and scrollable instead of wrapping */
+:host ::ng-deep .p-breadcrumb-list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+:host ::ng-deep .p-breadcrumb-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Linked crumbs */
+:host ::ng-deep .p-breadcrumb-item-link {
+  color: var(--p-text-muted-color, #6b7280);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+:host ::ng-deep .p-breadcrumb-item-link:hover {
+  color: var(--p-primary-color, #2563eb);
+}
+
+/* Current page (last crumb, no link) */
+:host ::ng-deep .p-breadcrumb-item:last-child .p-breadcrumb-item-label {
+  color: var(--p-text-color, #111827);
+  font-weight: 600;
+}
+
+/* Logout button */
+.logout-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  border-radius: 30px;
+}
+
+/* Small screens: hide the button label, keep the icon */
+@media (max-width: 576px) {
+  .breadcrumb-bar {
+    padding: 0.25rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .logout-btn span {
+    display: none;
+  }
+}

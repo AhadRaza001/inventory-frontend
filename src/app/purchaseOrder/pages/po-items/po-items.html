@@ -12,6 +12,7 @@
       icon="pi pi-plus"
       size="small"
       [text]="true"
+      [disabled]="po?.status == 'delivered'"
       (onClick)="onAddItem()"
     />
   </header>

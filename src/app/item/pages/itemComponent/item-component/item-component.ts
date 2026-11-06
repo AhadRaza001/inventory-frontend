@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ItemService } from '../../../service/item-service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastService } from '../../../../toast/toast-service';
 import { Iitem } from '../../../../interface/iitem';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -43,7 +43,6 @@ export class ItemComponent {
   location = inject(Location);
   selecteditems: Iitem[] = [];
   confirmService = inject(ConfirmationService);
-
 
   units = signal<Iitem[]>([]);
 
@@ -136,7 +135,7 @@ export class ItemComponent {
   detailItem(id: number) {
     this.itemService.getById(id).subscribe({
       next: () => {
-        this.router.navigate(['/item/detail', id]);
+        this.router.navigate(['/items/detail', id]);
       },
       error: (error) => {
         console.error(error);
@@ -192,7 +191,7 @@ export class ItemComponent {
     doc.text('Developed By: Ahad Raza', 150, 15);
     autoTable(doc, {
       startY: 45,
-      head: [['ID', 'SKU', 'Name', 'Category', 'Unit','Purchase Price', 'Sale Price', 'Status']],
+      head: [['ID', 'SKU', 'Name', 'Category', 'Unit', 'Purchase Price', 'Sale Price', 'Status']],
       body: this.selecteditems.map((item) => [
         item.id,
         item.sku ?? '',
@@ -216,8 +215,11 @@ export class ItemComponent {
     this.loadItems(this.lastLazyEvent);
     this.selecteditems = [];
   }
+  route = inject(ActivatedRoute);
   onNew() {
-    this.router.navigate(['/item/createItem']);
+    this.router.navigate(['/items/createItem'], {
+      relativeTo: this.route,
+    });
   }
   onSearch(value: string) {
     this.searchValue = value;

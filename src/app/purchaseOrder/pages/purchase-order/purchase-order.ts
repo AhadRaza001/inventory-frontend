@@ -16,7 +16,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 import { ToastService } from '../../../toast/toast-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   TableLazyLoadEvent,
   Table,
@@ -52,6 +52,7 @@ export class PurchaseOrder {
   router = inject(Router);
   toast = inject(ToastService);
   location = inject(Location);
+  route = inject(ActivatedRoute);
   confirmService = inject(ConfirmationService);
 
   selecteditems: IPurchaseOrder[] = [];
@@ -142,7 +143,7 @@ export class PurchaseOrder {
   detailPurchaseOrder(id: number) {
     this.purchaseOrderService.getById(id).subscribe({
       next: () => {
-        this.router.navigate(['/purchaseOrder/detail', id]);
+        this.router.navigate(['/purchaseOrders/detail', id]);
       },
 
       error: (error: any) => {
@@ -158,7 +159,7 @@ export class PurchaseOrder {
   }
 
   onNew() {
-    this.router.navigate(['/purchaseOrder/createOrder']);
+    this.router.navigate(['/purchaseOrders/createOrder'], { relativeTo: this.route });
   }
 
   onSearch(value: string) {

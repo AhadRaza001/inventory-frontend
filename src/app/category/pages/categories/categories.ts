@@ -7,7 +7,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToastService } from '../../../toast/toast-service';
 import { ConfirmationService } from 'primeng/api';
@@ -48,6 +48,7 @@ export class Categories {
   selectedCategories: Icategory[] = [];
   confirmService = inject(ConfirmationService);
   location = inject(Location);
+  private route = inject(ActivatedRoute);
 
   clear(table: any) {
     table.clear();
@@ -115,7 +116,7 @@ export class Categories {
     console.log(id);
     this.categoriesService.getById(id).subscribe({
       next: (response: any) => {
-        this.router.navigate(['/category/detail', id]);
+        this.router.navigate(['/categories/detail', id]);
       },
       error: (error) => {
         console.log(error);
@@ -221,7 +222,9 @@ export class Categories {
     this.selectedCategories = [];
   }
   onNew() {
-    this.router.navigate(['/category/createCategory']);
+    this.router.navigate(['createCategory'], {
+      relativeTo: this.route,
+    });
   }
   onSearch(value: string) {
     this.searchValue = value;

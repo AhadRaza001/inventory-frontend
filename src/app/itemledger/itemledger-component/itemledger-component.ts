@@ -16,6 +16,11 @@ import * as XLSX from 'xlsx';
 import { NgxExtendedPdfViewerService, NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { Toolbar } from 'primeng/toolbar';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputIcon } from 'primeng/inputicon';
+import { IconField } from 'primeng/iconfield';
+import { InputTextModule } from 'primeng/inputtext';
 
 interface IOption {
   id: number;
@@ -47,6 +52,11 @@ interface ILedgerRow {
     TableModule,
     ToastModule,
     NgxExtendedPdfViewerModule,
+    Toolbar,
+    FloatLabel,
+    InputIcon,
+    IconField,
+    InputTextModule,
   ],
   templateUrl: './itemledger-component.html',
   styleUrl: './itemledger-component.css',
@@ -319,18 +329,12 @@ export class ItemledgerComponent {
 
       headStyles: {
         fontStyle: 'bold',
-        // fillColor: [16, 185, 129],
-        // textColor: [255, 255, 255],
         lineWidth: 0.1,
-        // lineColor: [180, 180, 180],
       },
 
       footStyles: {
         fontStyle: 'bold',
-        // fillColor: [235, 245, 240],
-        // textColor: [0, 0, 0],
         lineWidth: 0.1,
-        // lineColor: [180, 180, 180],
       },
 
       margin: {

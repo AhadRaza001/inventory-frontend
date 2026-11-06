@@ -27,53 +27,256 @@ import { ItemledgerComponent } from './itemledger/itemledger-component/itemledge
 import { InoutsummaryComponent } from './inoutsummary/inoutsummary-component/inoutsummary-component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'categories', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent, canActivate: [authGuard] },
-  //categories
-  { path: 'categories', component: Categories, canActivate: [authGuard] },
-  { path: 'category/createCategory', component: AddCategory, canActivate: [authGuard] },
-  { path: 'category/detail/:id', component: CategoryDetailComponent, canActivate: [authGuard] },
-  // unit
-  { path: 'units', component: UnitController, canActivate: [authGuard] },
-  { path: 'unit/detail/:id', component: UnitDetailController, canActivate: [authGuard] },
-  { path: 'unit/createUnit', component: UnitAddController, canActivate: [authGuard] },
-  //Item
-  { path: 'items', component: ItemComponent, canActivate: [authGuard] },
-  { path: 'item/detail/:id', component: ItemDetailComponent, canActivate: [authGuard] },
-  { path: 'item/createItem', component: ItemAddComponent, canActivate: [authGuard] },
+  // ==================================================
+  // DEFAULT ROUTE
+  // ==================================================
 
-  //saleorders
-  { path: 'saleOrders', component: SaleOrderComponent, canActivate: [authGuard] },
-  { path: 'saleOrder/detail/:id', component: SoDetailComponent, canActivate: [authGuard] },
-  { path: 'saleOrders/createOrder', component: SoAddComponent, canActivate: [authGuard] },
-  //PurchaseOrder
-  { path: 'purchaseorder', component: PurchaseOrder, canActivate: [authGuard] },
-  { path: 'purchaseOrder/detail/:id', component: PoDetail, canActivate: [authGuard] },
-  { path: 'purchaseOrder/createOrder', component: AddPurchaseOrder, canActivate: [authGuard] },
-  //Supplier
-  { path: 'supplier', component: Supplier, canActivate: [authGuard] },
-  { path: 'supplier/detail/:id', component: SupplierDetail, canActivate: [authGuard] },
-  { path: 'supplier/create', component: AddSupplier, canActivate: [authGuard] },
-  // PDF packingslip
   {
-    path: 'packing-slip/:id',
-    component: PackingSlipComponent,
+    path: '',
+    redirectTo: 'categories',
+    pathMatch: 'full',
   },
+
+  // ==================================================
+  // AUTHENTICATION
+  // ==================================================
+
   {
-    path: 'po-packing-slip/:id',
-    component: PoPackingSlipComponent,
-  },
-  //ledger
-  {
-    path: 'itemledger',
-    component: ItemledgerComponent,
+    path: 'login',
+    component: LoginComponent,
   },
 
   {
-    path: 'inoutsummary',
-    component: InoutsummaryComponent,
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [authGuard],
   },
 
-  { path: '**', redirectTo: 'login' },
+  // ==================================================
+  // CATEGORIES
+  // ==================================================
+
+  {
+    path: 'categories',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Categories' },
+    children: [
+      {
+        path: '',
+        component: Categories,
+      },
+
+      {
+        path: 'createCategory',
+        component: AddCategory,
+        data: { breadcrumb: 'Add Category' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: CategoryDetailComponent,
+        data: { breadcrumb: 'Category Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // UNITS
+  // ==================================================
+
+  {
+    path: 'units',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Units' },
+    children: [
+      {
+        path: '',
+        component: UnitController,
+      },
+
+      {
+        path: 'createUnit',
+        component: UnitAddController,
+        data: { breadcrumb: 'Add Unit' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: UnitDetailController,
+        data: { breadcrumb: 'Unit Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // ITEMS
+  // ==================================================
+
+  {
+    path: 'items',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Items' },
+    children: [
+      {
+        path: '',
+        component: ItemComponent,
+      },
+
+      {
+        path: 'createItem',
+        component: ItemAddComponent,
+        data: { breadcrumb: 'Add Item' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: ItemDetailComponent,
+        data: { breadcrumb: 'Item Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // SALE ORDERS
+  // ==================================================
+
+  {
+    path: 'saleOrders',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Sale Orders' },
+    children: [
+      {
+        path: '',
+        component: SaleOrderComponent,
+      },
+
+      {
+        path: 'createOrder',
+        component: SoAddComponent,
+        data: { breadcrumb: 'Create Sale Order' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: SoDetailComponent,
+        data: { breadcrumb: 'Sale Order Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // PURCHASE ORDERS
+  // ==================================================
+
+  {
+    path: 'purchaseOrders',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Purchase Orders' },
+    children: [
+      {
+        path: '',
+        component: PurchaseOrder,
+      },
+
+      {
+        path: 'createOrder',
+        component: AddPurchaseOrder,
+        data: { breadcrumb: 'Create Purchase Order' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: PoDetail,
+        data: { breadcrumb: 'Purchase Order Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // SUPPLIERS
+  // ==================================================
+
+  {
+    path: 'suppliers',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Suppliers' },
+    children: [
+      {
+        path: '',
+        component: Supplier,
+      },
+
+      {
+        path: 'create',
+        component: AddSupplier,
+        data: { breadcrumb: 'Add Supplier' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: SupplierDetail,
+        data: { breadcrumb: 'Supplier Details' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // PACKING SLIPS
+  // ==================================================
+
+  {
+    path: 'packing-slip',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Sale Packing Slip' },
+    children: [
+      {
+        path: ':id',
+        component: PackingSlipComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'po-packing-slip',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Purchase Packing Slip' },
+    children: [
+      {
+        path: ':id',
+        component: PoPackingSlipComponent,
+      },
+    ],
+  },
+
+  // ==================================================
+  // REPORTS
+  // ==================================================
+
+  {
+    path: 'reports',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Reports' },
+    children: [
+      {
+        path: 'itemledger',
+        component: ItemledgerComponent,
+        data: { breadcrumb: 'Item Ledger' },
+      },
+
+      {
+        path: 'inoutsummary',
+        component: InoutsummaryComponent,
+        data: { breadcrumb: 'Stock In-Out Summary' },
+      },
+    ],
+  },
+
+  // ==================================================
+  // WILDCARD
+  // ==================================================
+
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
 ];

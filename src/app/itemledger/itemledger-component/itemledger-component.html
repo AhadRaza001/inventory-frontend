@@ -3,43 +3,107 @@
 <div class="p-4">
   @if (pdfBlob(); as blob) {
     <!-- PDF TOOLBAR -->
-    <div class="toolbar">
-  <div style="display: flex;">
-    <button
-          pButton
-          type="button"
-          text="true"
-          size="small"
-          severity="secondary"
-          (click)="back()"
-          aria-label="Back"
-        >
-          <i class="pi pi-arrow-left cursor-pointer pr-2"></i>
-        </button>
-        <div class="mx-2 h-5  border-l border-surface-300"></div>
-  </div>
-  <div class="search">
-    <i class="pi pi-search"></i>
-    <input #q type="text" placeholder="Search in document..."
-           (input)="onSearch(q.value)" (keydown.enter)="next(q.value)" />
-    <button type="button" (click)="prev(q.value)" title="Previous"><i class="pi pi-chevron-up"></i></button>
-    <button type="button" (click)="next(q.value)" title="Next"><i class="pi pi-chevron-down"></i></button>
-  </div>
+    <!-- PDF TOOLBAR -->
+    <p-toolbar styleClass="mb-3">
+      <!-- LEFT SIDE -->
+      <ng-template #start>
+        <div class="toolbar-start">
+          <p-button
+            icon="pi pi-arrow-left"
+            [text]="true"
+            [rounded]="true"
+            ariaLabel="Back"
+            (onClick)="back()"
+          />
 
- <div class="zoom">
-    <button type="button" (click)="zoomOut()" title="Zoom out"><i class="pi pi-search-minus"></i></button>
-    <span class="zoom-value">{{ zoomPercent }}%</span>
-    <button type="button" (click)="zoomIn()" title="Zoom in"><i class="pi pi-search-plus"></i></button>
-    <button type="button" (click)="resetZoom()" title="Reset zoom"><i class="pi pi-refresh"></i></button>
-  </div>
+          <div class="divider"></div>
 
-  <div class="actions">
-     <button type="button" class="print" (click)="print()"><i class="pi pi-print"></i> Print</button>
-    <button type="button" class="pdf"   (click)="exportPdf()"><i class="pi pi-file-pdf"></i> PDF</button>
-    <button type="button" class="excel" (click)="exportExcel()"><i class="pi pi-file-excel"></i> Excel</button>
-    <button type="button" class="word"  (click)="exportWord()"><i class="pi pi-file-word"></i> Word</button>
-  </div>
-</div>
+          <!-- Search -->
+          <p-floatlabel variant="on" class="search">
+            <p-iconfield>
+              <p-inputicon class="pi pi-search" />
+              <input
+                #q
+                pInputText
+                id="pdf-search"
+                autocomplete="off"
+                (input)="onSearch(q.value)"
+                (keydown.enter)="next(q.value)"
+              />
+            </p-iconfield>
+            <label for="pdf-search">Search in document...</label>
+          </p-floatlabel>
+
+          <div class="btns">
+            <p-button
+              icon="pi pi-chevron-up"
+              [text]="true"
+              severity="contrast"
+              ariaLabel="Previous"
+              (onClick)="prev(q.value)"
+            />
+            <p-button
+              icon="pi pi-chevron-down"
+              [text]="true"
+              severity="contrast"
+              ariaLabel="Next"
+              (onClick)="next(q.value)"
+            />
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Zoom -->
+          <div class="btns">
+            <p-button
+              icon="pi pi-search-minus"
+              [text]="true"
+              severity="contrast"
+              ariaLabel="Zoom out"
+              (onClick)="zoomOut()"
+            />
+            <i class="pi pi-search-minus"></i>
+            <span class="zoom-value">{{ zoomPercent }}%</span>
+            <p-button
+              icon="pi pi-search-plus"
+              [text]="true"
+              severity="contrast"
+              ariaLabel="Zoom in"
+              (onClick)="zoomIn()"
+            />
+            <p-button
+              icon="pi pi-refresh"
+              [text]="true"
+              severity="contrast"
+              ariaLabel="Reset zoom"
+              (onClick)="resetZoom()"
+            />
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- RIGHT SIDE -->
+      <ng-template #end>
+        <div class="toolbar-end btns">
+          <button pButton type="button" [text]="true" severity="contrast" (click)="print()">
+            <i class="pi pi-print"></i>
+            <span class="btn-label">Print</span>
+          </button>
+          <button pButton type="button" [text]="true" severity="contrast" (click)="exportPdf()">
+            <i class="pi pi-file-pdf"></i>
+            <span class="btn-label">PDF</span>
+          </button>
+          <button pButton type="button" [text]="true" severity="contrast" (click)="exportExcel()">
+            <i class="pi pi-file-excel"></i>
+            <span class="btn-label">Excel</span>
+          </button>
+          <button pButton type="button" [text]="true" severity="contrast" (click)="exportWord()">
+            <i class="pi pi-file-word"></i>
+            <span class="btn-label">Word</span>
+          </button>
+        </div>
+      </ng-template>
+    </p-toolbar>
 
     <!-- PDF VIEWER -->
     <ngx-extended-pdf-viewer
@@ -61,7 +125,7 @@
         </p>
       </div>
 
-      <button type="button" class="filter-btn" style="cursor:pointer" (click)="openDrawer()">
+      <button type="button" class="filter-btn" style="cursor: pointer" (click)="openDrawer()">
         <i class="pi pi-filter"></i>
         Filters
       </button>

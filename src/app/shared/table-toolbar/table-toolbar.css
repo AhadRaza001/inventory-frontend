@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+/* PrimeNG renders the toolbar's inner box, so it needs ::ng-deep */
+:host ::ng-deep .p-toolbar {
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+  border-radius: 12px;
+}
+
+/* Left and right groups */
+.toolbar-start,
+.toolbar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toolbar-start {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.toolbar-end {
+  margin-left: auto;
+}
+
+/* Vertical separator between sections */
+.divider {
+  width: 1px;
+  height: 1.75rem;
+  flex-shrink: 0;
+  background: var(--p-content-border-color, #e5e7eb);
+}
+
+/* Search */
+.search {
+  width: 16rem;
+  max-width: 100%;
+}
+
+.search input {
+  width: 100%;
+}
+
+/* Action buttons */
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.btn-label {
+  margin-left: 0.25rem;
+}
+
+/* Tablets and phones */
+@media (max-width: 768px) {
+  .search {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  /* Separators add clutter once the layout wraps */
+  .divider {
+    display: none;
+  }
+}
+
+/* Phones: icon-only buttons */
+@media (max-width: 576px) {
+  .btn-label {
+    display: none;
+  }
+}

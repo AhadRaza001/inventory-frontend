@@ -246,8 +246,6 @@ export class SoItemsComponent implements OnChanges, OnDestroy {
       accept: () => {
         this.soDetailService.delete(detail.id).subscribe({
           next: () => {
-            // Optimistic local removal so the row disappears immediately,
-            // in addition to the parent refetch that follows.
             this.rows.update((rows) => rows.filter((r) => r.id !== detail.id));
             this.refresh.emit(this.so?.id);
           },

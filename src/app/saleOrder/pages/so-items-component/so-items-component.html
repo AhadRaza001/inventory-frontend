@@ -12,6 +12,7 @@
       icon="pi pi-plus"
       size="small"
       [text]="true"
+      [disabled]="so?.status == 'delivered'"
       (onClick)="onAddItem()"
     />
   </header>
@@ -36,7 +37,7 @@
     </ng-template>
 
     <ng-template #body let-row>
-      <tr [class.opacity-60]="row.saving"  class="!h-auto" [class.pointer-events-none]="row.saving">
+      <tr [class.opacity-60]="row.saving" class="!h-auto" [class.pointer-events-none]="row.saving">
         @if (row.isDraft && !row.item) {
           <!-- Draft row: waiting for an item SKU to resolve -->
           <td>
@@ -57,7 +58,9 @@
                 <i class="pi pi-spin pi-spinner text-xs"></i> Loading item details…
               </span>
             } @else {
-              <span class="text-sm text-surface-400">Press Enter or click away to load item details</span>
+              <span class="text-sm text-surface-400"
+                >Press Enter or click away to load item details</span
+              >
             }
           </td>
           <td class="text-center">
@@ -74,7 +77,7 @@
           <!-- Resolved / saved line -->
           <td class="text-sm text-surface-700">{{ row.item?.sku }}</td>
           <td class="text-sm font-medium text-surface-900">{{ row.item?.name }}</td>
-          <td class="text-right ">
+          <td class="text-right">
             <p-inputnumber
               [ngModel]="+row.quantity"
               (ngModelChange)="row.quantity = ($event ?? 1).toString()"

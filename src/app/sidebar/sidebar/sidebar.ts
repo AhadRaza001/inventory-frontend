@@ -1,24 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  HostListener,
-  ElementRef,
-  inject,
-  ChangeDetectorRef,
-  signal,
-  Signal,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
-import { Drawer, DrawerModule } from 'primeng/drawer';
-import { StyleClassModule } from 'primeng/styleclass';
 import { SidebarService } from '../sidebarService';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -59,33 +44,23 @@ export class Sidebar {
     {
       label: 'Purchase Orders',
       icon: 'pi pi-shopping-bag',
-      route: '/purchaseorder',
+      route: '/purchaseOrders',
     },
     {
-      label: 'Supplier',
+      label: 'Suppliers',
       icon: 'pi pi-building',
-      route: '/supplier',
+      route: '/suppliers',
     },
 
     {
       label: 'Item Ledger',
       icon: 'pi pi-book',
-      route: '/itemledger',
+      route: '/reports/itemledger',
     },
     {
       label: 'In-Out Summary',
       icon: 'pi pi-arrow-right-arrow-left',
-      route: '/inoutsummary',
-    },
-    {
-      label: 'Reports',
-      icon: 'pi pi-chart-bar',
-      route: '/reports',
-    },
-     {
-      label: 'In-Out Summary',
-      icon: 'pi pi-arrow-right-arrow-left',
-      route: '/inoutsummary',
+      route: '/reports/inoutsummary',
     },
     {
       label: 'Reports',

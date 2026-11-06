@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule, ValueChangeEvent } from '@angular/forms';
 
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -37,6 +37,8 @@ export class SaleOrderComponent {
   saleOrderService = inject(SaleOrderService);
   router = inject(Router);
   toast = inject(ToastService);
+  route = inject(ActivatedRoute);
+
   location = inject(Location);
   confirmService = inject(ConfirmationService);
   selecteditems: IsaleOrder[] = [];
@@ -119,7 +121,7 @@ export class SaleOrderComponent {
   detailSaleOrder(id: number) {
     this.saleOrderService.getById(id).subscribe({
       next: () => {
-        this.router.navigate(['/saleOrder/detail', id]);
+        this.router.navigate(['/saleOrders/detail', id]);
       },
       error: (error: any) => {
         console.error(error);
@@ -263,7 +265,7 @@ export class SaleOrderComponent {
     this.selecteditems = [];
   }
   onNew() {
-    this.router.navigate(['/saleOrders/createOrder']);
+    this.router.navigate(['/saleOrders/createOrder'], { relativeTo: this.route });
   }
   onSearch(value: string) {
     this.searchValue = value;

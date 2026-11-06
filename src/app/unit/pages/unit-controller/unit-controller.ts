@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { UnitService } from '../../service/unit-service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastService } from '../../../toast/toast-service';
 import { Iunit } from '../../../interface/iunit';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -40,7 +40,7 @@ export class UnitController {
   router = inject(Router);
   toast = inject(ToastService);
   location = inject(Location);
-
+  route = inject(ActivatedRoute);
   units = signal<Iunit[]>([]);
   selecteditems: Iunit[] = [];
   confirmService = inject(ConfirmationService);
@@ -109,7 +109,7 @@ export class UnitController {
   detailUnit(id: number) {
     this.unitService.getById(id).subscribe({
       next: () => {
-        this.router.navigate(['/unit/detail', id]);
+        this.router.navigate(['/units/detail', id]);
       },
       error: (error) => {
         console.error(error);
@@ -210,7 +210,9 @@ export class UnitController {
     this.selecteditems = [];
   }
   onNew() {
-    this.router.navigate(['/unit/createUnit']);
+    this.router.navigate(['createUnit'], {
+      relativeTo: this.route,
+    });
   }
   onSearch(value: string) {
     this.searchValue = value;

@@ -1,24 +1,3 @@
-<!-- @if (showLayout()) {
-  <div class="app-layout" [class.sidebar-pinned]="sidebarService.pinned()">
-    sidebar is fixed/absolute, lives outside the shifting wrapper
-    <app-sidebar></app-sidebar>
-
-    this wrapper holds EVERYTHING else: topbar + main
-    <div class="app-content-wrapper">
-      <app-topbar></app-topbar>
-      <main class="ml-2 mr-2">
-        <app-toast-component></app-toast-component>
-        <app-loading></app-loading>
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  </div> 
-} @else {
-  <app-toast-component></app-toast-component>
-  <app-loading></app-loading>
-  <router-outlet></router-outlet>
-} -->
-
 <div class="app-layout">
 
   @if (showLayout()) {
