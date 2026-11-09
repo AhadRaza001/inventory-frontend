@@ -12,16 +12,20 @@ import { ConfirmationService } from 'primeng/api';
 import { UnitService } from '../../service/unit-service';
 import { ToastService } from '../../../toast/toast-service';
 import { Iunit } from '../../../interface/iunit';
+import { Tag } from 'primeng/tag';
+import { Toolbar } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-unit-detail-controller',
   imports: [
-     CardModule,
+    CardModule,
     ButtonModule,
     InputTextModule,
     FloatLabelModule,
     FormsModule,
     ConfirmDialogModule,
+    Tag,
+    Toolbar,
   ],
   templateUrl: './unit-detail-controller.html',
   styleUrl: './unit-detail-controller.css',
@@ -52,6 +56,9 @@ export class UnitDetailController {
       },
     });
   }
+  refresh() {
+    this.ngOnInit();
+  }
 
   updateName(name: string) {
     this.unit.update((u) => ({
@@ -64,7 +71,7 @@ export class UnitDetailController {
   updateShortName(short_name: string) {
     this.unit.update((u) => ({
       ...u!,
-      symbol:short_name,
+      symbol: short_name,
     }));
   }
 

@@ -1,0 +1,121 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-2xl w-full">
+    <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <h3 class="m-0 text-xl font-semibold">New Customer</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label for="name">Name</label>
+        <input pInputText id="name" [formField]="customerForm.name" class="w-full" />
+        <div class="text-red-500">
+          @if (customerForm.name().touched()) {
+            @for (item of customerForm.name().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="flex flex-col gap-2">
+        <label for="phone">Phone</label>
+        <input pInputText id="phone" [formField]="customerForm.phone" class="w-full" />
+        <div class="text-red-500">
+          @if (customerForm.phone().touched()) {
+            @for (item of customerForm.phone().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-2">
+        <label for="email">Email (optional)</label>
+        <input pInputText id="email" type="email" [formField]="customerForm.email" class="w-full" />
+        <div class="text-red-500">
+          @if (customerForm.email().touched()) {
+            @for (item of customerForm.email().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- City -->
+      <div class="flex flex-col gap-2">
+        <label for="city">City</label>
+        <input pInputText id="city" [formField]="customerForm.city" class="w-full" />
+        <div class="text-red-500">
+          @if (customerForm.city().touched()) {
+            @for (item of customerForm.city().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Credit Limit (p-inputnumber: ngModel workaround) -->
+      <div class="flex flex-col gap-2">
+        <label for="credit_limit">Credit Limit</label>
+        <p-inputnumber
+          inputId="credit_limit"
+          name="credit_limit"
+          mode="decimal"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          [ngModel]="customerForm.credit_limit().value()"
+          (ngModelChange)="customerForm.credit_limit().value.set($event ?? 0)"
+        ></p-inputnumber>
+        <div class="text-red-500">
+          @for (item of customerForm.credit_limit().errors(); track $index) {
+            {{ item.message }}
+          }
+        </div>
+      </div>
+
+      <!-- Status (p-select: ngModel workaround) -->
+      <div class="flex flex-col gap-2">
+        <label for="status">Status</label>
+        <p-select
+          inputId="status"
+          name="status"
+          optionLabel="label"
+          optionValue="value"
+          [options]="statusOptions"
+          [ngModel]="customerForm.status().value()"
+          (ngModelChange)="customerForm.status().value.set($event)"
+        ></p-select>
+      </div>
+
+      <!-- Address -->
+      <div class="flex flex-col gap-2 md:col-span-2">
+        <label for="address">Address (optional)</label>
+        <textarea
+          pTextarea
+          id="address"
+          rows="3"
+          [formField]="customerForm.address"
+          class="w-full"
+        ></textarea>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <div class="flex justify-end">
+        <button pButton type="button" variant="text" (click)="submit()">
+          <i class="pi pi-save"></i>
+          Save
+        </button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

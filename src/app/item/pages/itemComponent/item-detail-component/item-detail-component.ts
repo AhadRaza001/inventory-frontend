@@ -17,6 +17,8 @@ import { Categories } from '../../../../category/pages/categories/categories';
 import { CategoriesService } from '../../../../category/services/categories';
 import { UnitService } from '../../../../unit/service/unit-service';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { Tag } from 'primeng/tag';
+import { Toolbar } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-item-detail-component',
@@ -28,7 +30,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     FormsModule,
     ConfirmDialogModule,
     Select,
-    InputNumberModule
+    InputNumberModule,
+    Tag,
+    Toolbar,
   ],
   templateUrl: './item-detail-component.html',
   styleUrl: './item-detail-component.css',
@@ -67,7 +71,7 @@ export class ItemDetailComponent {
     // get all category for option
     this.categoryService.getAll().subscribe({
       next: (response: any) => {
-        this.categories.set(response.data); 
+        this.categories.set(response.data);
       },
       error: (error) => {
         this.toast.error(error?.error?.message || 'Something went wrong.');
@@ -87,6 +91,9 @@ export class ItemDetailComponent {
         this.toast.error(error?.error?.message || 'Something went wrong.');
       },
     });
+  }
+  refresh() {
+    this.ngOnInit();
   }
 
   updateName(name: string) {
@@ -110,12 +117,12 @@ export class ItemDetailComponent {
     }));
   }
 
- updatePurchasePrice(purchase_price: number) {
-  this.item.update((i) => ({
-    ...i!,
-    purchase_price: purchase_price.toString(), // keep interface contract as string
-  }));
-}
+  updatePurchasePrice(purchase_price: number) {
+    this.item.update((i) => ({
+      ...i!,
+      purchase_price: purchase_price.toString(), // keep interface contract as string
+    }));
+  }
 
   updateSalePrice(sale_price: number) {
     this.item.update((i) => ({

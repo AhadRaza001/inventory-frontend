@@ -32,13 +32,12 @@
   [tableStyle]="{ width: '100%' }"
   [paginator]="true"
   [rows]="10"
-  [rowsPerPageOptions]="[5, 10, 20]"
+  [rowsPerPageOptions]="[10, 20, 30]"
   [lazy]="true"
   [totalRecords]="totalRecords"
   (onLazyLoad)="loadSaleOrders($event)"
   [(selection)]="selecteditems"
   [scrollable]="true"
-  /* scrollHeight="calc(100vh - 225px)" */
 >
   <ng-template #header>
     <tr>

@@ -1,35 +1,65 @@
+<p-toolbar class="detail-toolbar">
+  <ng-template #start>
+    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
+    <div class="btns">
+      <button type="button" pButton variant="text" class="p-0" (click)="save()">
+        <i class="pi pi-save"></i>
+        Save
+      </button>
+
+      <button
+        type="button"
+        pButton
+        variant="text"
+        class="p-0 m-1"
+        severity="danger"
+        (click)="delete($event, unit()?.id)"
+      >
+        <i class="pi pi-trash"></i>
+        Delete
+      </button>
+
+      <button pButton type="button" variant="text" severity="info" (click)="enableEdit()">
+        <i class="pi pi-file-edit"></i>
+        Edit
+      </button>
+
+      <button
+        pButton
+        type="button"
+        variant="text"
+        class="p-0 m-1"
+        severity="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #end>
+    <button pButton type="button" variant="text" (click)="refresh()">
+      <i class="pi pi-refresh"></i>
+    </button>
+  </ng-template>
+</p-toolbar>
+
 <div class="flex justify-center mt-5">
   <p-card class="max-w-sm w-full">
     <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
-          <i
-            (click)="back()"
-            class="pi pi-arrow-left cursor-pointer"
-          ></i>
-
-          <h3 class="m-0 text-xl font-semibold">
-            Detail Unit
-          </h3>
+          <h3 class="m-0 text-xl font-semibold">Unit Details</h3>
         </div>
-
-        <button
-          pButton
-          type="button"
-          text="true"
-          severity="primary"
-          (click)="enableEdit()"
-        >
-        <i class="pi pi-file-edit"></i>
-        </button>
       </div>
     </ng-template>
 
     <form class="space-y-6 mt-3">
       <!-- Name -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="name">Name</label>
-
+        <label for="name" class="block mb-2 font-semibold text-900">Name</label>
         <input
           pInputText
           id="name"
@@ -41,10 +71,9 @@
         />
       </div>
 
-      <!-- Short Name (Remove if your interface doesn't have it) -->
+      <!-- Short Name -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="short_name">Short Name</label>
-
+        <label for="short_name" class="block mb-2 font-semibold text-900">Short Name</label>
         <input
           pInputText
           id="short_name"
@@ -55,51 +84,6 @@
           (ngModelChange)="updateShortName($event)"
         />
       </div>
-
     </form>
-
-    <ng-template #footer>
-      <div class="flex justify-between items-center">
-        <div>
-          <button
-            type="button"
-            pButton
-            text="true"
-            class="p-0 m-1"
-            severity="danger"
-            (click)="delete($event, unit()?.id)"
-          >
-          <i class="pi pi-trash"></i>
-            Delete
-          </button>
-        </div>
-
-        <p-confirmdialog></p-confirmdialog>
-
-        <div class="flex gap-2">
-          <button
-            type="button"
-            pButton
-            text="ture"
-            severity="secondary"
-            class="p-0 m-1"
-            (click)="cancel()"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="button"
-            pButton
-            text="true"
-            class="p-0 m-1"
-            (click)="save()"
-          >
-          <i class="pi pi-save"></i>
-            Save
-          </button>
-        </div>
-      </div>
-    </ng-template>
   </p-card>
 </div>

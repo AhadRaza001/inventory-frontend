@@ -25,6 +25,10 @@ import { PackingSlipComponent } from './pdf/packing-slip-component/packing-slip-
 import { PoPackingSlipComponent } from './pdf/po-packing-slip-component/po-packing-slip-component';
 import { ItemledgerComponent } from './itemledger/itemledger-component/itemledger-component';
 import { InoutsummaryComponent } from './inoutsummary/inoutsummary-component/inoutsummary-component';
+import { CustomerComponent } from './customer/pages/customer-component/customer-component';
+import { DetailCustomer } from './customer/pages/detail-customer/detail-customer';
+import { AddCustomer } from './customer/pages/add-customer/add-customer';
+import { Dashboard } from './dashboard/pages/dashboard/dashboard';
 
 export const routes: Routes = [
   // ==================================================
@@ -33,7 +37,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'categories',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
 
@@ -51,7 +55,17 @@ export const routes: Routes = [
     component: SignupComponent,
     canActivate: [authGuard],
   },
-
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Dashboard' },
+    children: [
+      {
+        path: '',
+        component: Dashboard,
+      },
+    ],
+  },
   // ==================================================
   // CATEGORIES
   // ==================================================
@@ -267,6 +281,30 @@ export const routes: Routes = [
         path: 'inoutsummary',
         component: InoutsummaryComponent,
         data: { breadcrumb: 'Stock In-Out Summary' },
+      },
+    ],
+  },
+  //customer
+  {
+    path: 'customers',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Customers' },
+    children: [
+      {
+        path: '',
+        component: CustomerComponent,
+      },
+
+      {
+        path: 'createCustomer',
+        component: AddCustomer,
+        data: { breadcrumb: 'Add Customer' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: DetailCustomer,
+        data: { breadcrumb: 'Customer Details' },
       },
     ],
   },

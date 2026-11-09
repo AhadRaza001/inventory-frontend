@@ -65,3 +65,51 @@ app-sidebar {
 :host ::ng-deep button.p-button:disabled {
   cursor: not-allowed !important;
 }
+
+
+/* datatable height and font size */
+
+:host {
+  --table-font-size: 13px;
+}
+
+:host ::ng-deep .p-datatable {
+  font-size: var(--table-font-size);
+}
+
+:host ::ng-deep .p-datatable-thead>tr>th {
+  padding: 7px 10px !important;
+}
+
+:host ::ng-deep .p-datatable-tbody>tr>td {
+  padding: 6px 10px !important;
+}
+
+:host ::ng-deep .p-sortable-column-icon {
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+}
+
+:host ::ng-deep .p-checkbox,
+:host ::ng-deep .p-checkbox .p-checkbox-box {
+  width: 16px;
+  height: 16px;
+}
+
+:host ::ng-deep .p-paginator {
+  padding: 4px 8px !important;
+  font-size: var(--table-font-size);
+}
+
+:host ::ng-deep .p-paginator .p-paginator-element {
+  min-width: 30px;
+  height: 30px;
+}
+
+/* detail page tooblar */
+
+:host ::ng-deep .detail-toolbar {
+  padding: 3px 10px;
+  position:relative;
+}

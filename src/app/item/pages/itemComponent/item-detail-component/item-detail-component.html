@@ -1,49 +1,81 @@
+<p-toolbar class="detail-toolbar">
+  <ng-template #start>
+    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
+    <div class="btns">
+      <button type="button" pButton variant="text" class="p-0" (click)="save()">
+        <i class="pi pi-save"></i>
+        Save
+      </button>
+
+      <button
+        type="button"
+        pButton
+        variant="text"
+        class="p-0 m-1"
+        severity="danger"
+        (click)="delete($event, item()?.id)"
+      >
+        <i class="pi pi-trash"></i>
+        Delete
+      </button>
+
+      <button pButton type="button" variant="text" severity="info" (click)="enableEdit()">
+        <i class="pi pi-file-edit"></i>
+        Edit
+      </button>
+
+      <button
+        pButton
+        type="button"
+        variant="text"
+        class="p-0 m-1"
+        severity="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #end>
+    <button pButton type="button" variant="text" (click)="refresh()">
+      <i class="pi pi-refresh"></i>
+    </button>
+  </ng-template>
+</p-toolbar>
+
 <div class="flex justify-center mt-5">
   <p-card class="max-w-4xl w-full">
     <ng-template #header>
       <div class="flex justify-between items-center p-4">
-        <div class="flex items-center gap-3">
-          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
-
-          <h3 class="m-0 text-xl font-semibold">Detail Item</h3>
-        </div>
-
-        <button
-          pButton
-          text="true"
-          type="button"
-          severity="primary"
-          (click)="enableEdit()"
-        >
-      <i class="pi pi-file-edit"></i>  
-      </button>
+        <h3 class="m-0 text-xl font-semibold">Item Details</h3>
       </div>
     </ng-template>
 
-    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+    <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- SKU -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="sku">SKU</label>
-
+        <label for="sku" class="block mb-2 font-semibold text-900">SKU</label>
         <input
-          styleClass="w-full"
           pInputText
+          class="w-full"
           id="sku"
           name="sku"
           type="text"
+          [disabled]="true"
           [ngModel]="item()?.sku"
-          disabled="true"
           (ngModelChange)="updateSku($event)"
         />
       </div>
 
       <!-- Name -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="name">Name</label>
-
+        <label for="name" class="block mb-2 font-semibold text-900">Name</label>
         <input
-          styleClass="w-full"
           pInputText
+          class="w-full"
           id="name"
           name="name"
           type="text"
@@ -55,9 +87,9 @@
 
       <!-- Category -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="category">Category</label>
-
+        <label for="category" class="block mb-2 font-semibold text-900">Category</label>
         <p-select
+          styleClass="w-full"
           id="category"
           name="category_id"
           [disabled]="!isEditing()"
@@ -72,8 +104,7 @@
 
       <!-- Unit -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="unit">Unit</label>
-
+        <label for="unit" class="block mb-2 font-semibold text-900">Unit</label>
         <p-select
           styleClass="w-full"
           id="unit"
@@ -90,8 +121,7 @@
 
       <!-- Purchase Price -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="purchase_price">Purchase Price</label>
-
+        <label for="purchase_price" class="block mb-2 font-semibold text-900">Purchase Price</label>
         <p-input-number
           styleClass="w-full"
           inputId="purchase_price"
@@ -106,8 +136,7 @@
 
       <!-- Sale Price -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="sale_price">Sale Price</label>
-
+        <label for="sale_price" class="block mb-2 font-semibold text-900">Sale Price</label>
         <p-input-number
           styleClass="w-full"
           inputId="sale_price"
@@ -122,8 +151,7 @@
 
       <!-- Reorder Level -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="reorder_level">Reorder Level</label>
-
+        <label for="reorder_level" class="block mb-2 font-semibold text-900">Reorder Level</label>
         <p-input-number
           styleClass="w-full"
           inputId="reorder_level"
@@ -136,11 +164,10 @@
 
       <!-- Barcode -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="barcode">Barcode</label>
-
+        <label for="barcode" class="block mb-2 font-semibold text-900">Barcode</label>
         <input
-          styleClass="w-full"
           pInputText
+          class="w-full"
           id="barcode"
           name="barcode"
           type="text"
@@ -152,9 +179,9 @@
 
       <!-- Status -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="status">Status</label>
-
+        <label for="status" class="block mb-2 font-semibold text-900">Status</label>
         <p-select
+          styleClass="w-full"
           id="status"
           name="status"
           [disabled]="!isEditing()"
@@ -168,65 +195,18 @@
 
       <!-- Description -->
       <div class="flex flex-col gap-2 sm:col-span-2 lg:col-span-3">
-        <label pLabel for="description">Description</label>
-
+        <label for="description" class="block mb-2 font-semibold text-900">Description</label>
         <textarea
-          class="sm:col-span-2 lg:col-span-3"
-          style="border: 1px solid gray"
           pTextarea
+          class="w-full resize-none"
           id="description"
           name="description"
           rows="3"
-          class="p-2"
           [disabled]="!isEditing()"
           [ngModel]="item()?.description"
           (ngModelChange)="updateDescription($event)"
         ></textarea>
       </div>
     </form>
-
-    <ng-template #footer>
-      <div class="flex justify-between items-center">
-        <div>
-          <button
-            type="button"
-            pButton
-            text="true"
-            severity="danger"
-            
-            class="p-0 m-1"
-            (click)="delete($event, item()?.id)"
-          >
-            <i class="pi pi-trash"></i> Delete
-          </button>
-        </div>
-
-        <p-confirmdialog></p-confirmdialog>
-
-        <div class="flex gap-2">
-          <button
-            type="button"
-            pButton
-            text="true"
-            severity="secondary"
-            class="p-0 m-1"
-            (click)="cancel()"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="button"
-            pButton
-            text="true"
-            class="p-0 m-1"
-            (click)="save()"
-          >
-          <i class="pi pi-save"></i>
-            Save
-          </button>
-        </div>
-      </div>
-    </ng-template>
   </p-card>
 </div>

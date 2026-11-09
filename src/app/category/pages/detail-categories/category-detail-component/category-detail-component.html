@@ -1,5 +1,5 @@
-<p-toolbar styleClass="mb-3">
-  <ng-template #start>
+<p-toolbar class="detail-toolbar">
+  <ng-template #start >
     <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
     <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
 
@@ -50,9 +50,6 @@
       </div>
     </ng-template>
     <form class="space-y-6 mt-3">
-      <div class="mb-5">
-        <p-tag severity="info" [value]="'ID : ' + category()?.id"></p-tag>
-      </div>
       <div class="flex flex-col gap-2">
         <label for="name" class="block mb-2 font-semibold text-900">Name</label>
         <input

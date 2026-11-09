@@ -5,8 +5,8 @@
 }
 
 /* Keep column widths aligned with header */
-.p-datatable-thead > tr,
-.p-datatable-tbody > tr {
+.p-datatable-thead>tr,
+.p-datatable-tbody>tr {
   display: table;
   width: 100%;
   table-layout: fixed;

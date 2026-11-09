@@ -23,6 +23,7 @@
     "@primeicons/angular": "^8.0.0",
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/postcss": "^4.3.1",
+    "chart.js": "^4.6.1",
     "docx": "^9.15.0",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",

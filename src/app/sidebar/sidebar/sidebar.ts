@@ -19,7 +19,7 @@ export class Sidebar {
     {
       label: 'Dashboard',
       icon: 'pi pi-home',
-      route: '/categories',
+      route: '/dashboard',
     },
     {
       label: 'Category',
@@ -63,9 +63,9 @@ export class Sidebar {
       route: '/reports/inoutsummary',
     },
     {
-      label: 'Reports',
+      label: 'Customer',
       icon: 'pi pi-chart-bar',
-      route: '/reports',
+      route: '/customers',
     },
   ];
 

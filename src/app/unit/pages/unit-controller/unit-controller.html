@@ -1,64 +1,3 @@
-<!-- <p-toolbar styleClass="mb-3">
-  <ng-template #start>
-    <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
-    <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
-
-    <p-floatlabel variant="on">
-      <p-iconfield>
-        <p-inputicon class="pi pi-search"></p-inputicon>
-
-        <input
-          pInputText
-          id="over_label"
-          [(ngModel)]="searchValue"
-          autocomplete="off"
-          (input)="table.filterGlobal($any($event.target).value, 'contains')"
-        />
-      </p-iconfield>
-
-      <label for="over_label">Search categories</label>
-    </p-floatlabel>
-
-    <div class="ms-5 h-7 border-l border-surface-300"></div>
-    <div class="btns">
-      <button pButton text="true" routerLink="/unit/createUnit" class="ms-2">
-        <i class="pi pi-plus"> New</i>
-      </button>
-      <button
-        pButton
-        text="true"
-        severity="danger"
-        [disabled]="selecteditems.length === 0"
-        (click)="deleteSelected()"
-      >
-        <i class="pi pi-trash"> Delete</i>
-      </button>
-      <button
-        pButton
-        text="true"
-        severity="contrast"
-        [disabled]="selecteditems.length === 0"
-        (click)="exportSelected()"
-      >
-        <i class="pi pi-file-excel"> Excel</i>
-      </button>
-      <button
-        pButton
-        text="true"
-        severity="contrast"
-        [disabled]="selecteditems.length === 0"
-        (click)="exportPDF()"
-      >
-        <i class="pi pi-file-pdf"></i>
-        <span class="ml-1">PDF</span>
-      </button>
-    </div>
-  </ng-template>
-  <ng-template #end>
-    <button pButton text="true" (click)="refresh()"><i class="pi pi-refresh"></i></button>
-  </ng-template>
-</p-toolbar> -->
-
 <app-table-toolbar
   searchPlaceholder="Search units"
   [showBack]="true"
@@ -67,12 +6,9 @@
   [showExcel]="true"
   [showPdf]="true"
   [showRefresh]="true"
-
   [deleteDisabled]="selecteditems.length === 0"
   [excelDisabled]="selecteditems.length === 0"
   [pdfDisabled]="selecteditems.length === 0"
-
-
   (searchChange)="onSearch($event)"
   (backClick)="back()"
   (newClick)="onNew()"

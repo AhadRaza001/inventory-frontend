@@ -1,0 +1,188 @@
+<div class="sticky top-0 z-50 bg-surface-0">
+  <p-toolbar class="detail-toolbar">
+    <ng-template #start>
+      <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+      <div class="ms-3 me-5 h-7 border-l border-surface-300"></div>
+
+      <div class="btns">
+        <button
+          type="button"
+          pButton
+          variant="text"
+          class="p-0"
+          [disabled]="!isEditing()"
+          (click)="save()"
+        >
+          <i class="pi pi-save"></i>
+          Save
+        </button>
+
+        <button
+          type="button"
+          pButton
+          variant="text"
+          class="p-0 m-1"
+          severity="danger"
+          (click)="delete($event, customer()?.id)"
+        >
+          <i class="pi pi-trash"></i>
+          Delete
+        </button>
+
+        <button pButton type="button" variant="text" severity="info" (click)="enableEdit()">
+          <i class="pi pi-file-edit"></i>
+          Edit
+        </button>
+
+        <button
+          pButton
+          type="button"
+          variant="text"
+          class="p-0 m-1"
+          severity="secondary"
+          [disabled]="!isEditing()"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template #end>
+      <button pButton type="button" variant="text" (click)="refresh()">
+        <i class="pi pi-refresh"></i>
+      </button>
+    </ng-template>
+  </p-toolbar>
+</div>
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-2xl w-full">
+    <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <h3 class="m-0 text-xl font-semibold">Customer Details</h3>
+          <p-tag
+            [value]="customer()?.status ?? ''"
+            [severity]="statusSeverity(customer()?.status)"
+          ></p-tag>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Customer No (auto-generated, never editable) -->
+      <div class="flex flex-col gap-2">
+        <label for="customer_no" class="block mb-2 font-semibold text-900">Customer No</label>
+        <input
+          pInputText
+          id="customer_no"
+          name="customer_no"
+          type="text"
+          [disabled]="true"
+          [ngModel]="customer()?.customer_no"
+        />
+      </div>
+
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label for="name" class="block mb-2 font-semibold text-900">Name</label>
+        <input
+          pInputText
+          id="name"
+          name="name"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.name"
+          (ngModelChange)="updateField('name', $event)"
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="flex flex-col gap-2">
+        <label for="phone" class="block mb-2 font-semibold text-900">Phone</label>
+        <input
+          pInputText
+          id="phone"
+          name="phone"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.phone"
+          (ngModelChange)="updateField('phone', $event)"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-2">
+        <label for="email" class="block mb-2 font-semibold text-900">Email</label>
+        <input
+          pInputText
+          id="email"
+          name="email"
+          type="email"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.email"
+          (ngModelChange)="updateField('email', $event || null)"
+        />
+      </div>
+
+      <!-- City -->
+      <div class="flex flex-col gap-2">
+        <label for="city" class="block mb-2 font-semibold text-900">City</label>
+        <input
+          pInputText
+          id="city"
+          name="city"
+          type="text"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.city"
+          (ngModelChange)="updateField('city', $event)"
+        />
+      </div>
+
+      <!-- Credit Limit -->
+      <div class="flex flex-col gap-2">
+        <label for="credit_limit" class="block mb-2 font-semibold text-900">Credit Limit</label>
+        <p-inputnumber
+          inputId="credit_limit"
+          name="credit_limit"
+          mode="decimal"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          [disabled]="!isEditing()"
+          [ngModel]="creditLimit()"
+          (ngModelChange)="updateCreditLimit($event)"
+        ></p-inputnumber>
+      </div>
+
+      <!-- Status -->
+      <div class="flex flex-col gap-2">
+        <label for="status" class="block mb-2 font-semibold text-900">Status</label>
+        <p-select
+          inputId="status"
+          name="status"
+          optionLabel="label"
+          optionValue="value"
+          [options]="statusOptions"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.status"
+          (ngModelChange)="updateField('status', $event)"
+        ></p-select>
+      </div>
+
+      <!-- Address -->
+      <div class="flex flex-col gap-2 md:col-span-2">
+        <label for="address" class="block mb-2 font-semibold text-900">Address</label>
+        <textarea
+          pTextarea
+          id="address"
+          name="address"
+          rows="3"
+          [disabled]="!isEditing()"
+          [ngModel]="customer()?.address"
+          (ngModelChange)="updateField('address', $event)"
+        ></textarea>
+      </div>
+    </form>
+  </p-card>
+</div>
