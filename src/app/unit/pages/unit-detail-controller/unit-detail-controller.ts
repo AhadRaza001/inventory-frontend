@@ -24,7 +24,6 @@ import { Toolbar } from 'primeng/toolbar';
     FloatLabelModule,
     FormsModule,
     ConfirmDialogModule,
-    Tag,
     Toolbar,
   ],
   templateUrl: './unit-detail-controller.html',

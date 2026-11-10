@@ -82,7 +82,12 @@
         <p-skeleton height="18rem" />
       } @else if (chartData()) {
         <div class="h-72">
-          <p-chart type="bar" [data]="chartData()" [options]="chartOptions" height="100%" />
+          <p-chart
+            type="bar"
+            [data]="chartData()!"
+            [options]="chartOptions"
+            height="100%"
+          ></p-chart>
         </div>
       }
     </div>
@@ -140,7 +145,7 @@
           <tr>
             <td>{{ order.order_no }}</td>
             <td>{{ order.party_name }}</td>
-            <td>{{ order.created_at| date: 'dd MMM yyyy' }}</td>
+            <td>{{ order.created_at | date: 'dd MMM yyyy' }}</td>
             <td class="text-right">{{ order.grand_total | number: '1.0-0' }}</td>
             <td><p-tag [value]="order.status" [severity]="statusSeverity(order.status)" /></td>
           </tr>

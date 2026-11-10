@@ -31,7 +31,6 @@ import { Toolbar } from 'primeng/toolbar';
     ConfirmDialogModule,
     Select,
     InputNumberModule,
-    Tag,
     Toolbar,
   ],
   templateUrl: './item-detail-component.html',
