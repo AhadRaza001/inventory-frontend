@@ -20,6 +20,18 @@
   border: none;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  border-radius: 30px;
+}
+
 /* Keep long trails on one line and scrollable instead of wrapping */
 :host ::ng-deep .p-breadcrumb-list {
   flex-wrap: nowrap;
@@ -63,7 +75,8 @@
     gap: 0.5rem;
   }
 
-  .logout-btn span {
+  .action-btn span {
     display: none;
   }
+
 }

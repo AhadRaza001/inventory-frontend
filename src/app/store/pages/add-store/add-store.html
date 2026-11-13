@@ -1,0 +1,78 @@
+<div class="flex justify-center mt-5">
+  <p-card class="max-w-2xl w-full">
+    <ng-template #header>
+      <div class="flex justify-between items-center p-4">
+        <div class="flex items-center gap-3">
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
+          <h3 class="m-0 text-xl font-semibold">New Store</h3>
+        </div>
+      </div>
+    </ng-template>
+
+    <form class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Name -->
+      <div class="flex flex-col gap-2">
+        <label for="name">Name</label>
+        <input pInputText id="name" [formField]="storeForm.name" class="w-full" />
+        <div class="text-red-500">
+          @if (storeForm.name().touched()) {
+            @for (item of storeForm.name().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="flex flex-col gap-2">
+        <label for="phone">Phone (optional)</label>
+        <input pInputText id="phone" [formField]="storeForm.phone" class="w-full" />
+        <div class="text-red-500">
+          @for (item of storeForm.phone().errors(); track $index) {
+            {{ item.message }}
+          }
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="flex flex-col gap-2 md:col-span-2">
+        <label for="address">Address</label>
+        <textarea
+          pTextarea
+          id="address"
+          rows="3"
+          [formField]="storeForm.address"
+          class="w-full"
+        ></textarea>
+        <div class="text-red-500">
+          @if (storeForm.address().touched()) {
+            @for (item of storeForm.address().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="flex flex-col gap-2 md:col-span-2">
+        <label for="description">Description (optional)</label>
+        <textarea
+          pTextarea
+          id="description"
+          rows="3"
+          [formField]="storeForm.description"
+          class="w-full"
+        ></textarea>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <div class="flex justify-end">
+        <button pButton type="button" variant="text" (click)="submit()">
+          <i class="pi pi-save"></i>
+          Save
+        </button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

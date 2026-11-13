@@ -188,3 +188,37 @@ nav::-webkit-scrollbar-thumb {
 .sidebar.collapsed nav::-webkit-scrollbar {
     display: none;
 }
+
+
+
+
+
+.group-header {
+  cursor: pointer;
+  user-select: none;
+}
+
+.group-header .chevron {
+  margin-left: auto;
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.group-header .chevron.open {
+  transform: rotate(180deg);
+}
+
+/* lighter than .active, so the open page link still stands out */
+.group-header.active-group {
+  color: var(--p-primary-color);
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  font-size:small;
+}
+
+.submenu a {
+  padding-left: 2.5rem;
+}

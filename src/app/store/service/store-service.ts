@@ -61,7 +61,7 @@ export class StoreService {
       body: { ids },
     });
   }
-  all(){
-     return this.http.get<IStore>(this.baseUrl);
+  all() {
+    return this.http.get<IStore>(this.baseUrl);
   }
 }

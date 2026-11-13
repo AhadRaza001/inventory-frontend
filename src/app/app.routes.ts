@@ -29,6 +29,9 @@ import { CustomerComponent } from './customer/pages/customer-component/customer-
 import { DetailCustomer } from './customer/pages/detail-customer/detail-customer';
 import { AddCustomer } from './customer/pages/add-customer/add-customer';
 import { Dashboard } from './dashboard/pages/dashboard/dashboard';
+import { StoreComponent } from './store/pages/store-component/store-component';
+import { AddStore } from './store/pages/add-store/add-store';
+import { DetailStore } from './store/pages/detail-store/detail-store';
 
 export const routes: Routes = [
   // ==================================================
@@ -309,6 +312,30 @@ export const routes: Routes = [
     ],
   },
 
+  //store
+  {
+    path: 'stores',
+    canActivate: [authGuard],
+    data: { breadcrumb: 'Stores' },
+    children: [
+      {
+        path: '',
+        component: StoreComponent,
+      },
+
+      {
+        path: 'createStore',
+        component: AddStore,
+        data: { breadcrumb: 'Add Store' },
+      },
+
+      {
+        path: 'detail/:id',
+        component: DetailStore,
+        data: { breadcrumb: 'Customer Details' },
+      },
+    ],
+  },
   // ==================================================
   // WILDCARD
   // ==================================================

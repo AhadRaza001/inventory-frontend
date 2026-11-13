@@ -13,6 +13,8 @@ export interface IStore {
   description?: string;
   address?: string;
   phone?: string;
+  created_at:string;
+  updated_at:string;
 }
 
 export interface ISaleOrderUser {

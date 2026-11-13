@@ -17,10 +17,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './breadcrumb.css',
 })
 export class Breadcrumb {
- private readonly router = inject(Router);
+  private readonly router = inject(Router);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly authService = inject(AuthService);
   private readonly toast = inject(ToastService);
+  route = inject(ActivatedRoute);
 
   readonly home: MenuItem = {
     icon: 'pi pi-home',
@@ -77,6 +78,11 @@ export class Breadcrumb {
 
     return crumbs;
   }
+  signup() {
+    this.router.navigate(['/signup'], {
+      relativeTo: this.route,
+    });
+  }
 
   logout(event: MouseEvent): void {
     this.confirmationService.confirm({
@@ -96,8 +102,7 @@ export class Breadcrumb {
       accept: () => {
         this.authService.logout().subscribe({
           next: (response: any) => this.toast.success(response.message),
-          error: (error: any) =>
-            this.toast.error(error?.error?.message || 'Something went wrong.'),
+          error: (error: any) => this.toast.error(error?.error?.message || 'Something went wrong.'),
         });
       },
     });

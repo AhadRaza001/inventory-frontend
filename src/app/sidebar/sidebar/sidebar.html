@@ -8,20 +8,47 @@
       }
     </div>
     <button pButton text="true" class="toggle" (click)="toggle()">
-      <i class="pi"  [class.pi-angle-left]="!collapsed()" [class.pi-angle-right]="collapsed()"> </i>
+      <i class="pi" [class.pi-angle-left]="!collapsed()" [class.pi-angle-right]="collapsed()"> </i>
     </button>
-
   </div>
 
   <nav style="cursor: pointer;">
-    @for (menu of menus; track menu.route) {
-      <a [routerLink]="menu.route" routerLinkActive="active">
-        <i [class]="menu.icon"></i>
+    @for (menu of menus; track menu.label) {
+      @if (menu.children) {
+        <!-- dropdown group -->
+        <a
+          class="group-header"
+          [class.active-group]="isGroupActive(menu)"
+          (click)="toggleGroup(menu.label)"
+        >
+          <i [class]="menu.icon"></i>
 
-        @if (!collapsed()) {
-          <span>{{ menu.label }}</span>
+          @if (!collapsed()) {
+            <span>{{ menu.label }}</span>
+            <i class="pi pi-angle-down chevron" [class.open]="isOpen(menu.label)"></i>
+          }
+        </a>
+
+        @if (isOpen(menu.label) && !collapsed()) {
+          <div class="submenu">
+            @for (child of menu.children; track child.route) {
+              <a [routerLink]="child.route" routerLinkActive="active">
+                <i [class]="child.icon"></i>
+                <span>{{ child.label }}</span>
+              </a>
+            }
+          </div>
         }
-      </a>
+      } @else {
+        <!-- plain link -->
+        <a [routerLink]="menu.route" routerLinkActive="active">
+          <i [class]="menu.icon"></i>
+
+          @if (!collapsed()) {
+            <span>{{ menu.label }}</span>
+          }
+        </a>
+      }
     }
   </nav>
 
