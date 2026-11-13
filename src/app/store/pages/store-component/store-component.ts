@@ -112,7 +112,7 @@ export class StoreComponent {
   }
 
   onNew() {
-    this.router.navigate(['/createStore'], {
+    this.router.navigate(['/stores/createStore'], {
       relativeTo: this.route,
     });
   }
