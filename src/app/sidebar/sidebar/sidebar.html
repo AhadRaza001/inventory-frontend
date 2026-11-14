@@ -4,7 +4,7 @@
       <i class="pi pi-box"></i>
 
       @if (!collapsed()) {
-        <span>Inventory</span>
+        <span>AA Developer's</span>
       }
     </div>
     <button pButton text="true" class="toggle" (click)="toggle()">
@@ -12,7 +12,7 @@
     </button>
   </div>
 
-  <nav style="cursor: pointer;">
+  <nav style="cursor: pointer">
     @for (menu of menus; track menu.label) {
       @if (menu.children) {
         <!-- dropdown group -->

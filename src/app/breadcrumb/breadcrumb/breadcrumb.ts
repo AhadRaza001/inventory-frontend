@@ -25,7 +25,7 @@ export class Breadcrumb {
 
   readonly home: MenuItem = {
     icon: 'pi pi-home',
-    routerLink: '/categories',
+    routerLink: '/dashboard',
   };
 
   // Emits the current URL after every completed navigation

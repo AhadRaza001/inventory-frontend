@@ -154,7 +154,9 @@
   position="right"
   [visible]="drawerVisible()"
   (visibleChange)="drawerVisible.set($event)"
-  [style]="{ width: '24rem' }"
+  [style]="{
+    width: isMobile() ? '18rem' : '25rem'
+  }"
 >
   <div class="flex flex-col gap-4">
     <!-- ITEM -->

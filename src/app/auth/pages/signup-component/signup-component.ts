@@ -15,7 +15,6 @@ import { email, form, minLength, required } from '@angular/forms/signals';
   selector: 'app-signup-component',
   imports: [
     FormsModule,
-    RouterLink,
     CardModule,
     InputTextModule,
     IconFieldModule,
@@ -81,7 +80,7 @@ export class SignupComponent {
 
     this.authService.signup(formValue).subscribe({
       next: () => {
-        this.toast.success('Account created successfully.','Signup Successfully');
+        this.toast.success('Account created successfully.', 'Signup Successfully');
         setTimeout(() => {
           this.router.navigate(['/']);
         }, 300);

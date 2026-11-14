@@ -54,11 +54,9 @@
   .btn-label {
     display: none;
   }
-   :host ::ng-deep .p-toolbar {
+
+  :host ::ng-deep .p-toolbar {
     flex-wrap: wrap;
   }
 }
 
-@media (max-width: 800px) {
- 
-}

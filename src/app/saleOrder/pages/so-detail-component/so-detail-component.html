@@ -17,11 +17,27 @@
         </button>
 
         <div class="mx-2 h-5 border-l border-surface-300"></div>
-        <button pButton type="button" [disabled]="so()?.status === 'delivered'" text="true" size="small" label="" (click)="saveAndDispatch()">
+        <button
+          pButton
+          type="button"
+          [disabled]="so()?.status === 'delivered'"
+          text="true"
+          size="small"
+          label=""
+          (click)="saveAndDispatch()"
+        >
           <i class="pi pi-box"></i>
           Post Packing
         </button>
-        <button pButton type="button" [disabled]="so()?.status === 'open'" text="true" size="small" label="" (click)="getpackingslip()">
+        <button
+          pButton
+          type="button"
+          [disabled]="so()?.status === 'open'"
+          text="true"
+          size="small"
+          label=""
+          (click)="getpackingslip()"
+        >
           <i class="pi pi-file"></i>
           Packing Slip
         </button>
@@ -117,11 +133,11 @@
             Customer Reference
           </label>
           <input
-          [disabled]="so()?.status === 'delivered'" 
+            [disabled]="so()?.status === 'delivered'"
             id="custRef"
             pInputText
             type="text"
-            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            class="w-50 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
             [value]="so()?.customer_reference ?? ''"
             #refInput
             (blur)="updateSaleOrderField('customer_reference', refInput.value)"
@@ -133,11 +149,11 @@
             Customer Requisition
           </label>
           <input
-          [disabled]="so()?.status === 'delivered'" 
+            [disabled]="so()?.status === 'delivered'"
             id="custReq"
             pInputText
             type="text"
-            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            class="w-50 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
             [value]="so()?.customer_requisitions ?? ''"
             #reqInput
             (blur)="updateSaleOrderField('customer_requisitions', reqInput.value)"

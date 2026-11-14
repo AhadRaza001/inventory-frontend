@@ -101,6 +101,7 @@
                 size="small"
                 severity="danger"
                 [text]="true"
+                [disabled]="po?.status == 'delivered'"
                 (onClick)="onDeleteItem(row)"
                 aria-label="Delete line"
               />

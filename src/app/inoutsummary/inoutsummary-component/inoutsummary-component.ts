@@ -15,6 +15,7 @@ import { forkJoin } from 'rxjs';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Location } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 interface IOption {
   id: number;
@@ -90,6 +91,15 @@ export class InoutsummaryComponent {
   private readonly MAX_ZOOM = 400;
   private readonly STEP = 10;
 
+  private breakpointObserver = inject(BreakpointObserver);
+
+  isMobile = signal(false);
+
+  constructor() {
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result) => {
+      this.isMobile.set(result.matches);
+    });
+  }
   ngOnInit(): void {
     forkJoin({
       items: this.itemService.all(),

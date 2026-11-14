@@ -130,7 +130,7 @@
             id="poRef"
             pInputText
             type="text"
-            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            class="w-50 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
             [value]="order.customer_reference ?? ''"
             #refInput
             (blur)="updatePoField('customer_reference', refInput.value)"
@@ -145,7 +145,7 @@
             id="poReq"
             pInputText
             type="text"
-            class="w-60 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
+            class="w-50 p-1 !rounded-md !border !border-surface-300 !py-1.5 !text-sm !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-100 focus:!ring-1 focus:!ring-green-600"
             [value]="order.customer_requisitions ?? ''"
             #reqInput
             (blur)="updatePoField('customer_requisitions', reqInput.value)"
