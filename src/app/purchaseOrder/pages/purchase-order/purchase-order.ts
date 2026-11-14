@@ -95,7 +95,7 @@ export class PurchaseOrder {
     // Sorting
     const sortField = (event.sortField as string) ?? 'id';
 
-    const sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
+    const sortOrder = event.sortOrder === 1 ? 'desc' : 'asc';
 
     // Column Filters
     const filters = Object.entries(event.filters ?? {}).flatMap(([field, metadata]) => {
