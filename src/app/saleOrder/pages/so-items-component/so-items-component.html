@@ -84,6 +84,7 @@
               (onBlur)="onQuantityBlur(row)"
               [min]="1"
               [showButtons]="false"
+              [disabled]="so?.status == 'delivered'"
               inputStyleClass="w-24 !py-1 text-sm text-center !border !border-surface-300 !shadow-none !outline-none transition-colors hover:!border-surface-400 focus:!border-green-600 focus:!ring-1 focus:!ring-green-600"
             />
           </td>

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-so-add-component',
@@ -34,6 +35,7 @@ export class SoAddComponent {
   saleOrderService = inject(SaleOrderService);
   customerService = inject(CustomerService);
   storeService = inject(StoreService);
+  router = inject(Router);
 
   toast = inject(ToastService);
   location = inject(Location);
@@ -166,6 +168,8 @@ export class SoAddComponent {
     this.saleOrderService.create(formValue).subscribe({
       next: (response: any) => {
         this.toast.success(response.message);
+        const saleOrderId = response.data.id;
+        this.router.navigate(['/saleOrders/detail', saleOrderId]);
       },
 
       error: (err: HttpErrorResponse) => {

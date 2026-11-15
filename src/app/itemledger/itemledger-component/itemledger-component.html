@@ -155,7 +155,7 @@
   [visible]="drawerVisible()"
   (visibleChange)="drawerVisible.set($event)"
   [style]="{
-    width: isMobile() ? '18rem' : '25rem'
+    width: isMobile() ? '18rem' : '25rem',
   }"
 >
   <div class="flex flex-col gap-4">
@@ -234,7 +234,7 @@
     <div class="flex gap-2 justify-end mt-2">
       <p-button label="Reset" severity="secondary" [outlined]="true" (onClick)="resetFilters()" />
 
-      <p-button label="Apply" icon="pi pi-check" [loading]="loading()" (onClick)="applyFilters()" />
+      <p-button label="Apply" [loading]="loading()" (onClick)="applyFilters()" />
     </div>
   </div>
 </p-drawer>

@@ -78,6 +78,7 @@
           <td class="text-sm font-medium text-surface-900">{{ row.item?.name }}</td>
           <td class="text-right">
             <p-inputnumber
+              [disabled]="po?.status == 'delivered'"
               [ngModel]="+row.quantity"
               (ngModelChange)="row.quantity = ($event ?? 1).toString()"
               (onBlur)="onFieldBlur(row)"

@@ -10,6 +10,22 @@
     </ng-template>
 
     <form class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-2">
+        <label for="sku">SKU</label>
+        <input
+          pInputText
+          id="sku"
+          [formField]="customerForm.sku"
+          class="w-full"
+        />
+        <div class="text-red-500">
+          @if (customerForm.sku().touched()) {
+            @for (item of customerForm.sku().errors(); track $index) {
+              {{ item.message }}
+            }
+          }
+        </div>
+      </div>
       <!-- Name -->
       <div class="flex flex-col gap-2">
         <label for="name">Name</label>

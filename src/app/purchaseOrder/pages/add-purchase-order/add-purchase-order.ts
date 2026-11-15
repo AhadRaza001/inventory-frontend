@@ -14,6 +14,8 @@ import { Select, SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { routes } from '../../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-purchase-order',
@@ -37,6 +39,7 @@ export class AddPurchaseOrder implements OnInit {
   gNumber = inject(GenerateNumberService);
   toast = inject(ToastService);
   location = inject(Location);
+  router = inject(Router);
 
   suppliers = signal<ISupplier[]>([]);
   stores = signal<IStore[]>([]);
@@ -91,7 +94,8 @@ export class AddPurchaseOrder implements OnInit {
     this.poService.create(formValue).subscribe({
       next: (response: any) => {
         this.toast.success(response.message);
-        this.location.back();
+        const id = response.data.id;
+        this.router.navigate(['/purchaseOrders/detail', id]);
       },
       error: (err: HttpErrorResponse) => {
         const errors = err.error?.errors;

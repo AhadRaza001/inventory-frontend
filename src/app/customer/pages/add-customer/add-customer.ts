@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { email, form, FormField, min, required } from '@angular/forms/signals';
+import { disabled, email, form, FormField, min, required } from '@angular/forms/signals';
 
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
@@ -14,6 +14,7 @@ import { SelectModule } from 'primeng/select';
 import { CardModule } from 'primeng/card';
 import { CustomerService } from '../../service/customer-service';
 import { ToastService } from '../../../toast/toast-service';
+import { GenerateNumberService } from '../../../core/service/generate-number-service';
 
 @Component({
   selector: 'app-add-customer',
@@ -45,6 +46,7 @@ export class AddCustomer {
 
   // customer_no and company_id are set by the backend
   customer = signal({
+    sku: '',
     name: '',
     phone: '',
     email: '',
@@ -54,7 +56,23 @@ export class AddCustomer {
     status: 'active',
   });
 
+  gNumber = inject(GenerateNumberService);
+  ngOnInit() {
+    // generate SKU
+    this.gNumber.customer().subscribe({
+      next: (sku) => {
+        console.log(sku);
+
+        this.customer.update((customer) => ({
+          ...customer,
+          sku: sku.data,
+        }));
+      },
+    });
+  }
+
   customerForm = form(this.customer, (schema) => {
+    disabled(schema.sku);
     required(schema.name, {
       when: ({ state }) => state.touched(),
       message: 'Customer name is required.',

@@ -34,8 +34,15 @@ export class GenerateNumberService {
     );
   }
 
-   public supplier() {
+  public supplier() {
     return this.http.get(`${this.baseUrl}/supplier`).pipe(
+      tap((res: any) => {
+        console.log(res);
+      }),
+    );
+  }
+  public customer() {
+    return this.http.get(`${this.baseUrl}/customer`).pipe(
       tap((res: any) => {
         console.log(res);
       }),
