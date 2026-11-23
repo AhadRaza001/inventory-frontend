@@ -3,10 +3,7 @@
     <ng-template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex items-center gap-3">
-          <i
-            (click)="back()"
-            class="pi pi-arrow-left cursor-pointer"
-          ></i>
+          <i (click)="back()" class="pi pi-arrow-left cursor-pointer"></i>
 
           <h3 class="m-0 text-xl font-semibold">New Sale Order</h3>
         </div>
@@ -14,18 +11,11 @@
     </ng-template>
 
     <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
-
       <!-- SO No -->
       <div class="flex flex-col gap-2">
         <label pLabel for="so_no">SO No</label>
 
-        <input
-          pInputText
-          id="so_no"
-          [value]="saleOrder().so_no"
-          disabled
-          class="w-full"
-        />
+        <input pInputText id="so_no" [value]="saleOrder().so_no" disabled class="w-full" />
 
         <div class="text-red-500">
           @if (saleOrderForm.so_no().touched()) {
@@ -54,10 +44,7 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.customer_id().touched()) {
-            @for (
-              item of saleOrderForm.customer_id().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.customer_id().errors(); track $index) {
               {{ item.message }}
             }
           }
@@ -82,10 +69,7 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.store_id().touched()) {
-            @for (
-              item of saleOrderForm.store_id().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.store_id().errors(); track $index) {
               {{ item.message }}
             }
           }
@@ -110,10 +94,7 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.status().touched()) {
-            @for (
-              item of saleOrderForm.status().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.status().errors(); track $index) {
               {{ item.message }}
             }
           }
@@ -138,18 +119,12 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.amount_status().touched()) {
-            @for (
-              item of saleOrderForm.amount_status().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.amount_status().errors(); track $index) {
               {{ item.message }}
             }
           }
         </div>
       </div>
-
-
-
 
       <!-- Discount Percentage -->
       <div class="flex flex-col gap-2">
@@ -165,10 +140,7 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.discount_percentage().touched()) {
-            @for (
-              item of saleOrderForm.discount_percentage().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.discount_percentage().errors(); track $index) {
               {{ item.message }}
             }
           }
@@ -189,17 +161,12 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.taxPercent().touched()) {
-            @for (
-              item of saleOrderForm.taxPercent().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.taxPercent().errors(); track $index) {
               {{ item.message }}
             }
           }
         </div>
       </div>
-
-
 
       <!-- Paid Amount -->
       <div class="flex flex-col gap-2">
@@ -215,22 +182,16 @@
 
         <div class="text-red-500">
           @if (saleOrderForm.paid_amount().touched()) {
-            @for (
-              item of saleOrderForm.paid_amount().errors();
-              track $index
-            ) {
+            @for (item of saleOrderForm.paid_amount().errors(); track $index) {
               {{ item.message }}
             }
           }
         </div>
       </div>
 
-
       <!-- Customer Requisition -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="customer_requisitions">
-          Customer Requisition
-        </label>
+        <label pLabel for="customer_requisitions"> Customer Requisition </label>
 
         <input
           pInputText
@@ -242,9 +203,7 @@
 
       <!-- Customer Reference -->
       <div class="flex flex-col gap-2">
-        <label pLabel for="customer_reference">
-          Customer Reference
-        </label>
+        <label pLabel for="customer_reference"> Customer Reference </label>
 
         <input
           pInputText
@@ -266,23 +225,16 @@
           style="border: 1px solid rgb(210, 208, 208)"
         ></textarea>
       </div>
-
     </form>
 
     <ng-template #footer>
       <div class="flex flex-col gap-4">
         <div class="mt-2 text-right text-surface-500 text-sm">
-          <button
-            pButton
-            text="true"
-            type="button"
-            (click)="submit()"
-          >
+          <button pButton text="true" type="button" (click)="submit()">
             <i class="pi pi-save"> Save</i>
           </button>
         </div>
       </div>
     </ng-template>
-
   </p-card>
 </div>

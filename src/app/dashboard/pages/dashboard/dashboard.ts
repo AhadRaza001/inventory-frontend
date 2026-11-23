@@ -68,6 +68,26 @@ export class Dashboard {
     ];
   });
 
+  // Profit row: based on dispatched sales this month
+  profitCards = computed<any[]>(() => {
+    const d = this.data();
+    if (!d) {
+      return [];
+    }
+    const p = d.profit_this_month;
+    return [
+      { label: 'Revenue (Dispatched)', value: p.revenue, icon: 'pi pi-wallet', kind: 'money' },
+      { label: 'Cost of Goods Sold', value: p.cost, icon: 'pi pi-tag', kind: 'money' },
+      { label: 'Profit This Month', value: p.profit, icon: 'pi pi-chart-line', kind: 'money' },
+      {
+        label: 'Profit Margin',
+        value: p.margin_percent,
+        icon: 'pi pi-percentage',
+        kind: 'percent',
+      },
+    ];
+  });
+
   // Second row: small master-data counts
   countCards = computed(() => {
     const d = this.data();
@@ -105,21 +125,48 @@ export class Dashboard {
     const style = getComputedStyle(document.documentElement);
     const salesColor = style.getPropertyValue('--p-primary-500');
     const purchaseColor = style.getPropertyValue('--p-surface-400');
+    const profitColor = style.getPropertyValue('--p-green-500');
 
     const labels: string[] = [];
     const sales: number[] = [];
     const purchases: number[] = [];
+    const profit: number[] = [];
     for (const row of d.monthly_totals) {
       labels.push(row.month);
       sales.push(row.sales);
       purchases.push(row.purchases);
+      profit.push(row.profit);
     }
 
     return {
       labels: labels,
       datasets: [
-        { label: 'Sales', data: sales, backgroundColor: salesColor, borderRadius: 4 },
-        { label: 'Purchases', data: purchases, backgroundColor: purchaseColor, borderRadius: 4 },
+        {
+          type: 'line',
+          label: 'Profit',
+          data: profit,
+          borderColor: profitColor,
+          backgroundColor: profitColor,
+          tension: 0.3,
+          borderWidth: 3,
+          order: 0,
+        },
+        {
+          type: 'bar',
+          label: 'Sales',
+          data: sales,
+          backgroundColor: salesColor,
+          borderRadius: 4,
+          order: 1,
+        },
+        {
+          type: 'bar',
+          label: 'Purchases',
+          data: purchases,
+          backgroundColor: purchaseColor,
+          borderRadius: 4,
+          order: 1,
+        },
       ],
     };
   });

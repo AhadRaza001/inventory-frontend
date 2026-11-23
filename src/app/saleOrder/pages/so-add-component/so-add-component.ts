@@ -176,26 +176,11 @@ export class SoAddComponent {
         const errors = err.error?.errors;
 
         if (errors) {
-          const firstError = Object.values(errors)[0] as string[];
-
-          if (firstError?.length) {
-            this.toast.error(firstError[0]);
-            return;
-          }
+          const messages = Object.values(errors).flat().join('\n');
+          this.toast.error(messages);
+        } else {
+          this.toast.error(err.error?.message ?? 'Something went wrong');
         }
-
-        const debug = err.error?.debug || '';
-
-        // Duplicate Sale Order Number
-        if (
-          debug.includes('sale_orders_company_id_so_no_unique') ||
-          debug.includes('sale_orders_so_no_unique')
-        ) {
-          this.toast.error('Sale Order number already exists. Please reload the page.');
-          return;
-        }
-
-        this.toast.error(err.error?.message || 'Something went wrong.');
       },
     });
   }

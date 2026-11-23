@@ -2,7 +2,9 @@
   <div class="flex items-center justify-between">
     <div>
       <h1 class="text-2xl font-semibold m-0">Dashboard</h1>
-      <p class="text-muted-color m-0 mt-1">Overview of your inventory, sales and purchases</p>
+      <p class="text-muted-color m-0 mt-1">
+        Overview of your inventory, sales, purchases and profit
+      </p>
     </div>
     <p-button label="Refresh" severity="secondary" [outlined]="true" (onClick)="load()">
       <i class="pi pi-refresh"></i>
@@ -50,6 +52,41 @@
     }
   </div>
 
+  <!-- Profit cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    @if (loading()) {
+      @for (i of [1, 2, 3, 4]; track i) {
+        <p-skeleton height="6.5rem" borderRadius="12px" />
+      }
+    } @else {
+      @for (card of profitCards(); track card.label) {
+        <div
+          class="rounded-xl border border-surface bg-surface-0 dark:bg-surface-900 p-4 flex items-center justify-between"
+        >
+          <div>
+            <div class="text-muted-color text-sm">{{ card.label }}</div>
+            <div
+              class="text-2xl font-semibold mt-1"
+              [class.text-green-600]="card.label === 'Profit This Month' && card.value >= 0"
+              [class.text-red-600]="card.label === 'Profit This Month' && card.value < 0"
+            >
+              @if (card.kind === 'money') {
+                {{ card.value | currency: 'PKR ' : 'symbol' : '1.0-0' }}
+              } @else {
+                {{ card.value | number: '1.0-2' }}%
+              }
+            </div>
+          </div>
+          <div
+            class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center"
+          >
+            <i [class]="card.icon + ' text-primary text-xl'"></i>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
   <!-- Master data counts -->
   <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
     @if (loading()) {
@@ -77,7 +114,7 @@
     <div
       class="xl:col-span-2 rounded-xl border border-surface bg-surface-0 dark:bg-surface-900 p-4"
     >
-      <div class="font-semibold mb-3">Sales vs Purchases (last 6 months)</div>
+      <div class="font-semibold mb-3">Sales, Purchases &amp; Profit (last 6 months)</div>
       @if (loading()) {
         <p-skeleton height="18rem" />
       } @else if (chartData()) {
@@ -122,6 +159,42 @@
         </div>
       }
     </div>
+  </div>
+
+  <!-- Top profit items -->
+  <div class="rounded-xl border border-surface bg-surface-0 dark:bg-surface-900 p-4">
+    <div class="font-semibold mb-3">Top Profit Items (this month)</div>
+    <p-table [value]="data()?.top_profit_items ?? []" [loading]="loading()" size="small">
+      <ng-template #header>
+        <tr>
+          <th style="width: 4rem">#</th>
+          <th>Item</th>
+          <th class="text-right">Qty Sold</th>
+          <th class="text-right">Profit</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-row let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.name }}</td>
+          <td class="text-right">{{ row.qty_sold | number }}</td>
+          <td
+            class="text-right font-medium"
+            [class.text-green-600]="row.profit >= 0"
+            [class.text-red-600]="row.profit < 0"
+          >
+            {{ row.profit | currency: 'PKR ' : 'symbol' : '1.0-0' }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="4" class="text-center text-muted-color">
+            No dispatched sales this month.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 
   <!-- Recent orders -->
