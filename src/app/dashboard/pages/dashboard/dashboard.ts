@@ -7,6 +7,7 @@ import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { SkeletonModule } from 'primeng/skeleton';
+import type { ChartData, ChartOptions } from 'chart.js';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -23,8 +24,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
-  private dashboardService = inject(DashboardService);
+export class Dashboard {  private dashboardService = inject(DashboardService);
 
   loading = signal(true);
   errorMessage = signal('');
@@ -33,9 +33,11 @@ export class Dashboard {
   // Top row of cards
   statCards = computed<any[]>(() => {
     const d = this.data();
+
     if (!d) {
       return [];
     }
+
     return [
       {
         label: 'Sales This Month',
@@ -68,17 +70,35 @@ export class Dashboard {
     ];
   });
 
-  // Profit row: based on dispatched sales this month
+  // Profit cards
   profitCards = computed<any[]>(() => {
     const d = this.data();
+
     if (!d) {
       return [];
     }
+
     const p = d.profit_this_month;
+
     return [
-      { label: 'Revenue (Dispatched)', value: p.revenue, icon: 'pi pi-wallet', kind: 'money' },
-      { label: 'Cost of Goods Sold', value: p.cost, icon: 'pi pi-tag', kind: 'money' },
-      { label: 'Profit This Month', value: p.profit, icon: 'pi pi-chart-line', kind: 'money' },
+      {
+        label: 'Revenue (Dispatched)',
+        value: p.revenue,
+        icon: 'pi pi-wallet',
+        kind: 'money',
+      },
+      {
+        label: 'Cost of Goods Sold',
+        value: p.cost,
+        icon: 'pi pi-tag',
+        kind: 'money',
+      },
+      {
+        label: 'Profit This Month',
+        value: p.profit,
+        icon: 'pi pi-chart-line',
+        kind: 'money',
+      },
       {
         label: 'Profit Margin',
         value: p.margin_percent,
@@ -88,14 +108,21 @@ export class Dashboard {
     ];
   });
 
-  // Second row: small master-data counts
+  // Master data counts
   countCards = computed(() => {
     const d = this.data();
+
     if (!d) {
       return [];
     }
+
     return [
-      { label: 'Items', value: d.counts.items, icon: 'pi pi-box', route: '/items' },
+      {
+        label: 'Items',
+        value: d.counts.items,
+        icon: 'pi pi-box',
+        route: '/items',
+      },
       {
         label: 'Categories',
         value: d.counts.categories,
@@ -117,29 +144,35 @@ export class Dashboard {
     ];
   });
 
-  chartData = computed(() => {
+  // Mixed Bar + Line Chart
+  chartData = computed<ChartData<'bar' | 'line'> | null>(() => {
     const d = this.data();
+
     if (!d) {
       return null;
     }
-    const style = getComputedStyle(document.documentElement);
-    const salesColor = style.getPropertyValue('--p-primary-500');
-    const purchaseColor = style.getPropertyValue('--p-surface-400');
-    const profitColor = style.getPropertyValue('--p-green-500');
 
-    const labels: string[] = [];
-    const sales: number[] = [];
-    const purchases: number[] = [];
-    const profit: number[] = [];
-    for (const row of d.monthly_totals) {
-      labels.push(row.month);
-      sales.push(row.sales);
-      purchases.push(row.purchases);
-      profit.push(row.profit);
-    }
+    const style = getComputedStyle(document.documentElement);
+
+    const salesColor = style
+      .getPropertyValue('--p-primary-500')
+      .trim();
+
+    const purchaseColor = style
+      .getPropertyValue('--p-surface-400')
+      .trim();
+
+    const profitColor = style
+      .getPropertyValue('--p-green-500')
+      .trim();
+
+    const labels = d.monthly_totals.map((row) => row.month);
+    const sales = d.monthly_totals.map((row) => row.sales);
+    const purchases = d.monthly_totals.map((row) => row.purchases);
+    const profit = d.monthly_totals.map((row) => row.profit);
 
     return {
-      labels: labels,
+      labels,
       datasets: [
         {
           type: 'line',
@@ -171,42 +204,67 @@ export class Dashboard {
     };
   });
 
-  chartOptions = {
+  // Chart options
+  chartOptions: ChartOptions<'bar' | 'line'> = {
     maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom' } },
-    scales: { y: { beginAtZero: true } },
+
+    plugins: {
+      legend: {
+        position: 'bottom',
+      },
+    },
+
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
 
   ngOnInit(): void {
     this.load();
   }
 
+  // Load dashboard data
   load(): void {
     this.loading.set(true);
     this.errorMessage.set('');
+
     this.dashboardService.getDashboard().subscribe({
       next: (res) => {
         this.data.set(res.data);
         this.loading.set(false);
       },
-      error: () => {
-        this.errorMessage.set('Could not load dashboard data.');
+
+      error: (error) => {
+        console.error('Dashboard loading error:', error);
+
+        this.errorMessage.set(
+          'Could not load dashboard data.'
+        );
+
         this.loading.set(false);
       },
     });
   }
 
-  statusSeverity(status: string): 'success' | 'warn' | 'info' | 'secondary' | 'danger' {
+  // Order status severity
+  statusSeverity(
+    status: string
+  ): 'success' | 'warn' | 'info' | 'secondary' | 'danger' {
     switch (status) {
       case 'completed':
       case 'dispatched':
       case 'received':
         return 'success';
+
       case 'pending':
       case 'draft':
         return 'warn';
+
       case 'cancelled':
         return 'danger';
+
       default:
         return 'secondary';
     }
