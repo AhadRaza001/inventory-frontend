@@ -21,15 +21,13 @@ export interface IDashboardCounts {
   customers: number;
   suppliers: number;
   categories: number;
-  profit_this_month: IProfitSummary;   // new
-  top_profit_items: ITopProfitItem[];
 }
 
 export interface IMonthlyTotal {
   month: string;
   sales: number;
   purchases: number;
-   profit: number; 
+  profit: number;
 }
 
 export interface ILowStockItem {
@@ -49,7 +47,6 @@ export interface IRecentOrder {
 }
 
 export interface IDashboardData {
-  profit_this_month: any;
   counts: IDashboardCounts;
   sales_this_month: number;
   purchases_this_month: number;
@@ -59,6 +56,8 @@ export interface IDashboardData {
   low_stock_items: ILowStockItem[];
   recent_sale_orders: IRecentOrder[];
   recent_purchase_orders: IRecentOrder[];
+  profit_this_month: IProfitSummary; // new
+  top_profit_items: ITopProfitItem[];
 }
 @Service()
 export class DashboardService {
